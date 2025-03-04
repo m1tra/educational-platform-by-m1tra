@@ -312,7 +312,7 @@ export default function WordLearningPage() {
     {  "withGaps":  "экстр..мальный",  "correct":  "экстрЕмальный"  },
     {  "withGaps":  "эл..ктроника",  "correct":  "элЕктроника"  },
     {  "withGaps":  "энц..кл..педия",  "correct":  "энцИклОпедия"  },
-    {  "withGaps":  "эст..када (мост)",  "correct":  "эстакада"}
+    {  "withGaps":  "эст..када",  "correct":  "эстАкада"}
 ]
     
 
