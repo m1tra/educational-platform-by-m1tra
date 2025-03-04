@@ -1,19 +1,28 @@
 import { TestCard } from "@/components/test-card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BookOpen, Brain, GraduationCap, Plus } from "lucide-react"
+import { BookOpen, Brain, Plus } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
   const tests = [
     {
-      id: "word-learning",
-      title: "Правописание слов",
+      id: "ege-gram-9",
+      title: "9 задание ЕГЭ",
       description: "Заполните пропущенные буквы в словах",
       icon: "📝",
       difficulty: "Средний",
       questionsCount: 302,
-      category: "language",
+      category: "ege-rus",
+    },
+    {
+      id: "ege-gram-10",
+      title: "10 задание ЕГЭ",
+      description: "Заполните пропущенные буквы в словах",
+      icon: "📝",
+      difficulty: "Сложный",
+      questionsCount: 68,
+      category: "ege-rus",
     },
     {
       id: "grammar",
@@ -98,9 +107,13 @@ export default function HomePage() {
 
       <section className="mb-12">
         <div className="mx-auto max-w-3xl">
-          <Tabs defaultValue="language" className="w-full">
+          <Tabs defaultValue="ege-rus" className="w-full">
             <div className="flex justify-center mb-6">
               <TabsList className="grid w-full max-w-md grid-cols-3">
+                <TabsTrigger value="ege-rus" className="flex items-center gap-2 justify-center">
+                  <BookOpen className="h-4 w-4" />
+                  <span className="hidden sm:inline">Егэ</span>
+                </TabsTrigger>
                 <TabsTrigger value="language" className="flex items-center gap-2 justify-center">
                   <BookOpen className="h-4 w-4" />
                   <span className="hidden sm:inline">Язык</span>
@@ -109,12 +122,18 @@ export default function HomePage() {
                   <Brain className="h-4 w-4" />
                   <span className="hidden sm:inline">Математика</span>
                 </TabsTrigger>
-                <TabsTrigger value="history" className="flex items-center gap-2 justify-center">
-                  <GraduationCap className="h-4 w-4" />
-                  <span className="hidden sm:inline">История</span>
-                </TabsTrigger>
               </TabsList>
             </div>
+
+            <TabsContent value="ege-rus" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                {tests
+                  .filter((test) => test.category === "ege-rus")
+                  .map((test) => (
+                    <TestCard key={test.id} test={test} />
+                  ))}
+              </div>
+            </TabsContent>
 
             <TabsContent value="language" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -136,15 +155,7 @@ export default function HomePage() {
               </div>
             </TabsContent>
 
-            <TabsContent value="history" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                {tests
-                  .filter((test) => test.category === "history")
-                  .map((test) => (
-                    <TestCard key={test.id} test={test} />
-                  ))}
-              </div>
-            </TabsContent>
+
           </Tabs>
         </div>
       </section>
