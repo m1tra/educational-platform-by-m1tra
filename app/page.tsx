@@ -12,7 +12,7 @@ export default function HomePage() {
       description: "Заполните пропущенные буквы в словах",
       icon: "📝",
       difficulty: "Средний",
-      questionsCount: 22,
+      questionsCount: 302,
       category: "language",
     },
     {

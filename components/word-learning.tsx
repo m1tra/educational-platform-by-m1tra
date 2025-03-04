@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Check, X, Trophy } from "lucide-react"
+import { Check, X, Trophy, Settings } from "lucide-react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import { Slider } from "@/components/ui/slider"
 
 // Word data structure
 export interface Word {
@@ -37,13 +38,28 @@ export function WordLearningTest({
   const [attempts, setAttempts] = useState(0)
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false)
   const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null)
+  const [wordCount, setWordCount] = useState(10)
+  const [testStarted, setTestStarted] = useState(false)
+  const [activeWords, setActiveWords] = useState<Word[]>([])
 
   // Initialize words on component mount
   useEffect(() => {
-    setShuffledWords([...words].sort(() => Math.random() - 0.5))
+    const shuffled = [...words].sort(() => Math.random() - 0.5)
+    setShuffledWords(shuffled)
   }, [words])
 
-  const currentWord = shuffledWords[currentWordIndex] || words[0]
+  // Start the test with selected number of words
+  const startTest = () => {
+    // Take only the selected number of words
+    const selectedWords = shuffledWords.slice(0, wordCount)
+    setActiveWords(selectedWords)
+    setTestStarted(true)
+    setTimeout(() => {
+      inputRef?.focus()
+    }, 100)
+  }
+
+  const currentWord = activeWords[currentWordIndex] || words[0]
 
   // Function to check if the user's input matches the correct word
   const checkAnswer = () => {
@@ -75,7 +91,7 @@ export function WordLearningTest({
       setCorrectCount(correctCount + 1)
       // Move to the next word after a short delay
       setTimeout(() => {
-        if (currentWordIndex < shuffledWords.length - 1) {
+        if (currentWordIndex < activeWords.length - 1) {
           setCurrentWordIndex(currentWordIndex + 1)
           setUserInput("")
           setIsCorrect(null)
@@ -107,7 +123,6 @@ export function WordLearningTest({
 
   // Function to restart the exercise
   const handleRestart = () => {
-    setShuffledWords([...words].sort(() => Math.random() - 0.5))
     setCurrentWordIndex(0)
     setUserInput("")
     setIsCorrect(null)
@@ -115,9 +130,11 @@ export function WordLearningTest({
     setCorrectCount(0)
     setAttempts(0)
     setShowCorrectAnswer(false)
-    setTimeout(() => {
-      inputRef?.focus()
-    }, 100)
+    setTestStarted(false)
+
+    // Reshuffle words
+    const shuffled = [...words].sort(() => Math.random() - 0.5)
+    setShuffledWords(shuffled)
   }
 
   // Format the word with gaps for display
@@ -126,7 +143,7 @@ export function WordLearningTest({
   }
 
   // Calculate progress percentage
-  const progressPercentage = shuffledWords.length ? (currentWordIndex / shuffledWords.length) * 100 : 0
+  const progressPercentage = activeWords.length ? (currentWordIndex / activeWords.length) * 100 : 0
 
   // Get the correct letters that should be filled in
   const getCorrectLetters = () => {
@@ -149,6 +166,62 @@ export function WordLearningTest({
   // Calculate score percentage
   const scorePercentage = attempts > 0 ? Math.round((correctCount / attempts) * 100) : 0
 
+  // Configuration screen
+  if (!testStarted && !completed) {
+    return (
+      <div className="w-full max-w-md mx-auto">
+        <Card className="shadow-lg border-2">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-2xl text-center">{title}</CardTitle>
+            <CardDescription className="text-center">{description}</CardDescription>
+          </CardHeader>
+
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium">Количество слов</h3>
+                <span className="text-2xl font-bold">{wordCount}</span>
+              </div>
+
+              <Slider
+                value={[wordCount]}
+                min={5}
+                max={Math.min(words.length)}
+                step={1}
+                onValueChange={(value) => setWordCount(value[0])}
+                className="py-4"
+              />
+
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>5</span>
+                <span>Всего доступно: {words.length}</span>
+              </div>
+            </div>
+
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+              <div className="flex items-start gap-2">
+                <Settings className="h-5 w-5 text-muted-foreground mt-0.5" />
+                <div>
+                  <h4 className="font-medium">Как это работает</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Вам будет предложено {wordCount} слов с пропущенными буквами. Введите пропущенные буквы и проверьте
+                    свои знания.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+
+          <CardFooter>
+            <Button onClick={startTest} className="w-full">
+              Начать тест
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full max-w-md mx-auto">
       <AnimatePresence mode="wait">
@@ -169,7 +242,7 @@ export function WordLearningTest({
               <CardContent className="space-y-6">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">
-                    Слово {currentWordIndex + 1} из {shuffledWords.length}
+                    Слово {currentWordIndex + 1} из {activeWords.length}
                   </span>
                   <span className="text-sm font-medium">Правильно: {correctCount}</span>
                 </div>
