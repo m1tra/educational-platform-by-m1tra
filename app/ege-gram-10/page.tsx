@@ -78,8 +78,7 @@ export default function WordLearningPage() {
     { "withGaps": "пр..митивный", "correct": "прИмитивный" },
     { "withGaps": "пр..грешение", "correct": "прЕгрешение" },
     { "withGaps": "пр..вентивный", "correct": "прЕвентивный" },
-    { "withGaps": "пр..налечь", "correct": "прИналечь" },
-    { "withGaps": "аттр..кцион", "correct": "аттрАкцион" }
+    { "withGaps": "пр..налечь", "correct": "прИналечь" }
 ]
     
 

@@ -237,9 +237,9 @@ export function WordLearningTest({
               </div>
             </div>
 
-            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2 relative ">
               <div className="flex items-start gap-2">
-                <Settings className="h-5 w-5 text-muted-foreground mt-0.5" />
+                <Settings className="absolute right-3 h-5 w-5 text-muted-foreground mt-0.5" />
                 <div>
                   <h4 className="font-medium">Как это работает</h4>
                   <p className="text-sm text-muted-foreground">
