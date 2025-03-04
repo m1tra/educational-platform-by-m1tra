@@ -35,12 +35,15 @@ export function WordLearningTest({
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [completed, setCompleted] = useState(false)
   const [correctCount, setCorrectCount] = useState(0)
-  const [attempts, setAttempts] = useState(0)
+  const [incorrectCount, setIncorrectCount] = useState(0)
+  const [totalAttempts, setTotalAttempts] = useState(0)
+  const [currentWordAttempts, setCurrentWordAttempts] = useState(0)
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false)
   const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null)
   const [wordCount, setWordCount] = useState(10)
   const [testStarted, setTestStarted] = useState(false)
   const [activeWords, setActiveWords] = useState<Word[]>([])
+  const [skippedWords, setSkippedWords] = useState(0)
 
   // Initialize words on component mount
   useEffect(() => {
@@ -61,11 +64,26 @@ export function WordLearningTest({
 
   const currentWord = activeWords[currentWordIndex] || words[0]
 
+  // Move to the next word
+  const moveToNextWord = () => {
+    if (currentWordIndex < activeWords.length - 1) {
+      setCurrentWordIndex(currentWordIndex + 1)
+      setUserInput("")
+      setIsCorrect(null)
+      setShowCorrectAnswer(false)
+      setCurrentWordAttempts(0)
+      inputRef?.focus()
+    } else {
+      setCompleted(true)
+    }
+  }
+
   // Function to check if the user's input matches the correct word
   const checkAnswer = () => {
     if (!userInput.trim()) return
 
-    setAttempts(attempts + 1)
+    setTotalAttempts(totalAttempts + 1)
+    setCurrentWordAttempts(currentWordAttempts + 1)
 
     // Get the correct letters that should be filled in
     const correctLetters = getCorrectLetters()
@@ -73,6 +91,7 @@ export function WordLearningTest({
     // Check if user provided the right number of letters
     if (userInput.length !== correctLetters.length) {
       setIsCorrect(false)
+      handleIncorrectAnswer()
       return
     }
 
@@ -88,23 +107,37 @@ export function WordLearningTest({
     setIsCorrect(isAnswerCorrect)
 
     if (isAnswerCorrect) {
-      setCorrectCount(correctCount + 1)
+      // Only count as correct if user hasn't made too many attempts
+      if (currentWordAttempts < 2) {
+        setCorrectCount(correctCount + 1)
+      } else {
+        // If they've already made too many attempts, count as skipped
+        setSkippedWords(skippedWords + 1)
+      }
+
       // Move to the next word after a short delay
       setTimeout(() => {
-        if (currentWordIndex < activeWords.length - 1) {
-          setCurrentWordIndex(currentWordIndex + 1)
-          setUserInput("")
-          setIsCorrect(null)
-          setShowCorrectAnswer(false)
-          inputRef?.focus()
-        } else {
-          setCompleted(true)
-        }
+        moveToNextWord()
       }, 1500)
     } else {
-      // Show correct answer after 3 wrong attempts
-      if ((attempts + 1) % 3 === 0) {
-        setShowCorrectAnswer(true)
+      handleIncorrectAnswer()
+    }
+  }
+
+  // Handle incorrect answer
+  const handleIncorrectAnswer = () => {
+    setIncorrectCount(incorrectCount + 1)
+
+    // Show correct answer after 2 incorrect attempts on this word
+    if (currentWordAttempts + 1 >= 3) {
+      setShowCorrectAnswer(true)
+
+      // Move to next word after showing the answer for a moment
+      if (currentWordAttempts + 1 >= 3) {
+        setTimeout(() => {
+          setSkippedWords(skippedWords + 1)
+          moveToNextWord()
+        }, 2000)
       }
     }
   }
@@ -128,9 +161,12 @@ export function WordLearningTest({
     setIsCorrect(null)
     setCompleted(false)
     setCorrectCount(0)
-    setAttempts(0)
+    setIncorrectCount(0)
+    setTotalAttempts(0)
+    setCurrentWordAttempts(0)
     setShowCorrectAnswer(false)
     setTestStarted(false)
+    setSkippedWords(0)
 
     // Reshuffle words
     const shuffled = [...words].sort(() => Math.random() - 0.5)
@@ -164,7 +200,7 @@ export function WordLearningTest({
   }
 
   // Calculate score percentage
-  const scorePercentage = attempts > 0 ? Math.round((correctCount / attempts) * 100) : 0
+  const scorePercentage = totalAttempts > 0 ? Math.round((correctCount / (correctCount + skippedWords)) * 100) : 0
 
   // Configuration screen
   if (!testStarted && !completed) {
@@ -206,6 +242,10 @@ export function WordLearningTest({
                   <p className="text-sm text-muted-foreground">
                     Вам будет предложено {wordCount} слов с пропущенными буквами. Введите пропущенные буквы и проверьте
                     свои знания.
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    После 2 неправильных попыток вам будет показан правильный ответ. После 3 попыток система перейдет к
+                    следующему слову.
                   </p>
                 </div>
               </div>
@@ -277,8 +317,15 @@ export function WordLearningTest({
                       ref={setInputRef}
                       autoFocus
                     />
-                    <Button onClick={checkAnswer}>Проверить</Button>
+                    {currentWordAttempts<=2&&(isCorrect==null||isCorrect==false)?
+                        <Button onClick={checkAnswer}>Проверить</Button>
+                        :
+                        <Button disabled>Проверить</Button>
+                    }
+                    
                   </div>
+
+                  <div className="text-xs text-muted-foreground">Попытка {isCorrect===true ? currentWordAttempts : currentWordAttempts <= 2 ? currentWordAttempts + 1 : 3} из 3</div>
 
                   <AnimatePresence>
                     {isCorrect !== null && (
@@ -300,7 +347,9 @@ export function WordLearningTest({
                         ) : (
                           <>
                             <X size={20} />
-                            <span>Неправильно. Попробуйте еще раз.</span>
+                            <span>
+                              Неправильно. {currentWordAttempts >= 2 ? "Последняя попытка!" : "Попробуйте еще раз."}
+                            </span>
                           </>
                         )}
                       </motion.div>
@@ -376,13 +425,38 @@ export function WordLearningTest({
                   </div>
                 </div>
 
-                <div className="space-y-2 text-center">
-                  <p className="text-xl font-semibold">
-                    {correctCount} / {attempts}
-                  </p>
-                  <p className="text-muted-foreground">
-                    Вы правильно заполнили {correctCount} из {attempts} попыток
-                  </p>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg text-center">
+                      <div className="text-2xl font-bold text-green-600 dark:text-green-400">{correctCount}</div>
+                      <div className="text-sm text-muted-foreground">Правильно</div>
+                    </div>
+                    <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg text-center">
+                      <div className="text-2xl font-bold text-red-600 dark:text-red-400">{skippedWords}</div>
+                      <div className="text-sm text-muted-foreground">Неправильно</div>
+                    </div>
+                  </div>
+
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-sm">Всего слов:</span>
+                      <span className="text-sm font-medium">{activeWords.length}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm">Всего попыток:</span>
+                      <span className="text-sm font-medium">{totalAttempts}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm">Неправильных ответов:</span>
+                      <span className="text-sm font-medium">{skippedWords}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm">Соотношение правильных/неправильных:</span>
+                      <span className="text-sm font-medium">
+                        {incorrectCount > 0 ? (correctCount / incorrectCount).toFixed(1) : correctCount > 0 ? "∞" : "0"}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="pt-4 space-y-4">
