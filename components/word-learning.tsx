@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Check, X, Trophy, Settings } from "lucide-react"
+import { Check, X, Trophy, Settings, Info } from "lucide-react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Slider } from "@/components/ui/slider"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { cn } from "@/lib/utils"
 
 // Word data structure
 export interface Word {
@@ -200,7 +202,8 @@ export function WordLearningTest({
   }
 
   // Calculate score percentage
-  const scorePercentage = totalAttempts > 0 ? Math.round((correctCount / (correctCount + skippedWords)) * 100) : 0
+  const scorePercentage1 = totalAttempts > 0 ? Math.round((correctCount / (correctCount + skippedWords)) * 100) : 0
+  const scorePercentage2 = totalAttempts > 0 ? Math.round((correctCount / (correctCount + incorrectCount)) * 100) : 0
 
   // Configuration screen
   if (!testStarted && !completed) {
@@ -395,36 +398,86 @@ export function WordLearningTest({
               </CardHeader>
 
               <CardContent className="space-y-6 py-6">
-                <div className="flex justify-center">
-                  <div className="relative h-32 w-32">
-                    <svg className="h-full w-full" viewBox="0 0 100 100">
-                      <circle
-                        className="stroke-muted-foreground/20"
-                        strokeWidth="10"
-                        fill="none"
-                        r="40"
-                        cx="50"
-                        cy="50"
-                      />
-                      <circle
-                        className="stroke-primary transition-all duration-1000 ease-in-out"
-                        strokeWidth="10"
-                        strokeLinecap="round"
-                        fill="none"
-                        r="40"
-                        cx="50"
-                        cy="50"
-                        strokeDasharray={`${2 * Math.PI * 40}`}
-                        strokeDashoffset={`${2 * Math.PI * 40 * (1 - scorePercentage / 100)}`}
-                        transform="rotate(-90 50 50)"
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-3xl font-bold">{scorePercentage}%</span>
+                <div className="flex justify-evenly w-full">
+                    <div className="relative flex justify-center w-full">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="ghost" size={"sm"} className={cn("absolute hover:none top-0 right-0 z-10")}><Info /></Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Отношение правильных к неправильным ответам</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      <div className="relative h-32 w-32">
+                        <svg className="h-full w-full" viewBox="0 0 100 100">
+                          <circle
+                            className="stroke-muted-foreground/20"
+                            strokeWidth="10"
+                            fill="none"
+                            r="40"
+                            cx="50"
+                            cy="50"
+                          />
+                          <circle
+                            className="stroke-primary transition-all duration-1000 ease-in-out"
+                            strokeWidth="10"
+                            strokeLinecap="round"
+                            fill="none"
+                            r="40"
+                            cx="50"
+                            cy="50"
+                            strokeDasharray={`${2 * Math.PI * 40}`}
+                            strokeDashoffset={`${2 * Math.PI * 40 * (1 - scorePercentage1 / 100)}`}
+                            transform="rotate(-90 50 50)"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-3xl font-bold">{scorePercentage1}%</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                    <div className="relative flex justify-center w-full">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="ghost" size={"sm"} className={cn("absolute hover:none top-0 right-0 z-10")}><Info /></Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Отношение количества ответов к количеству слов</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      <div className="relative h-32 w-32">
+                        <svg className="h-full w-full" viewBox="0 0 100 100">
+                          <circle
+                            className="stroke-muted-foreground/20"
+                            strokeWidth="10"
+                            fill="none"
+                            r="40"
+                            cx="50"
+                            cy="50"
+                          />
+                          <circle
+                            className="stroke-primary transition-all duration-1000 ease-in-out"
+                            strokeWidth="10"
+                            strokeLinecap="round"
+                            fill="none"
+                            r="40"
+                            cx="50"
+                            cy="50"
+                            strokeDasharray={`${2 * Math.PI * 40}`}
+                            strokeDashoffset={`${2 * Math.PI * 40 * (1 - scorePercentage2 / 100)}`}
+                            transform="rotate(-90 50 50)"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-3xl font-bold">{scorePercentage2}%</span>
+                        </div>
+                      </div>
+                    </div>
                 </div>
-
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg text-center">
@@ -436,7 +489,7 @@ export function WordLearningTest({
                       <div className="text-sm text-muted-foreground">Неправильно</div>
                     </div>
                   </div>
-
+                    
                   <div className="bg-muted/50 p-4 rounded-lg space-y-2">
                     <div className="flex justify-between">
                       <span className="text-sm">Всего слов:</span>
@@ -458,7 +511,7 @@ export function WordLearningTest({
                     </div>
                   </div>
                 </div>
-
+                
                 <div className="pt-4 space-y-4">
                   <Button onClick={handleRestart} className="w-full">
                     Начать заново
