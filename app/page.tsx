@@ -1,101 +1,185 @@
-import Image from "next/image";
+import { TestCard } from "@/components/test-card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { BookOpen, Brain, GraduationCap, Plus } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
-export default function Home() {
+export default function HomePage() {
+  const tests = [
+    {
+      id: "word-learning",
+      title: "Правописание слов",
+      description: "Заполните пропущенные буквы в словах",
+      icon: "📝",
+      difficulty: "Средний",
+      questionsCount: 22,
+      category: "language",
+    },
+    {
+      id: "grammar",
+      title: "Грамматика",
+      description: "Проверьте свои знания правил грамматики",
+      icon: "📚",
+      difficulty: "Сложный",
+      questionsCount: 15,
+      comingSoon: true,
+      category: "language",
+    },
+    {
+      id: "punctuation",
+      title: "Пунктуация",
+      description: "Расставьте знаки препинания правильно",
+      icon: "✏️",
+      difficulty: "Сложный",
+      questionsCount: 10,
+      comingSoon: true,
+      category: "language",
+    },
+    {
+      id: "vocabulary",
+      title: "Словарный запас",
+      description: "Расширьте свой словарный запас",
+      icon: "🔤",
+      difficulty: "Лёгкий",
+      questionsCount: 30,
+      comingSoon: true,
+      category: "language",
+    },
+    {
+      id: "math-basics",
+      title: "Основы математики",
+      description: "Решайте базовые математические задачи",
+      icon: "🔢",
+      difficulty: "Лёгкий",
+      questionsCount: 20,
+      comingSoon: true,
+      category: "math",
+    },
+    {
+      id: "algebra",
+      title: "Алгебра",
+      description: "Решайте алгебраические уравнения",
+      icon: "➗",
+      difficulty: "Средний",
+      questionsCount: 15,
+      comingSoon: true,
+      category: "math",
+    },
+    {
+      id: "history-dates",
+      title: "Исторические даты",
+      description: "Проверьте знание важных исторических дат",
+      icon: "📅",
+      difficulty: "Средний",
+      questionsCount: 25,
+      comingSoon: true,
+      category: "history",
+    },
+    {
+      id: "geography",
+      title: "География",
+      description: "Проверьте знание географии мира",
+      icon: "🌍",
+      difficulty: "Средний",
+      questionsCount: 18,
+      comingSoon: true,
+      category: "history",
+    },
+  ]
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="container mx-auto px-4 py-8 md:py-12">
+      <section className="mb-12 space-y-4 text-center">
+        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Учебная платформа</h1>
+        <p className="mx-auto max-w-[700px] text-lg text-muted-foreground">
+          Интерактивные тесты для проверки и улучшения ваших знаний в различных областях
+        </p>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <section className="mb-12">
+        <div className="mx-auto max-w-3xl">
+          <Tabs defaultValue="language" className="w-full">
+            <div className="flex justify-center mb-6">
+              <TabsList className="grid w-full max-w-md grid-cols-3">
+                <TabsTrigger value="language" className="flex items-center gap-2 justify-center">
+                  <BookOpen className="h-4 w-4" />
+                  <span className="hidden sm:inline">Язык</span>
+                </TabsTrigger>
+                <TabsTrigger value="math" className="flex items-center gap-2 justify-center">
+                  <Brain className="h-4 w-4" />
+                  <span className="hidden sm:inline">Математика</span>
+                </TabsTrigger>
+                <TabsTrigger value="history" className="flex items-center gap-2 justify-center">
+                  <GraduationCap className="h-4 w-4" />
+                  <span className="hidden sm:inline">История</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            <TabsContent value="language" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                {tests
+                  .filter((test) => test.category === "language")
+                  .map((test) => (
+                    <TestCard key={test.id} test={test} />
+                  ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="math" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                {tests
+                  .filter((test) => test.category === "math")
+                  .map((test) => (
+                    <TestCard key={test.id} test={test} />
+                  ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="history" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                {tests
+                  .filter((test) => test.category === "history")
+                  .map((test) => (
+                    <TestCard key={test.id} test={test} />
+                  ))}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      <section className="rounded-lg border bg-card p-6 shadow-sm mx-auto max-w-5xl mb-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-2 text-center md:text-left">
+            <h2 className="text-2xl font-bold">Создайте свой тест</h2>
+            <p className="text-muted-foreground">Создайте собственный тест с вашими словами и заданиями</p>
+          </div>
+          <div className="flex-shrink-0">
+            <Button asChild>
+              <Link href="/custom-test" className="inline-flex items-center gap-2">
+                <Plus className="h-4 w-4" />
+                <span>Создать тест</span>
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-lg border bg-card p-6 shadow-sm mx-auto max-w-5xl">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-2 text-center md:text-left">
+            <h2 className="text-2xl font-bold">Хотите больше тестов?</h2>
+            <p className="text-muted-foreground">Мы постоянно добавляем новые тесты и улучшаем существующие</p>
+          </div>
+          <div className="flex-shrink-0">
+            <div className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 cursor-pointer">
+              Подписаться на обновления
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
+
