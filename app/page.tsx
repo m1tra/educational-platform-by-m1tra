@@ -16,6 +16,15 @@ export default function HomePage() {
       category: "ege-rus",
     },
     {
+      id: "ege-gram-4",
+      title: "4 задание ЕГЭ",
+      description: "Заполните пропущенные буквы в словах",
+      icon: "📝",
+      difficulty: "Легко",
+      questionsCount: 154,
+      category: "ege-rus",
+    },
+    {
       id: "ege-gram-10",
       title: "10 задание ЕГЭ",
       description: "Заполните пропущенные буквы в словах",

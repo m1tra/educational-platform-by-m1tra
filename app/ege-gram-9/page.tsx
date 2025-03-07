@@ -253,7 +253,7 @@ export default function WordLearningPage() {
     { "withGaps": "с..нет", "correct": "сОнет" },
     { "withGaps": "состр..дать", "correct": "сострАдать" },
     { "withGaps": "сост..заться", "correct": "состЯзаться" },
-    { "withGaps": "с..ц..альный",  "correct":  "sОцИальный"  },
+    { "withGaps": "с..ц..альный",  "correct":  "cОцИальный"  },
     {  "withGaps":  "сп..ртакиада",  "correct":  "спАртакиада"  },
     {  "withGaps":  "сп..койный",  "correct":  "спОкойный"  },
     {  "withGaps":  "ст..д..он",  "correct":  "стАдИон"  },

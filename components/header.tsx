@@ -43,7 +43,7 @@ export function Header() {
           <ThemeToggle />
           <Link href="https://github.com/m1tra/educational-platform-by-m1tra">
             <Button variant="outline" size="icon">
-                <Github strokeWidth={2} className='className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-black dark:text-white' />
+                <Github strokeWidth={2} className=' h-[1.2rem] w-[1.2rem]  text-secondary-foreground' />
             </Button>
           </Link>
           <Button className="hidden md:flex">Войти</Button>
@@ -65,19 +65,19 @@ export function Header() {
             </DrawerHeader>
             <div className='flex flex-col gap-4 h-96 p-5'>
               <Link href="/" onClick={handleLinkClick}>
-                <div className='text-white text-base'>Главная</div>
+                <div className='text-secondary-foreground text-base'>Главная</div>
               </Link>
               <Link href="/" onClick={handleLinkClick}>
-                <div className='text-white text-base'>Все тесты</div>
+                <div className='text-secondary-foreground text-base'>Все тесты</div>
               </Link>
               <Link href="/" onClick={handleLinkClick}>
-                <div className='text-white text-base'>О проекте</div>
+                <div className='text-secondary-foreground text-base'>О проекте</div>
               </Link>
             </div>
             <DrawerFooter>
               <div className='flex gap-2 justify-end'>
                 <Link href="https://github.com/m1tra/educational-platform-by-m1tra">
-                  <Github className='text-neutral-300' strokeWidth={1} />
+                  <Github className='text-secondary-foreground' strokeWidth={1} />
                 </Link>
               </div>
             </DrawerFooter>
