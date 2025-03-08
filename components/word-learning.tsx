@@ -89,7 +89,7 @@ export function WordLearningTest({
 
     // Get the correct letters that should be filled in
     const correctLetters = getCorrectLetters()
-
+    
     // Check if user provided the right number of letters
     if (userInput.length !== correctLetters.length) {
       setIsCorrect(false)
@@ -316,7 +316,7 @@ export function WordLearningTest({
                             ? "border-red-500 bg-red-50 dark:bg-red-900/20"
                             : ""
                       }`}
-                      maxLength={(currentWord?.withGaps.match(/\.\./g) || []).length}
+                      maxLength={(currentWord?.withGaps.match(/\_\_\_/g) || []).length}
                       ref={setInputRef}
                       autoFocus
                     />
