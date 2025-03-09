@@ -29,7 +29,6 @@ export const Combobox = ({ onSelect }:ICombobox) => {
   const handleSelect = (option:ITasks) => {
     setSelectedOption(option.label)
     setOpen(false)
-    // Pass selected value to parent component
     if (onSelect) {
       onSelect(option)
     }
