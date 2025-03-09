@@ -3,10 +3,9 @@
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
-import { BookOpen, Github } from "lucide-react"
+import { BookOpen, Github, User } from "lucide-react"
 import { useState } from "react"
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from './ui/drawer';
-import { Auth } from "./auth"
 
 export function Header() {
 
@@ -47,7 +46,9 @@ export function Header() {
                 <Github strokeWidth={2} className=' h-[1.2rem] w-[1.2rem]  text-secondary-foreground' />
             </Button>
           </Link>
-          <Auth/>
+          <Button variant="outline" size="icon">
+            <User strokeWidth={2} className=' h-[1.2rem] w-[1.2rem]  text-secondary-foreground' />
+          </Button>
         </div>
       </div>
 
