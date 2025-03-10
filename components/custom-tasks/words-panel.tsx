@@ -24,7 +24,6 @@ export const WordsPanel = ({ handleTakeValue, words }: WordsPanelProps) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editingWord, setEditingWord] = useState<Word>({ withGaps: "", correct: "" })
 
-  // Sync with parent component's words
   useEffect(() => {
     setWordsList(words)
   }, [words])

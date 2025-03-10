@@ -71,10 +71,9 @@ export const Wrapper = () => {
           <div className="w-full max-w-4xl">
             <h2 className="text-2xl font-bold mb-6">{title}</h2>
             <p className="mb-8">{description}</p>
-            {/* Here you would implement the programming test component */}
             <div className="bg-muted p-6 rounded-lg">
               <p>Программирование: {programmingTasks.length} задач</p>
-              {/* This is a placeholder for the actual programming test UI */}
+
             </div>
           </div>
         )}

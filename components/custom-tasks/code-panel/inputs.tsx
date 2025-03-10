@@ -1,29 +1,34 @@
-'use client'
+"use client"
 
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 
 import { CardContent } from "@/components/ui/card"
-import { ProgrammingTask } from "./code-panel"
+import type { ProgrammingTask } from "./code-panel"
+import { Button } from "@/components/ui/button"
+import {  Save  } from "lucide-react"
 
 interface TaskEditFormProps {
   task: ProgrammingTask | null
   mode: "create" | "edit"
   index?: number
-  onChange: (field: keyof ProgrammingTask, value: string) => void
+  onSave?: (task: ProgrammingTask, index: number) => void
+  onChange: (field: string, value: string) => void
 }
 
-export const TaskEditForm = ({ 
-  task, 
-  mode,
-  index, 
-  onChange 
-}: TaskEditFormProps) => {
+export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEditFormProps) => {
   if (!task) return null
+
+  const handleSave = () => {
+    if (onSave && task) {
+      onSave(task, index)
+    }
+  }
 
   return (
     <CardContent className="p-4">
+
       <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor={mode === "create" ? "title" : `edit-title-${index}`}>Название задачи</Label>
@@ -58,17 +63,19 @@ export const TaskEditForm = ({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor={mode === "create" ? "expectedInput" : `edit-expectedInput-${index}`}>Ожидаемый результат</Label>
+          <Label htmlFor={mode === "create" ? "expectedInput" : `edit-expectedInput-${index}`}>Ожидаемый ввод</Label>
           <Textarea
             id={mode === "create" ? "expectedInput" : `edit-expectedInput-${index}`}
             value={task.expectedInput || ""}
             onChange={(e) => onChange("expectedInput", e.target.value)}
-            placeholder="Ожидаемый вывод в консоль"
+            placeholder="Ожидаемый ввод"
             className="min-h-[80px]"
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor={mode === "create" ? "expectedOutput" : `edit-expectedOutput-${index}`}>Ожидаемый результат</Label>
+          <Label htmlFor={mode === "create" ? "expectedOutput" : `edit-expectedOutput-${index}`}>
+            Ожидаемый результат
+          </Label>
           <Textarea
             id={mode === "create" ? "expectedOutput" : `edit-expectedOutput-${index}`}
             value={task.expectedOutput || ""}
@@ -77,8 +84,13 @@ export const TaskEditForm = ({
             className="min-h-[80px]"
           />
         </div>
-
+        {mode === "edit" && (
+          <Button onClick={handleSave}>
+            <Save className="h-4 w-4 mr-1" /> Сохранить
+          </Button>
+        )}
       </div>
     </CardContent>
   )
 }
+
