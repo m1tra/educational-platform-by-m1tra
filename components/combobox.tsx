@@ -6,27 +6,27 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { cn } from "@/lib/utils"
 
-export interface ITasks{
+export interface IWordObject{
   value:string,
   label:string
 }
 interface ICombobox{
-  onSelect: (option: ITasks) => void;
+  onSelect: (option: IWordObject) => void;
 }
 
 export const Combobox = ({ onSelect }:ICombobox) => {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
   const [selectedOption, setSelectedOption] = useState("пропущенные слова")
-  const [filteredOptions, setFilteredOptions] = useState<ITasks[]>([])
+  const [filteredOptions, setFilteredOptions] = useState<IWordObject[]>([])
 
-  const options:ITasks[] = [ { value: "words", label: "пропущенные слова", }, { value: "definition", label: "слово - определение", }, { value: "code", label: "код", } ]
+  const options:IWordObject[] = [ { value: "words", label: "пропущенные слова", }, { value: "definition", label: "слово - определение", }, { value: "code", label: "код", } ]
   useEffect(() => {
-    const filtered = options.filter((option:ITasks) => option.label.toLowerCase().includes(search.toLowerCase()))
+    const filtered = options.filter((option:IWordObject) => option.label.toLowerCase().includes(search.toLowerCase()))
     setFilteredOptions(filtered)
   }, [search])
 
-  const handleSelect = (option:ITasks) => {
+  const handleSelect = (option:IWordObject) => {
     setSelectedOption(option.label)
     setOpen(false)
     if (onSelect) {
@@ -78,7 +78,7 @@ export const Combobox = ({ onSelect }:ICombobox) => {
 
           <ul className="max-h-60 overflow-auto">
             {filteredOptions.length > 0 ? (
-              filteredOptions.map((option:ITasks) => (
+              filteredOptions.map((option:IWordObject) => (
                 <Option key={option.value} text={option.label} onSelect={() => handleSelect(option)} />
               ))
             ) : (

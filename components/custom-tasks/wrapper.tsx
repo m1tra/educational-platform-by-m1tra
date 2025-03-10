@@ -3,13 +3,14 @@
 import { useState } from "react"
 import { ArrowLeft } from "lucide-react"
 
-import { Combobox, type ITasks } from "@/components/combobox"
+import { Combobox, type IWordObject } from "@/components/combobox"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { type Word, WordLearningTest } from "@/components/word-learning"
 import { WordsPanel } from "./words-panel"
+import { CodePanel, ProgrammingTask } from "./code-panel/code-panel"
 
 export const Wrapper = () => {
   const [title, setTitle] = useState("Мой тест")
@@ -17,24 +18,42 @@ export const Wrapper = () => {
   const [showTest, setShowTest] = useState(false)
   const [selectedValue, setSelectedValue] = useState("words")
   const [testValue, setTestValue] = useState<Word[]>([])
+  const [programmingTasks, setProgrammingTasks] = useState<ProgrammingTask[]>([])
 
   const handleDeleteAll = () => {
-    setTestValue([])
+    if (selectedValue === "words") {
+      setTestValue([])
+    } else if (selectedValue === "code") {
+      setProgrammingTasks([])
+    }
   }
 
-  const handleTakeValue = (value: Word[]) => {
+  const handleTakeWords = (value: Word[]) => {
     setTestValue(value)
   }
 
-  const handleSelect = (option: ITasks) => {
+  const handleTakeTasks = (value:ProgrammingTask[]) => {
+    setProgrammingTasks(value)
+  }
+
+  const handleSelect = (option: IWordObject) => {
     setSelectedValue(option.value)
   }
 
   const startTest = () => {
-    if (testValue.length > 0) {
+    if (
+      (selectedValue === "words" && testValue.length > 0) ||
+      (selectedValue === "code" && programmingTasks.length > 0)
+    ) {
       setShowTest(true)
     }
   }
+
+  const isStartDisabled =
+    (selectedValue === "words" && testValue.length === 0) || (selectedValue === "code" && programmingTasks.length === 0)
+
+  const isClearDisabled =
+    (selectedValue === "words" && testValue.length === 0) || (selectedValue === "code" && programmingTasks.length === 0)
 
   if (showTest) {
     return (
@@ -46,7 +65,19 @@ export const Wrapper = () => {
           </Button>
         </div>
 
-        <WordLearningTest words={testValue} title={title} description={description} />
+        {selectedValue === "words" ? (
+          <WordLearningTest words={testValue} title={title} description={description} />
+        ) : (
+          <div className="w-full max-w-4xl">
+            <h2 className="text-2xl font-bold mb-6">{title}</h2>
+            <p className="mb-8">{description}</p>
+            {/* Here you would implement the programming test component */}
+            <div className="bg-muted p-6 rounded-lg">
+              <p>Программирование: {programmingTasks.length} задач</p>
+              {/* This is a placeholder for the actual programming test UI */}
+            </div>
+          </div>
+        )}
       </div>
     )
   }
@@ -80,15 +111,20 @@ export const Wrapper = () => {
                 />
               </div>
             </div>
+
             {selectedValue === "words" && (
-              <WordsPanel handleTakeValue={handleTakeValue} words={testValue} />
+              <WordsPanel handleTakeValue={handleTakeWords} words={testValue} />
+            )}
+
+            {selectedValue === "code" && (
+              <CodePanel handleTakeValue={handleTakeTasks} tasks={programmingTasks} />
             )}
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline" disabled={testValue.length === 0} onClick={handleDeleteAll}>
+            <Button variant="outline" disabled={isClearDisabled} onClick={handleDeleteAll}>
               Очистить всё
             </Button>
-            <Button variant="default" disabled={testValue.length === 0} onClick={startTest}>
+            <Button variant="default" disabled={isStartDisabled} onClick={startTest}>
               Начать тест
             </Button>
           </CardFooter>
