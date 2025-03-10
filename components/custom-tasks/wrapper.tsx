@@ -116,7 +116,7 @@ export const Wrapper = () => {
             )}
 
             {selectedValue === "code" && (
-              <CodePanel handleTakeValue={handleTakeTasks} tasks={programmingTasks} />
+              <CodePanel handleTakeValue={handleTakeTasks} initialTasks={programmingTasks} />
             )}
           </CardContent>
           <CardFooter className="flex justify-between">

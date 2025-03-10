@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Edit, Trash } from "lucide-react"
@@ -16,11 +16,12 @@ export interface ProgrammingTask {
 }
 
 interface CreateTabProps {
-  handleTakeValue?: (tasks: ProgrammingTask[]) => void
+  tasks: ProgrammingTask[]
+  handleTakeValue: (tasks: ProgrammingTask[]) => void
 }
 
-export const CreateTab = ({ handleTakeValue }: CreateTabProps) => {
-  const [tasksList, setTasksList] = useState<ProgrammingTask[]>([])
+export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
+  const [tasksList, setTasksList] = useState<ProgrammingTask[]>(tasks)
   const [currentTask, setCurrentTask] = useState<ProgrammingTask>({
     title: "",
     description: "",
@@ -37,15 +38,19 @@ export const CreateTab = ({ handleTakeValue }: CreateTabProps) => {
   })
   const [editIndex, setEditIndex] = useState<number | null>(null)
 
+  useEffect(() => {
+    setTasksList(tasks)
+  }, [tasks])
+
+  useEffect(() => {
+    handleTakeValue(tasksList)
+  }, [tasksList, handleTakeValue])
+
   const onSave = (task: ProgrammingTask, index: number) => {
     const updatedList = [...tasksList]
     updatedList[index] = task
     setTasksList(updatedList)
     setEditIndex(null)
-
-    if (handleTakeValue) {
-      handleTakeValue(updatedList)
-    }
   }
 
   const handleCreateTaskChange = (id: string, value: string) => {
@@ -59,11 +64,6 @@ export const CreateTab = ({ handleTakeValue }: CreateTabProps) => {
   const addTask = () => {
     const updatedValue = [...tasksList, currentTask]
     setTasksList(updatedValue)
-
-    if (handleTakeValue) {
-      handleTakeValue(updatedValue)
-    }
-
     setCurrentTask({
       title: "",
       description: "",
@@ -76,10 +76,6 @@ export const CreateTab = ({ handleTakeValue }: CreateTabProps) => {
   const deleteTask = (index: number) => {
     const updatedList = tasksList.filter((_, i) => i !== index)
     setTasksList(updatedList)
-
-    if (handleTakeValue) {
-      handleTakeValue(updatedList)
-    }
   }
 
   const startEditing = (index: number) => {
