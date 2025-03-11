@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { type Word, WordLearningTest } from "@/components/word-learning"
 import { WordsPanel } from "./words-panel"
-import { CodePanel, ProgrammingTask } from "./code-panel/code-panel"
+import { CodePanel } from "./code-panel/code-panel"
+import { ProgrammingTask } from "./code-panel/create-tab"
 
 export const Wrapper = () => {
   const [title, setTitle] = useState("Мой тест")
@@ -83,7 +84,7 @@ export const Wrapper = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12 flex flex-col items-center">
-      <div className="md:w-3xl w-full mx-auto space-y-6">
+      <div className="md:w-7xl w-full mx-auto space-y-6">
         <Combobox onSelect={handleSelect} />
         <Card>
           <CardHeader>

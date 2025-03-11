@@ -3,16 +3,10 @@
 import { useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
-import { CreateTab } from "./create-tab"
+import { CreateTab, ProgrammingTask } from "./create-tab"
 import { TestTab } from "./test-tab"
 
-export interface ProgrammingTask {
-  title: string
-  description: string
-  initialCode: string
-  expectedInput: string
-  expectedOutput: string
-}
+
 
 export interface CodePanelProps {
   handleTakeValue?: (task: ProgrammingTask[]) => void

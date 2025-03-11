@@ -13,6 +13,8 @@ export interface ProgrammingTask {
   initialCode: string
   expectedInput: string
   expectedOutput: string
+  generateScript?: string
+  answerScript?: string
 }
 
 interface CreateTabProps {
@@ -28,6 +30,8 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
     initialCode: "",
     expectedInput: "",
     expectedOutput: "",
+    generateScript:"",
+    answerScript:""
   })
   const [editingTask, setEditingTask] = useState<ProgrammingTask>({
     title: "",
@@ -35,6 +39,8 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
     initialCode: "",
     expectedInput: "",
     expectedOutput: "",
+    generateScript:"",
+    answerScript:""
   })
   const [editIndex, setEditIndex] = useState<number | null>(null)
 
@@ -70,6 +76,8 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
       initialCode: "",
       expectedInput: "",
       expectedOutput: "",
+      generateScript:"",
+      answerScript:""
     })
   }
 
