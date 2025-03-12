@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import type { Word } from "@/components/word-learning"
+import type { Word } from "@/components/tests"
 import { pairOfWords } from "@/lib/words"
 
 interface WordsPanelProps {

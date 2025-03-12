@@ -29,7 +29,7 @@ export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEd
   return (
     <CardContent className="p-4">
 
-      <div className=" flex gap-5">
+      <div className="md:flex gap-5 space-y-4">
         <div className="w-full space-y-4">
           <div className="space-y-2">
             <Label htmlFor={mode === "create" ? "title" : `edit-title-${index}`}>Название задачи</Label>

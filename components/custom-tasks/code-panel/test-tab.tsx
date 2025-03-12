@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -19,6 +19,50 @@ export const TestTab = ({ tasks }: TestTabProps) => {
   const [code, setCode] = useState<string>("")
   const [output, setOutput] = useState<string>("")
   const [isRunning, setIsRunning] = useState<boolean>(false)
+  const [isPyodideReady,setIsPyodideReady] = useState<boolean>(false)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pyodideRef = useRef<any>(null)
+  useEffect(() => {
+    async function loadPyodide() {
+      setIsRunning(true)
+      try {
+        if (typeof window !== "undefined") {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          window.loadPyodide = async (config) => {
+            await new Promise((resolve, reject) => {
+              const script = document.createElement("script")
+              script.src = "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"
+              script.onload = resolve
+              script.onerror = reject
+              document.head.appendChild(script)
+            })
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            return window.loadPyodide(config)
+          }
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          pyodideRef.current = await window.loadPyodide({
+            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/",
+          })
+
+          setIsPyodideReady(true)
+        }
+      } catch (error) {
+        console.error("Failed to load Pyodide:", error)
+        setOutput("Failed to load Python interpreter. Error: " + String(error))
+      } finally {
+        setIsRunning(false)
+      }
+    }
+
+    loadPyodide()
+
+  }, [])
+
 
   if (tasks.length === 0) {
     return (
@@ -45,28 +89,42 @@ export const TestTab = ({ tasks }: TestTabProps) => {
   }
 
   const executeCode = () => {
+    if (!isPyodideReady) {
+      setOutput("Python interpreter is still loading...")
+      return
+    }
     if (!selectedTask) return
 
     setIsRunning(true)
     setOutput("Выполнение кода...")
 
-    setTimeout(() => {
-      setIsRunning(false)
+    try {
+      pyodideRef.current.runPython(`
+        import sys
+        from io import StringIO
+        sys.stdout = StringIO()
+      `)
 
-
+      pyodideRef.current.runPython(code)
+      const stdout = pyodideRef.current.runPython(`sys.stdout.getvalue()`)
       setOutput(`# Результат выполнения:
-      
+  
 Входные данные:
 ${selectedTask.expectedInput}
 
-Вывод программы:
-(Здесь будет вывод вашей программы)
-
 Ожидаемый результат:
-${selectedTask.expectedOutput}
+${selectedTask.expectedOutput}   
+         
+Вывод программы:
+${stdout}         `)
 
-Статус: Проверка не выполнена`)
-    }, 1500)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setOutput(`Error: ${error.message}`)
+    } finally {
+      setIsRunning(false)
+    }
+
   }
 
   return (
@@ -157,7 +215,7 @@ ${selectedTask.expectedOutput}
                   {output && (
                     <div>
                       <h4 className="text-sm font-medium mb-1">Результат выполнения:</h4>
-                      <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto whitespace-pre-wrap">
+                      <pre className="bg-muted p-3 rounded-md text-xs overflow-x-scroll whitespace-pre-wrap max-h-100">
                         {output}
                       </pre>
                     </div>

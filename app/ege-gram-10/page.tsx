@@ -1,7 +1,7 @@
 "use client"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { WordLearningTest } from "@/components/word-learning"
+import { WordLearningTest } from "@/components/tests"
 
 // Word data structure
 interface Word {
