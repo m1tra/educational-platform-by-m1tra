@@ -3,15 +3,10 @@
 import { useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
-import { CreateTab, ProgrammingTask } from "./create-tab"
+import { CreateTab } from "./create-tab"
 import { TestTab } from "./test-tab"
+import { CodePanelProps, ProgrammingTask } from "./code-panel-interface"
 
-
-
-export interface CodePanelProps {
-  handleTakeValue?: (task: ProgrammingTask[]) => void
-  initialTasks?: ProgrammingTask[]
-}
 
 export const CodePanel = ({ handleTakeValue, initialTasks = [] }: CodePanelProps) => {
   const [tasks, setTasks] = useState<ProgrammingTask[]>(initialTasks)

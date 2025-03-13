@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { type Word, WordLearningTest } from "@/components/tests"
+import { type Word, WordLearningTest } from "@/components/test/tests"
 import { WordsPanel } from "./words-panel"
 import { CodePanel } from "./code-panel/code-panel"
-import { ProgrammingTask } from "./code-panel/create-tab"
+import { ProgrammingTask } from "./code-panel/code-panel-interface"
 
 export const Wrapper = () => {
   const [title, setTitle] = useState("Мой тест")

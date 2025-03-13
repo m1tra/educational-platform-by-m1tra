@@ -1,7 +1,7 @@
 "use client"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { WordLearningTest } from "@/components/tests"
+import { WordLearningTest } from "@/components/test/tests"
 
 // Word data structure
 interface Word {
@@ -330,7 +330,7 @@ export default function WordLearningPage() {
       </div>
 
       <WordLearningTest
-        words={words}
+        tasks={words}
         title="Учим правописание слов"
         description="Заполните пропущенные буквы в словах"
       />

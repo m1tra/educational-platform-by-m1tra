@@ -5,22 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Edit, Trash } from "lucide-react"
 import { TaskEditForm } from "./inputs"
+import { CreateTabProps, ProgrammingTask } from "./code-panel-interface"
 
 
-export interface ProgrammingTask {
-  title: string
-  description: string
-  initialCode: string
-  expectedInput: string
-  expectedOutput: string
-  generateScript?: string
-  answerScript?: string
-}
 
-interface CreateTabProps {
-  tasks: ProgrammingTask[]
-  handleTakeValue: (tasks: ProgrammingTask[]) => void
-}
 
 export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
   const [tasksList, setTasksList] = useState<ProgrammingTask[]>(tasks)

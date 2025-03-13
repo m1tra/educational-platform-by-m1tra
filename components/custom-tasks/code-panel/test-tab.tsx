@@ -6,13 +6,11 @@ import { useEffect, useRef, useState } from "react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import type { ProgrammingTask } from "./create-tab"
 import { cn } from "@/lib/utils"
 import { Play, ChevronRight } from "lucide-react"
+import { TestTabProps } from "./code-panel-interface"
 
-interface TestTabProps {
-  tasks: ProgrammingTask[]
-}
+
 
 export const TestTab = ({ tasks }: TestTabProps) => {
   const [selectedTaskIndex, setSelectedTaskIndex] = useState<number | null>(tasks.length > 0 ? 0 : null)
@@ -76,11 +74,8 @@ export const TestTab = ({ tasks }: TestTabProps) => {
 
   const handleTaskSelect = (index: number) => {
     setSelectedTaskIndex(index)
-    if (tasks[index].initialCode) {
-      setCode(tasks[index].initialCode)
-    } else {
-      setCode("")
-    }
+    setCode("")
+    
     setOutput("")
   }
 
@@ -114,7 +109,7 @@ ${selectedTask.expectedInput}
 
 Ожидаемый результат:
 ${selectedTask.expectedOutput}   
-         
+
 Вывод программы:
 ${stdout}         `)
 

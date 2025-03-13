@@ -7,15 +7,9 @@ import { Label } from "@/components/ui/label"
 import { CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {  Save  } from "lucide-react"
-import { ProgrammingTask } from "./create-tab"
+import { TaskEditFormProps } from "./code-panel-interface"
 
-interface TaskEditFormProps {
-  task: ProgrammingTask | null
-  mode: "create" | "edit"
-  index?: number
-  onSave?: (task: ProgrammingTask, index: number) => void
-  onChange: (field: string, value: string) => void
-}
+
 
 export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEditFormProps) => {
   if (!task) return null
@@ -75,7 +69,7 @@ export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEd
           </div>
           <div className="space-y-2">
             <Label htmlFor={mode === "create" ? "expectedOutput" : `edit-expectedOutput-${index}`}>
-              Ожидаемый результат
+              Результат
             </Label>
             <Textarea
               id={mode === "create" ? "expectedOutput" : `edit-expectedOutput-${index}`}
