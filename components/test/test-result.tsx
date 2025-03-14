@@ -100,12 +100,6 @@ export function TestResults({
                 <span className="text-sm">Всего попыток:</span>
                 <span className="text-sm font-medium">{totalAttempts}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-sm">Соотношение правильных/неправильных:</span>
-                <span className="text-sm font-medium">
-                  {incorrectTasks > 0 ? (correctCount / incorrectTasks).toFixed(1) : correctCount > 0 ? "∞" : "0"}
-                </span>
-              </div>
             </div>
           </div>
 

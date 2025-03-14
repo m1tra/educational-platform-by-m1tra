@@ -15,8 +15,7 @@ export interface tasks{
 }
 
 export interface Word {
-  withGaps: string
-  correct: string
+  expectedOutput: string
 }
 
 export interface WordLearningTestProps extends tasks {
@@ -24,7 +23,7 @@ export interface WordLearningTestProps extends tasks {
   description?: string
 }
 
-export function WordLearningTest({
+export function Test({
   tasks,
   title = "Учим правописание слов",
   description = "Заполните пропущенные буквы в словах",
@@ -43,7 +42,7 @@ export function WordLearningTest({
   useEffect(() => {
     const shuffled = [...tasks].sort(() => Math.random() - 0.5);
     setShuffledTasks(shuffled);
-  }, [tasks]);
+  }, [tasks,completed]);
   
   const onStart = () => {
     const selectedTask = shuffledTasks.slice(0,taskCount)
@@ -56,19 +55,21 @@ export function WordLearningTest({
   }
 
   const onRestart = () => {
-
+    setTestStarted(false)
+    setCompleted(false)
+    setTotalAttempts(0)
+    setCorrectTasksCount(0)
+    setCurrentTaskIndex(0)
   }
-
-  console.log(activeTasks)
-
+  console.log()
   if (!testStarted && !completed) {
     return (
       <TestConfig tasks={tasks} taskCount={taskCount} setTaskCount={setTaskCount} onStart={onStart} title={title} description={description}/>
     )
   }
-
+  
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-4xl  mx-auto">
       <AnimatePresence mode="wait">
         {!completed ? (
           <TestCard 

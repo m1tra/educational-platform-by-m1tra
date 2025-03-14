@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { type Word, WordLearningTest } from "@/components/test/tests"
-import { WordsPanel } from "./words-panel"
+import { type Word, Test } from "@/components/test/tests"
+import { WordsPanel } from "./words-panel/words-panel"
 import { CodePanel } from "./code-panel/code-panel"
 import { ProgrammingTask } from "./code-panel/code-panel-interface"
 
@@ -18,44 +18,31 @@ export const Wrapper = () => {
   const [description, setDescription] = useState("Заполните пропущенные буквы")
   const [showTest, setShowTest] = useState(false)
   const [selectedValue, setSelectedValue] = useState("words")
-  const [testValue, setTestValue] = useState<Word[]>([])
-  const [programmingTasks, setProgrammingTasks] = useState<ProgrammingTask[]>([])
+  const [testData, setTestData] = useState<Array<Word | ProgrammingTask>>([])
+  
+  const handleTakeValue = (value: Array<Word | ProgrammingTask>) => {
+    setTestData(value)
+  }  
 
   const handleDeleteAll = () => {
-    if (selectedValue === "words") {
-      setTestValue([])
-    } else if (selectedValue === "code") {
-      setProgrammingTasks([])
-    }
-  }
-
-  const handleTakeWords = (value: Word[]) => {
-    setTestValue(value)
-  }
-
-  const handleTakeTasks = (value:ProgrammingTask[]) => {
-    setProgrammingTasks(value)
+    setTestData([])
   }
 
   const handleSelect = (option: IWordObject) => {
+
     setSelectedValue(option.value)
   }
 
   const startTest = () => {
     if (
-      (selectedValue === "words" && testValue.length > 0) ||
-      (selectedValue === "code" && programmingTasks.length > 0)
+      testData.length>0
     ) {
       setShowTest(true)
     }
   }
 
-  const isStartDisabled =
-    (selectedValue === "words" && testValue.length === 0) || (selectedValue === "code" && programmingTasks.length === 0)
-
-  const isClearDisabled =
-    (selectedValue === "words" && testValue.length === 0) || (selectedValue === "code" && programmingTasks.length === 0)
-
+  const isStartDisabled = testData.length === 0
+  const isClearDisabled = testData.length === 0
   if (showTest) {
     return (
       <div className="container mx-auto px-4 py-8 md:py-12 flex flex-col items-center">
@@ -65,9 +52,9 @@ export const Wrapper = () => {
             Вернуться к редактору
           </Button>
         </div>
-
-        {selectedValue === "words" ? (
-          <WordLearningTest words={testValue} title={title} description={description} />
+        <Test tasks={testData} title={title} description={description} />
+        {/* {selectedValue === "words" ? (
+          <Test tasks={testValue} title={title} description={description} />
         ) : (
           <div className="w-full max-w-4xl">
             <h2 className="text-2xl font-bold mb-6">{title}</h2>
@@ -77,7 +64,7 @@ export const Wrapper = () => {
 
             </div>
           </div>
-        )}
+        )} */}
       </div>
     )
   }
@@ -113,11 +100,11 @@ export const Wrapper = () => {
             </div>
 
             {selectedValue === "words" && (
-              <WordsPanel handleTakeValue={handleTakeWords} words={testValue} />
+              <WordsPanel handleTakeValue={handleTakeValue} words={testData.filter((item): item is Word => "expectedOutput" in item)} />
             )}
 
             {selectedValue === "code" && (
-              <CodePanel handleTakeValue={handleTakeTasks} initialTasks={programmingTasks} />
+              <CodePanel handleTakeValue={handleTakeValue} initialTasks={testData.filter((item): item is ProgrammingTask => "title" in item)} />
             )}
           </CardContent>
           <CardFooter className="flex justify-between">

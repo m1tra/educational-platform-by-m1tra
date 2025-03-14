@@ -11,7 +11,7 @@ export function pairOfWords(str: string) {
         }
     }
 
-    return modified ? result : null; 
+    return modified ? result : str; 
 }
 export function correctAnswerOfWords(str: string) {
     let modified = false; 
@@ -24,5 +24,5 @@ export function correctAnswerOfWords(str: string) {
         } 
     }
 
-    return modified ? result : null; 
+    return modified ? result : str; 
 }

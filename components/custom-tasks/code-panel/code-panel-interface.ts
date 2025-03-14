@@ -2,7 +2,6 @@ export interface ProgrammingTask {
     title: string
     description: string
     initialCode: string
-    expectedInput: string
     expectedOutput: string
     generateScript?: string
     answerScript?: string
@@ -28,4 +27,11 @@ export interface TaskEditFormProps {
 
 export interface TestTabProps {
   tasks: ProgrammingTask[]
+}
+
+export interface cardPythonInterpreterProps {
+  code:string
+  setCode:(v:string) => void
+  output:string
+  setOutput:(v:string) => void
 }

@@ -30,7 +30,7 @@ export const TestConfig = ({
     
             <Slider
               value={[taskCount]}
-              min={5}
+              min={1}
               max={Math.min(tasks.length)}
               step={1}
               onValueChange={(value) => setTaskCount(value[0])}
@@ -38,7 +38,7 @@ export const TestConfig = ({
             />
     
             <div className="flex justify-between text-sm text-muted-foreground">
-              <span>5</span>
+              <span>1</span>
               <span>Всего доступно: {tasks.length}</span>
             </div>
           </div>

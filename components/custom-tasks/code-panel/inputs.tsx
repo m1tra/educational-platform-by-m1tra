@@ -56,20 +56,9 @@ export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEd
               className="min-h-[150px] font-mono"
             />
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor={mode === "create" ? "expectedInput" : `edit-expectedInput-${index}`}>Ожидаемый ввод</Label>
-            <Textarea
-              id={mode === "create" ? "expectedInput" : `edit-expectedInput-${index}`}
-              value={task.expectedInput || ""}
-              onChange={(e) => onChange("expectedInput", e.target.value)}
-              placeholder="Ожидаемый ввод"
-              className="min-h-[80px]"
-            />
-          </div>
           <div className="space-y-2">
             <Label htmlFor={mode === "create" ? "expectedOutput" : `edit-expectedOutput-${index}`}>
-              Результат
+              Ожидаемый результат
             </Label>
             <Textarea
               id={mode === "create" ? "expectedOutput" : `edit-expectedOutput-${index}`}

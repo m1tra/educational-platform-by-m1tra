@@ -27,5 +27,11 @@ export interface TestCardProps {
   totalAttempts:number
   setTotalAttempts: (currentTaskIndex:number)=>void
   handleFinish:() => void
-  
+}
+
+export type CheckInputProps = {
+  userInput:string
+  setUserInput:(e:string)=>void
+  isCorrect:boolean | null
+  checkAnswer:()=>void
 }

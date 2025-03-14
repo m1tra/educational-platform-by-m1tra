@@ -16,7 +16,6 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
     title: "",
     description: "",
     initialCode: "",
-    expectedInput: "",
     expectedOutput: "",
     generateScript:"",
     answerScript:""
@@ -25,7 +24,6 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
     title: "",
     description: "",
     initialCode: "",
-    expectedInput: "",
     expectedOutput: "",
     generateScript:"",
     answerScript:""
@@ -62,7 +60,6 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
       title: "",
       description: "",
       initialCode: "",
-      expectedInput: "",
       expectedOutput: "",
       generateScript:"",
       answerScript:""
@@ -86,7 +83,7 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
         <Button
           onClick={addTask}
           disabled={
-            !currentTask.title || !currentTask.description || !currentTask.expectedInput || !currentTask.expectedOutput
+            !currentTask.title || !currentTask.description || !currentTask.expectedOutput
           }
         >
           Добавить задачу
@@ -134,17 +131,9 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
                           <pre className="bg-muted p-2 rounded-md text-xs overflow-x-auto mt-1">{task.initialCode}</pre>
                         </div>
                       )}
-                      {task.expectedInput && (
-                        <div className="mt-2">
-                          <p className="text-xs text-muted-foreground">Ввод:</p>
-                          <pre className="bg-muted p-2 rounded-md text-xs overflow-x-auto mt-1">
-                            {task.expectedInput}
-                          </pre>
-                        </div>
-                      )}
                       {task.expectedOutput && (
                         <div className="mt-2">
-                          <p className="text-xs text-muted-foreground">Ожидаемый результат:</p>
+                          <p className="text-xs text-muted-foreground">Результат:</p>
                           <pre className="bg-muted p-2 rounded-md text-xs overflow-x-auto mt-1">
                             {task.expectedOutput}
                           </pre>
