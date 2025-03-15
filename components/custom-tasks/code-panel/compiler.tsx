@@ -89,7 +89,7 @@ export const CardPythonInterpreter = ({code,setCode,output,setOutput}:cardPython
       setCode(e.target.value)
     }
     return (
-        <Card>
+        <Card className="border-none">
             <CardHeader>
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-medium">Ваше решение</h3>
@@ -97,7 +97,7 @@ export const CardPythonInterpreter = ({code,setCode,output,setOutput}:cardPython
               </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="relative space-y-4 ">
                 <Textarea
                   value={code}
                   onChange={handleCodeChange}

@@ -113,13 +113,15 @@ export function TestCard({
                       <h4 className="text-lg font-semibold">{task.title}</h4>
                       <p className="text-sm text-muted-foreground">{task.description}</p>
                     </div>
-
                     <CardPythonInterpreter 
                       code={code} 
                       setCode={setCode} 
                       output={output} 
                       setOutput={setOutput} 
                     />
+                    <div className="">
+                        <CheckInput userInput={userInput} setUserInput={setUserInput} isCorrect={isCorrect} checkAnswer={checkAnswer}/>
+                    </div>
                 </div>
           ) : (
             <div className="mt-6 text-center space-y-4">

@@ -11,8 +11,8 @@ export const CheckInput = ({userInput,setUserInput,isCorrect,checkAnswer}: Check
           type="text"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value.toLowerCase())}
-          placeholder="Введите пропущенные буквы"
-          className={`text-center text-lg ${
+          placeholder="Введите ответ"
+          className={`text-center text-lg  ${
             isCorrect === true
               ? "border-green-500 bg-green-50 dark:bg-green-900/20"
               : isCorrect === false
