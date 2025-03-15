@@ -90,19 +90,19 @@ export const CardPythonInterpreter = ({code,setCode,output,setOutput}:cardPython
     }
     return (
         <Card className="border-none">
-            <CardHeader>
+            <CardHeader className="p-0">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-medium">Ваше решение</h3>
                 <PythonInterpreter code={code} onOutput={setOutput} />
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0">
               <div className="relative space-y-4 ">
                 <Textarea
                   value={code}
                   onChange={handleCodeChange}
                   placeholder="# Введите ваш код на Python здесь"
-                  className="font-mono min-h-[200px] resize-y"
+                  className="font-mono md:min-h-[200px] min-h-[100px] resize-y"
                 />
     
                 {output && (
