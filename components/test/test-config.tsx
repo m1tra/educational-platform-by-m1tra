@@ -15,7 +15,7 @@ export const TestConfig = ({
     console.log(taskCount)   
     return (
       <div className="w-full max-w-md mx-auto">
-      <Card className="shadow-lg border-2">
+      <Card className=" md:shadow-lg shadow-none md:border-2 border-0">
         <CardHeader className="pb-4">
           <CardTitle className="text-2xl text-center">{title}</CardTitle>
           <CardDescription className="text-center">{description}</CardDescription>

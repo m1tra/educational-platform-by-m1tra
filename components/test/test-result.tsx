@@ -27,7 +27,7 @@ export function TestResults({
       exit={{ opacity: 0, y: -20 }}
       className="w-full"
     >
-      <Card className="shadow-lg border-2">
+      <Card className="md:shadow-lg shadow-none md:border-2 border-0">
         <CardHeader className="pb-4">
           <div className="flex justify-center mb-2">
             <div className="rounded-full bg-primary/10 p-3">

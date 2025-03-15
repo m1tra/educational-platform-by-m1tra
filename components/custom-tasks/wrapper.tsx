@@ -45,7 +45,7 @@ export const Wrapper = () => {
   const isClearDisabled = testData.length === 0
   if (showTest) {
     return (
-      <div className="container mx-auto px-4 py-8 md:py-12 flex flex-col items-center">
+      <div className="container mx-auto md:px-4 py-8 md:py-12 flex flex-col items-center">
         <div className="w-full max-w-md mb-6">
           <Button variant="outline" onClick={() => setShowTest(false)} className="inline-flex items-center">
             <ArrowLeft className="mr-2 h-4 w-4" />
