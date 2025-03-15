@@ -70,14 +70,14 @@ export const Wrapper = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12 flex flex-col items-center">
+    <div className="container mx-auto md:px-4 py-8 md:py-12 flex flex-col items-center">
       <div className="md:max-w-7xl w-full mx-auto space-y-6">
         <Combobox onSelect={handleSelect} />
-        <Card>
-          <CardHeader>
+        <Card className="md:shadow-lg shadow-none md:border-2 border-0">
+          <CardHeader className="md:px-6 px-2">
             <CardTitle>Создайте свой тест</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="md:px-6 px-2">
             <div className="space-y-5 grid grid-cols-2 gap-2">
               <div className="space-y-2">
                 <Label htmlFor="title">Название теста</Label>
