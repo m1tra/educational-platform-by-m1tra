@@ -25,7 +25,7 @@ export function TestResults({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="w-full"
+      className=" max-w-md mx-auto"
     >
       <Card className="md:shadow-lg shadow-none md:border-2 border-0">
         <CardHeader className="pb-4">

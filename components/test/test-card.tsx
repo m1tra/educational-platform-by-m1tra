@@ -86,7 +86,7 @@ export function TestCard({
     }
     setTotalAttempts(totalAttempts + 1)
   }
-  console.log(correctAnswer)
+
   const progressPercentage = tasks.length ? (currentTaskIndex / tasks.length) * 100 : 0
   return (
     <motion.div
@@ -94,7 +94,7 @@ export function TestCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="w-full"
+      className="w-full max-w-md mx-auto"
     >
       <Card className="md:shadow-lg shadow-none md:border-2 border-0">
         <CardHeader className="pb-4">
