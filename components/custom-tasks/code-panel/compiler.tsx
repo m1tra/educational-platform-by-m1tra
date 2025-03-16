@@ -89,14 +89,14 @@ export const CardPythonInterpreter = ({code,setCode,output,setOutput}:cardPython
       setCode(e.target.value)
     }
     return (
-        <Card className="border-none">
-            <CardHeader className="p-0">
+        <Card className="border-none shadow-none">
+            <CardHeader className="md:px-6 px-0">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-medium">Ваше решение</h3>
                 <PythonInterpreter code={code} onOutput={setOutput} />
               </div>
             </CardHeader>
-            <CardContent className="p-0">
+            <CardContent className=" md:px-6 px-0">
               <div className="relative space-y-4 ">
                 <Textarea
                   value={code}

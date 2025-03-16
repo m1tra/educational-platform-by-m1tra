@@ -1,4 +1,7 @@
+import { TestType } from "../wrapper";
+
 export interface ProgrammingTask {
+    type: TestType.CODE;
     title: string
     description: string
     initialCode: string

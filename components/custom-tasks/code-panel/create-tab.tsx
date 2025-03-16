@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Edit, Trash } from "lucide-react"
 import { TaskEditForm } from "./inputs"
 import { CreateTabProps, ProgrammingTask } from "./code-panel-interface"
+import { TestType } from "../wrapper"
 
 
 
@@ -13,6 +14,7 @@ import { CreateTabProps, ProgrammingTask } from "./code-panel-interface"
 export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
   const [tasksList, setTasksList] = useState<ProgrammingTask[]>(tasks)
   const [currentTask, setCurrentTask] = useState<ProgrammingTask>({
+    type:TestType.CODE,
     title: "",
     description: "",
     initialCode: "",
@@ -21,6 +23,7 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
     answerScript:""
   })
   const [editingTask, setEditingTask] = useState<ProgrammingTask>({
+    type:TestType.CODE,
     title: "",
     description: "",
     initialCode: "",
@@ -57,6 +60,7 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
     const updatedValue = [...tasksList, currentTask]
     setTasksList(updatedValue)
     setCurrentTask({
+      type: TestType.CODE,
       title: "",
       description: "",
       initialCode: "",

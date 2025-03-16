@@ -20,7 +20,7 @@ export const Combobox = ({ onSelect }:ICombobox) => {
   const [selectedOption, setSelectedOption] = useState("пропущенные слова")
   const [filteredOptions, setFilteredOptions] = useState<IWordObject[]>([])
 
-  const options:IWordObject[] = [ { value: "words", label: "пропущенные слова", }, { value: "definition", label: "слово - определение", }, { value: "code", label: "код", } ]
+  const options:IWordObject[] = [ { value: "words", label: "пропущенные слова", }, { value: "examTicket", label: "билеты", }, { value: "code", label: "код", } ]
   useEffect(() => {
     const filtered = options.filter((option:IWordObject) => option.label.toLowerCase().includes(search.toLowerCase()))
     setFilteredOptions(filtered)

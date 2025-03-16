@@ -8,13 +8,16 @@ import { TestConfig } from "./test-config"
 import { TestResults } from "./test-result"
 import { TestCard } from "./test-card"
 import { ProgrammingTask } from "../custom-tasks/code-panel/code-panel-interface"
+import { TestType } from "../custom-tasks/wrapper"
+import { ExamTicketProps } from "../custom-tasks/word-answer-panel/word-answer-panel"
 
 
 export interface tasks{
-  tasks: (Word | ProgrammingTask)[]
+  tasks: (Word | ProgrammingTask | ExamTicketProps)[]
 }
 
-export interface Word {
+export interface Word { 
+  type: TestType.WORD;
   expectedOutput: string
 }
 
@@ -29,10 +32,10 @@ export function Test({
   description = "Заполните пропущенные буквы в словах",
 }: WordLearningTestProps) {
   //состояние карточки
-  const [shuffledTasks, setShuffledTasks] = useState<(Word | ProgrammingTask)[]>([]);
+  const [shuffledTasks, setShuffledTasks] = useState<(Word | ProgrammingTask | ExamTicketProps)[]>([]);
   const [taskCount, setTaskCount] = useState<number>(Math.min(5, tasks.length))
   const [testStarted,setTestStarted] = useState<boolean>(false)
-  const [activeTasks, setActiveTasks] = useState<(Word | ProgrammingTask)[]>([])
+  const [activeTasks, setActiveTasks] = useState<(Word | ProgrammingTask | ExamTicketProps)[]>([])
   const [completed, setCompleted] = useState(false)
   const [currentTaskIndex,setCurrentTaskIndex] = useState<number>(0)
   //cocтояние ответов

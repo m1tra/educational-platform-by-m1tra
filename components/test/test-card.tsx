@@ -1,18 +1,19 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 
 import { Progress } from "../ui/progress"
-import { Check, X } from "lucide-react"
 import { TestCardProps } from "./test-interface"
 import { ProgrammingTask } from "../custom-tasks/code-panel/code-panel-interface"
 import { Word } from "./tests"
 import { correctAnswerOfWords, pairOfWords } from "@/lib/words"
 import { CardPythonInterpreter } from "../custom-tasks/code-panel/compiler"
-import { CheckInput } from "./check-input"
+import { AnswerFeedback } from "./check-input"
+import { ExamTicketProps } from "../custom-tasks/word-answer-panel/word-answer-panel"
+
 
 
 export function TestCard({
@@ -27,7 +28,7 @@ export function TestCard({
   setTotalAttempts,
   handleFinish,
 }: TestCardProps) {
-  const [task, setTask] = useState<ProgrammingTask | Word>(tasks[currentTaskIndex])
+  const [task, setTask] = useState<ProgrammingTask | Word | ExamTicketProps>(tasks[currentTaskIndex])
   const [userInput, setUserInput] = useState("")
   const [correctAnswer, setCorrectAnswer] = useState("")
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
@@ -45,10 +46,14 @@ export function TestCard({
     setTask(tasks[currentTaskIndex])
     setShowCorrectAnswer(false)
 
-    if ("expectedOutput" in tasks[currentTaskIndex]) {
-      setCorrectAnswer(correctAnswerOfWords(tasks[currentTaskIndex].expectedOutput) || "")
-    } else {
-      setCorrectAnswer("")
+    if (tasks[currentTaskIndex].type==="words") {
+      setCorrectAnswer(correctAnswerOfWords(tasks[currentTaskIndex].expectedOutput ) || "")
+    } 
+    else if (tasks[currentTaskIndex].type==="examTicket"){
+      setCorrectAnswer(correctAnswerOfWords(tasks[currentTaskIndex].expectedOutput.toLowerCase() ) || "")
+    }
+    else {
+      setCorrectAnswer(tasks[currentTaskIndex].expectedOutput.toLowerCase())
       setCode((tasks[currentTaskIndex] as ProgrammingTask).initialCode || "")
     }
   }, [currentTaskIndex])
@@ -81,9 +86,8 @@ export function TestCard({
     }
     setTotalAttempts(totalAttempts + 1)
   }
-
+  console.log(correctAnswer)
   const progressPercentage = tasks.length ? (currentTaskIndex / tasks.length) * 100 : 0
-  console.log(task)
   return (
     <motion.div
       key="quiz"
@@ -98,8 +102,8 @@ export function TestCard({
           <CardDescription className="text-center">{description}</CardDescription>
         </CardHeader>
 
-        <CardContent className="space-y-6">
-          <div className="flex justify-between items-center">
+        <CardContent className="space-y-6 ">
+          <div className="flex justify-between items-center ">
             <span className="text-sm font-medium">
               Вопрос {currentTaskIndex + 1} из {tasks.length}
             </span>
@@ -107,7 +111,7 @@ export function TestCard({
           </div>
           <Progress value={progressPercentage} className="h-2" />
 
-            {"title" in task ? (
+            {task.type==="code" ? (
                 <div className="space-y-4">
                     <div className="p-4 bg-muted rounded-md border">
                       <h4 className="text-lg font-semibold">{task.title}</h4>
@@ -120,49 +124,38 @@ export function TestCard({
                       setOutput={setOutput} 
                     />
                     <div className="">
-                        <CheckInput userInput={userInput} setUserInput={setUserInput} isCorrect={isCorrect} checkAnswer={checkAnswer}/>
+                    <AnswerFeedback
+                      userInput={userInput}
+                      setUserInput={setUserInput}
+                      isCorrect={isCorrect}
+                      checkAnswer={checkAnswer}
+                      currentTaskAttempts={currentTaskAttempts}
+                      showCorrectAnswer={showCorrectAnswer}
+                      correctAnswer={correctAnswer}
+                    />  
                     </div>
                 </div>
           ) : (
             <div className="mt-6 text-center space-y-4">
+              {task.type==="words"?(
                 <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-3xl font-medium mb-4">
                   {pairOfWords((task as Word).expectedOutput)}
                 </motion.p>
-
-                <CheckInput userInput={userInput} setUserInput={setUserInput} isCorrect={isCorrect} checkAnswer={checkAnswer}/>
-
-                <AnimatePresence>
-                  {isCorrect !== null && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className={`mt-4 flex items-center justify-center gap-2 p-2 rounded-md ${
-                        isCorrect
-                          ? "bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400"
-                          : "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
-                      }`}
-                    >
-                      {isCorrect ? (
-                        <>
-                          <Check size={20} />
-                          <span>Правильно!</span>
-                        </>
-                      ) : (
-                        <>
-                          <X size={20} />
-                          <span>Неправильно. {currentTaskAttempts >= 2 ? "Последняя попытка!" : "Попробуйте еще раз."}</span>
-                        </>
-                      )}
-                    </motion.div>
-                  )}
-
-                  {showCorrectAnswer && !isCorrect && (
-                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-2 p-2 bg-blue-50 text-blue-600 rounded-md dark:bg-blue-900/20 dark:text-blue-400">
-                      <p>Правильный ответ: {correctAnswer}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                ):
+                (
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-3xl font-medium mb-4">
+                  {pairOfWords((task as ExamTicketProps).question.toLowerCase())}
+                </motion.p>
+                )}
+              <AnswerFeedback
+                userInput={userInput}
+                setUserInput={setUserInput}
+                isCorrect={isCorrect}
+                checkAnswer={checkAnswer}
+                currentTaskAttempts={currentTaskAttempts}
+                showCorrectAnswer={showCorrectAnswer}
+                correctAnswer={correctAnswer}
+              />  
             </div>
           )}
         </CardContent>

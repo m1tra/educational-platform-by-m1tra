@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import type { Word } from "@/components/test/tests"
+import { TestType } from "../wrapper"
 
 interface WordsPanelProps {
   handleTakeValue: (words: Word[]) => void
@@ -17,18 +18,18 @@ interface WordsPanelProps {
 }
 
 export const WordsPanel = ({ handleTakeValue, words }: WordsPanelProps) => {
-  const [currentWord, setCurrentWord] = useState<Word>({ expectedOutput: "" })
+  const [currentWord, setCurrentWord] = useState<Word>({ type: TestType.WORD, expectedOutput: "" })
   const [wordsList, setWordsList] = useState<Word[]>([])
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
-  const [editingWord, setEditingWord] = useState<Word>({ expectedOutput: "" })
+  const [editingWord, setEditingWord] = useState<Word>({ type: TestType.WORD,expectedOutput: "" })
   const [bulkWords, setBulkWords] = useState<string>("")
-
+  console.log(wordsList,words)
   useEffect(() => {
     setWordsList(words)
   }, [words])
 
   const handleChangeWord = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentWord({ expectedOutput: e.target.value })
+    setCurrentWord({ type: TestType.WORD,expectedOutput: e.target.value })
   }
 
   const addWord = () => {
@@ -36,7 +37,7 @@ export const WordsPanel = ({ handleTakeValue, words }: WordsPanelProps) => {
       const updatedList = [...wordsList, currentWord]
       setWordsList(updatedList)
       handleTakeValue(updatedList)
-      setCurrentWord({ expectedOutput: "" })
+      setCurrentWord({ type: TestType.WORD, expectedOutput: "" })
     }
   }
 
@@ -56,7 +57,7 @@ export const WordsPanel = ({ handleTakeValue, words }: WordsPanelProps) => {
   }
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditingWord({ expectedOutput: e.target.value })
+    setEditingWord({ type: TestType.WORD, expectedOutput: e.target.value })
   }
 
   const saveEdit = (index: number) => {
@@ -71,21 +72,22 @@ export const WordsPanel = ({ handleTakeValue, words }: WordsPanelProps) => {
 
   const addBulkWords = () => {
     const wordsArray = bulkWords
-      .split(/[\n,]+/) // Разделение по запятой или новой строке
+      .split(/[\n,]+/) 
       .map((word) => word.trim())
-      .filter((word) => word.length > 0) // Убираем пустые строки
+      .filter((word) => word.length > 0) 
   
     if (wordsArray.length > 0) {
-      const newWords = wordsArray.map((word) => ({ expectedOutput: word }))
-      const updatedList = [...wordsList, ...newWords]
-      setWordsList(updatedList)
-      handleTakeValue(updatedList)
-      setBulkWords("") // Очищаем textarea после добавления
+      const newWords: Word[] = wordsArray.map((word) => ({ type: TestType.WORD, expectedOutput: word }));
+      const updatedList = [...wordsList, ...newWords];
+      setWordsList(updatedList);
+      handleTakeValue(updatedList);
+      setBulkWords("");
     }
   }
+  
 
   return (
-    <Tabs defaultValue="one" className="mt-6">
+    <Tabs defaultValue="one" className="mt-6 ">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="one">Добавить по одному</TabsTrigger>
         <TabsTrigger value="all">Добавить всё</TabsTrigger>

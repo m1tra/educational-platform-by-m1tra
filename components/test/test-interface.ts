@@ -1,8 +1,9 @@
 import { ProgrammingTask } from "../custom-tasks/code-panel/code-panel-interface";
+import { ExamTicketProps } from "../custom-tasks/word-answer-panel/word-answer-panel";
 import { Word } from "./tests";
 
 export interface TestConfigProps{
-  tasks:(ProgrammingTask | Word)[]
+  tasks:(ProgrammingTask | Word | ExamTicketProps)[]
   setTaskCount: (taskCount: number) => void
   taskCount:number
   onStart: (taskCount: number) => void
@@ -17,7 +18,7 @@ export interface TestResultsProps {
   }
   
 export interface TestCardProps {
-  tasks:(ProgrammingTask | Word)[]
+  tasks:(ProgrammingTask | Word | ExamTicketProps)[]
   title: string
   description: string 
   currentTaskIndex:number
