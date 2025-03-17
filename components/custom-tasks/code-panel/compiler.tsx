@@ -98,7 +98,7 @@ export const CardPythonInterpreter = ({code,setCode,output,setOutput}:cardPython
     return (
       <Sheet>
         <SheetTrigger asChild className="m-0">
-          <Button variant="default">Открыть редактор</Button>
+          <Button variant="default" >Открыть редактор</Button>
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
