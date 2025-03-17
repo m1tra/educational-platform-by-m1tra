@@ -90,7 +90,7 @@ export function TestCard({
   const progressPercentage = tasks.length ? (currentTaskIndex / tasks.length) * 100 : 0
   return (
     <motion.div
-      key="quiz"
+      key={`quiz-${currentTaskIndex}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -112,28 +112,28 @@ export function TestCard({
           <Progress value={progressPercentage} className="h-2" />
 
             {task.type==="code" ? (
-                <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-md border">
-                      <h4 className="text-lg font-semibold">{task.title}</h4>
-                      <p className="text-sm text-muted-foreground">{task.description}</p>
-                    </div>
+                <div className="space-y-6 flex flex-col ">
+                  <div className="p-4 bg-muted rounded-md border">
+                    <h4 className="text-lg font-semibold">{task.title}</h4>
+                    <p className="text-sm text-muted-foreground">{task.description}</p>
+                  </div>
+                  <div className="self-">
                     <CardPythonInterpreter 
                       code={code} 
                       setCode={setCode} 
                       output={output} 
                       setOutput={setOutput} 
                     />
-                    <div className="">
-                    <AnswerFeedback
-                      userInput={userInput}
-                      setUserInput={setUserInput}
-                      isCorrect={isCorrect}
-                      checkAnswer={checkAnswer}
-                      currentTaskAttempts={currentTaskAttempts}
-                      showCorrectAnswer={showCorrectAnswer}
-                      correctAnswer={correctAnswer}
-                    />  
-                    </div>
+                  </div>
+                  <AnswerFeedback
+                    userInput={userInput}
+                    setUserInput={setUserInput}
+                    isCorrect={isCorrect}
+                    checkAnswer={checkAnswer}
+                    currentTaskAttempts={currentTaskAttempts}
+                    showCorrectAnswer={showCorrectAnswer}
+                    correctAnswer={correctAnswer}
+                  />  
                 </div>
           ) : (
             <div className="mt-6 text-center space-y-4">
