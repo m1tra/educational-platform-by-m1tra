@@ -7,11 +7,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { TestType } from "../wrapper"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { RadioGroupManager } from "./radio-group-manager"
 
 export interface ExamTicketProps {
   type: TestType.EXAM_TICKET;
   question: string;
-  expectedOutput: string;
+  expectedOutput: string ;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface RadioOutput{
+  radioOptions:string[]
+  selectedOption:string
 }
 
 interface TestPanelProps {
@@ -20,6 +28,7 @@ interface TestPanelProps {
 }
 
 export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
+  console.log(tests)
   const [currentTest, setCurrentTest] = useState<ExamTicketProps>({
     type: TestType.EXAM_TICKET,
     question: "",
@@ -35,6 +44,12 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   })
 
   const [bulkTests, setBulkTests] = useState<string>("")
+  const [answer, setAnswer] = useState<string>("input")
+
+  //radio
+  const [radioOptions, setRadioOptions] = useState<string[]>([]);
+  const [newOption, setNewOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   useEffect(() => {
     setTestList(tests)
@@ -97,7 +112,7 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
       setBulkTests("")
     }
   }
-
+  console.log(radioOptions,selectedOption)
   return (
     <Tabs defaultValue="one" className="mt-6">
       <TabsList className="grid w-full grid-cols-2">
@@ -108,8 +123,32 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
         <div className="space-y-2 relative">
           <Label>Вопрос</Label>
           <Input value={currentTest.question} onChange={(e) => handleChange(e, "question")} placeholder="Введите вопрос" />
-          <Label>Ответ</Label>
-          <Input value={currentTest.expectedOutput} onChange={(e) => handleChange(e, "expectedOutput")} placeholder="Введите ответ" />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" >
+                тип ответа
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuItem onClick={()=>setAnswer('input')}>ввод</DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>setAnswer('radio')}>выбор ответов</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {answer==="input"&&(
+            <>
+              <Label>Ответ</Label>
+              <Input value={currentTest.expectedOutput} onChange={(e) => handleChange(e, "expectedOutput")} placeholder="Введите ответ" />
+            </>
+          )}
+          {answer==="radio"&&(
+            <RadioGroupManager 
+              radioOptions={radioOptions} 
+              newOption={newOption} 
+              setRadioOptions={setRadioOptions} 
+              setNewOption={setNewOption} 
+              selectedOption={selectedOption} 
+              setSelectedOption={setSelectedOption}/>
+          )}
           <Button size="sm" onClick={addTest}>Добавить тест</Button>
         </div>
       </TabsContent>
