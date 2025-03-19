@@ -9,23 +9,8 @@ import { Label } from "@/components/ui/label"
 import { TestType } from "../wrapper"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { RadioGroupManager } from "./radio-group-manager"
+import {  ExamTicketProps, TestPanelProps } from "./exam-ticket-interface"
 
-export interface ExamTicketProps {
-  type: TestType.EXAM_TICKET;
-  question: string;
-  expectedOutput: string ;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface RadioOutput{
-  radioOptions:string[]
-  selectedOption:string
-}
-
-interface TestPanelProps {
-  handleTakeValue: (tests: ExamTicketProps[]) => void;
-  tests: ExamTicketProps[];
-}
 
 export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   console.log(tests)

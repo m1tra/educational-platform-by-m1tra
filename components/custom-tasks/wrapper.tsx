@@ -12,7 +12,8 @@ import { type Word, Test } from "@/components/test/tests"
 import { WordsPanel } from "./words-panel/words-panel"
 import { CodePanel } from "./code-panel/code-panel"
 import { ProgrammingTask } from "./code-panel/code-panel-interface"
-import { ExamTicketProps, WordAnswerPanel } from "./word-answer-panel/word-answer-panel"
+import {  WordAnswerPanel } from "./word-answer-panel/word-answer-panel"
+import { ExamTicketProps } from "./word-answer-panel/exam-ticket-interface"
 
 export enum TestType {
   WORD = "words",

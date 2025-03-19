@@ -12,7 +12,8 @@ import { Word } from "./tests"
 import { correctAnswerOfWords, pairOfWords } from "@/lib/words"
 import { CardPythonInterpreter } from "../custom-tasks/code-panel/compiler"
 import { AnswerFeedback } from "./check-input"
-import { ExamTicketProps } from "../custom-tasks/word-answer-panel/word-answer-panel"
+import { ExamTicketProps } from "../custom-tasks/word-answer-panel/exam-ticket-interface"
+
 
 
 

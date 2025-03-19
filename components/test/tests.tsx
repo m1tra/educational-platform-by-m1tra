@@ -9,7 +9,8 @@ import { TestResults } from "./test-result"
 import { TestCard } from "./test-card"
 import { ProgrammingTask } from "../custom-tasks/code-panel/code-panel-interface"
 import { TestType } from "../custom-tasks/wrapper"
-import { ExamTicketProps } from "../custom-tasks/word-answer-panel/word-answer-panel"
+import { ExamTicketProps } from "../custom-tasks/word-answer-panel/exam-ticket-interface"
+
 
 
 export interface tasks{

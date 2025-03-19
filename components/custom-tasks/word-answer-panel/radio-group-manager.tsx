@@ -5,15 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroupManagerProps } from "./exam-ticket-interface";
 
-interface RadioGroupManagerProps{
-    selectedOption:string | null
-    radioOptions:string[]
-    newOption:string
-    setRadioOptions:(value:string[])=>void
-    setNewOption:(value:string)=>void
-    setSelectedOption:(value:string | null)=>void
-}
 
 
 export function RadioGroupManager({radioOptions,newOption,selectedOption,setRadioOptions,setNewOption,setSelectedOption}:RadioGroupManagerProps) {
