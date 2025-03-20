@@ -36,7 +36,7 @@ export function TestCard({
   const [showCorrectAnswer, setShowCorrectAnswer] = useState<boolean>(false)
   const [currentTaskAttempts, setCurrentTaskAttempts] = useState<number>(0)
 
-  // Для интерпретатора Python
+  // Для интерпретатора 
   const [code, setCode] = useState<string>("")
   const [output, setOutput] = useState<string>("")
 

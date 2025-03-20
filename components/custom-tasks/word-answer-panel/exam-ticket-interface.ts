@@ -17,7 +17,7 @@ export interface ExamTicketProps {
 
 export interface RadioOutput{
   radioOptions:string[]
-  selectedOption:string
+  selectedOption:string 
 }
 
 export interface TestPanelProps {

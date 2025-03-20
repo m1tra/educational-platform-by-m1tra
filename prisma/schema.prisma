@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  fullName  String
+  email     String    @unique
+  password  String
+  role      UserRole  @default(USER)
+  verified  DateTime?
+
+  provider   String?
+  providerId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tests Test[] // Связь с тестами, созданными пользователем
+}
+
+model Test {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  type        TestType
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  
+  programmingTask ProgrammingTask?
+  examTicket     ExamTicket?
+  wordTask       WordTask?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProgrammingTask {
+  id             Int    @id @default(autoincrement())
+  testId         Int    @unique
+  test           Test   @relation(fields: [testId], references: [id])
+  initialCode    String
+  expectedOutput String
+  generateScript String?
+  answerScript   String?
+}
+
+model ExamTicket {
+  id             Int    @id @default(autoincrement())
+  testId         Int    @unique
+  test           Test   @relation(fields: [testId], references: [id])
+  question       String
+  expectedOutput String
+}
+
+model WordTask {
+  id             Int    @id @default(autoincrement())
+  testId         Int    @unique
+  test           Test   @relation(fields: [testId], references: [id])
+  expectedOutput String
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum TestType {
+  CODE
+  EXAM_TICKET
+  WORD
+}

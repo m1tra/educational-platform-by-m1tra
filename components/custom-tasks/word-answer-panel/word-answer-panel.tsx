@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { Edit, Trash, Save, X } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -9,11 +8,11 @@ import { Label } from "@/components/ui/label"
 import { TestType } from "../wrapper"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { RadioGroupManager } from "./radio-group-manager"
-import {  ExamTicketProps, TestPanelProps } from "./exam-ticket-interface"
+import { ExamTicketProps, RadioOutput, TestPanelProps } from "./exam-ticket-interface"
 
 
 export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
-  console.log(tests)
+  
   const [currentTest, setCurrentTest] = useState<ExamTicketProps>({
     type: TestType.EXAM_TICKET,
     question: "",
@@ -35,15 +34,20 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   const [radioOptions, setRadioOptions] = useState<string[]>([]);
   const [newOption, setNewOption] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [radioData,setRadioData] = useState<RadioOutput>({radioOptions:[],selectedOption:""})
 
   useEffect(() => {
     setTestList(tests)
   }, [tests])
 
+  useEffect(()=>{
+    setRadioData({radioOptions:radioOptions,selectedOption:selectedOption!})
+  },[radioOptions,selectedOption])  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: "question" | "expectedOutput") => {
     setCurrentTest((prev) => ({ ...prev, [field]: e.target.value }))
   }
-
+  console.log(currentTest)
   const addTest = () => {
     if (currentTest.question.length > 0 && currentTest.expectedOutput.length > 0) {
       const newTest: ExamTicketProps = { ...currentTest, type: TestType.EXAM_TICKET }
@@ -97,7 +101,7 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
       setBulkTests("")
     }
   }
-  console.log(radioOptions,selectedOption)
+
   return (
     <Tabs defaultValue="one" className="mt-6">
       <TabsList className="grid w-full grid-cols-2">
