@@ -33,7 +33,7 @@ export function Header() {
             <Link href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
               Все тесты
             </Link>
-            <Link href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+            <Link href="/about-project" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
               О проекте
             </Link>
             </nav>

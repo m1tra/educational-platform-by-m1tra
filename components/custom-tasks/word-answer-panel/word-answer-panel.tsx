@@ -47,7 +47,7 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: "question" | "expectedOutput") => {
     setCurrentTest((prev) => ({ ...prev, [field]: e.target.value }))
   }
-  console.log(currentTest)
+  console.log(radioData)
   const addTest = () => {
     if (currentTest.question.length > 0 && currentTest.expectedOutput.length > 0) {
       const newTest: ExamTicketProps = { ...currentTest, type: TestType.EXAM_TICKET }
