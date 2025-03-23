@@ -27,6 +27,29 @@ export default function Profile(){
                     <div>
                         <h1 className="text-2xl font-bold">Добро пожаловать, Username</h1>
                         <p className="text-muted-foreground">student@example.com</p>
+                        <div className="mt-4">
+                            <div className="flex flex-wrap gap-1">
+                                {[...Array(52)].map((_, weekIndex) => (
+                                    <div key={weekIndex} className="flex flex-col gap-1">
+                                        {[...Array(7)].map((_, dayIndex) => {
+                                            const intensity = Math.floor(Math.random() * 4); // 0-3 для разной интенсивности
+                                            return (
+                                                <div
+                                                    key={dayIndex}
+                                                    className={`w-3 h-3 rounded-sm ${
+                                                        intensity === 0 ? 'bg-muted' :
+                                                        intensity === 1 ? 'bg-primary/30' :
+                                                        intensity === 2 ? 'bg-primary/60' :
+                                                        'bg-primary'
+                                                    }`}
+                                                    title="Активность"
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button className="px-4 py-2 rounded-lg bg-primary text-primary-foreground">
