@@ -15,7 +15,7 @@ export const useSignOut = () => {
       router.push("/")
       router.refresh()
     } catch (error) {
-      console.error("Ошибка при выходе из системы:", error)
+      console.error("Ошибка при выходе из системы: ", error)
     }
   }
 
