@@ -5,6 +5,10 @@ import { dbClient } from "@/src/shared/lib/db"
 import { privateConfig } from "@/src/shared/config/private"
 import { compact } from 'lodash-es'
 
+if (!privateConfig.NEXTAUTH_SECRET) {
+  throw new Error('NEXTAUTH_SECRET is not defined')
+}
+
 export const nextAuthConfig: AuthOptions = {
   adapter: PrismaAdapter(dbClient),
   providers: compact([
