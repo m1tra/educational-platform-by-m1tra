@@ -51,7 +51,7 @@ export function TestCard({ test }: TestProps) {
               В разработке
             </div>
           ) : (
-            <Link href={`/${test.id}`} className="w-full">
+            <Link href={`/test/${test.id}`} className="w-full">
               <div className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2.5 px-4 rounded-md text-center transition-colors">
                 Начать
               </div>

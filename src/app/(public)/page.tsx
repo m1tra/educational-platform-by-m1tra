@@ -5,107 +5,15 @@ import { BookOpen, Brain, Plus } from "lucide-react"
 import Link from "next/link"
 
 
-export default function HomePage() {
-  const tests = [
-    {
-      id: "ege-gram-9",
-      title: "9 задание ЕГЭ",
-      description: "Заполните пропущенные буквы в словах",
-      icon: "📝",
-      difficulty: "Средний",
-      questionsCount: 302,
-      category: "ege-rus",
+export default async function HomePage() {
+  const response = await fetch(`${process.env.NEXT_AUTH_URL}/api/tests`,{
+    method:"GET",
+    headers: {
+      'Content-Type': 'application/json',
     },
-    {
-      id: "ege-gram-4",
-      title: "4 задание ЕГЭ",
-      description: "Заполните пропущенные буквы в словах",
-      icon: "📝",
-      difficulty: "Легко",
-      questionsCount: 154,
-      category: "ege-rus",
-    },
-    {
-      id: "ege-gram-10",
-      title: "10 задание ЕГЭ",
-      description: "Заполните пропущенные буквы в словах",
-      icon: "📝",
-      difficulty: "Сложный",
-      questionsCount: 68,
-      category: "ege-rus",
-    },
-    {
-      id: "grammar",
-      title: "Грамматика",
-      description: "Проверьте свои знания правил грамматики",
-      icon: "📚",
-      difficulty: "Сложный",
-      questionsCount: 15,
-      comingSoon: true,
-      category: "language",
-    },
-    {
-      id: "punctuation",
-      title: "Пунктуация",
-      description: "Расставьте знаки препинания правильно",
-      icon: "✏️",
-      difficulty: "Сложный",
-      questionsCount: 10,
-      comingSoon: true,
-      category: "language",
-    },
-    {
-      id: "vocabulary",
-      title: "Словарный запас",
-      description: "Расширьте свой словарный запас",
-      icon: "🔤",
-      difficulty: "Лёгкий",
-      questionsCount: 30,
-      comingSoon: true,
-      category: "language",
-    },
-    {
-      id: "math-basics",
-      title: "Основы математики",
-      description: "Решайте базовые математические задачи",
-      icon: "🔢",
-      difficulty: "Лёгкий",
-      questionsCount: 20,
-      comingSoon: true,
-      category: "math",
-    },
-    {
-      id: "algebra",
-      title: "Алгебра",
-      description: "Решайте алгебраические уравнения",
-      icon: "➗",
-      difficulty: "Средний",
-      questionsCount: 15,
-      comingSoon: true,
-      category: "math",
-    },
-    {
-      id: "history-dates",
-      title: "Исторические даты",
-      description: "Проверьте знание важных исторических дат",
-      icon: "📅",
-      difficulty: "Средний",
-      questionsCount: 25,
-      comingSoon: true,
-      category: "history",
-    },
-    {
-      id: "geography",
-      title: "География",
-      description: "Проверьте знание географии мира",
-      icon: "🌍",
-      difficulty: "Средний",
-      questionsCount: 18,
-      comingSoon: true,
-      category: "history",
-    },
-  ]
-
+  })
+  const tests = await response.json()
+  console.log(tests)
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
       <section className="mb-12 space-y-4 text-center">
@@ -138,7 +46,7 @@ export default function HomePage() {
             <TabsContent value="ege-rus" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {tests
-                  .filter((test) => test.category === "ege-rus")
+                  .filter((test) => test.type === "words")
                   .map((test) => (
                     <TestCard key={test.id} test={test} />
                   ))}
