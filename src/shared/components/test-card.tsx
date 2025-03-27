@@ -27,7 +27,7 @@ export function TestCard({ test }: TestProps) {
 
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
-      <Card className="overflow-hidden h-full flex flex-col transition-all hover:shadow-md border-2">
+      <Card className="overflow-hidden h-80 flex flex-col transition-all hover:shadow-md border-2">
         <CardHeader className="pb-2">
           <div className="flex justify-between items-start">
             <div className="text-4xl mb-2">{test.icon}</div>
@@ -51,7 +51,7 @@ export function TestCard({ test }: TestProps) {
               В разработке
             </div>
           ) : (
-            <Link href={`/${test.id}`} className="w-full">
+            <Link href={`/test/${test.id}`} className="w-full">
               <div className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2.5 px-4 rounded-md text-center transition-colors">
                 Начать
               </div>

@@ -16,11 +16,12 @@ import { useSignOut } from "@/src/shared/hooks/use-sign-out";
 export function Profile() {
   const session = useAppSession()
   const signOut = useSignOut()
-
+  
   if (session.status === "loading") return <Skeleton className="w-8 h-8 rounded-full" />
 
   if (session.status === "unauthenticated") return <SignInButton />
   
+  const user = session?.data?.user
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -45,7 +46,7 @@ export function Profile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/profile/123`}>
+            <Link href={`/profile/${user?.id}`}>
               <User className="mr-2 h-4 w-4" />
               <span>Профиль</span>
             </Link>

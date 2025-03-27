@@ -14,6 +14,7 @@ import { CodePanel } from "./code-panel/code-panel"
 import { ProgrammingTask } from "./code-panel/code-panel-interface"
 import { WordAnswerPanel } from "./word-answer-panel/word-answer-panel"
 import { ExamTicketProps } from "./word-answer-panel/exam-ticket-interface"
+import { useAppSession } from "@/src/entities/session/use-app-session"
 
 export enum TestType {
   WORD = "words",
@@ -28,6 +29,8 @@ export const Wrapper = () => {
   const [selectedValue, setSelectedValue] = useState("words")
   const [testData, setTestData] = useState<Array<Word | ProgrammingTask | ExamTicketProps>>([])
   
+  const session = useAppSession()
+  
   const handleTakeValue = (value: Array<Word | ProgrammingTask | ExamTicketProps>) => {
     setTestData(value)
   }  
@@ -38,6 +41,46 @@ export const Wrapper = () => {
   const handleSelect = (option: IWordObject) => {
 
     setSelectedValue(option.value)
+  }
+
+  const handleCreateTest = async () => {
+    try {
+      if (!session?.data?.user?.id) {
+        console.error("Необходимо авторизоваться")
+        return
+      }
+
+      const testPayload = {
+        title,
+        description,
+        type: selectedValue,
+        questions: testData,
+        authorId: session.data?.user?.id
+      }
+
+      const response = await fetch('/api/tests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(testPayload)
+      })
+
+      if (!response.ok) {
+        throw new Error('Ошибка при создании теста')
+      }
+
+      const createdTest = await response.json()
+      console.log('Тест успешно создан:', createdTest)
+      
+
+      setTitle("Мой тест")
+      setDescription("Заполните пропущенные буквы")
+      setTestData([])
+
+    } catch (error) {
+      console.error('Ошибка при создании теста:', error)
+    }
   }
 
   const startTest = () => {
@@ -118,9 +161,14 @@ export const Wrapper = () => {
             <Button variant="outline" disabled={isClearDisabled} onClick={handleDeleteAll}>
               Очистить всё
             </Button>
-            <Button variant="default" disabled={isStartDisabled} onClick={startTest}>
-              Начать тест
-            </Button>
+            <div>
+              <Button variant="outline" onClick={handleCreateTest}>
+                Создать
+              </Button>
+              <Button variant="default" disabled={isStartDisabled} onClick={startTest}>
+                Начать тест
+              </Button>
+            </div>
           </CardFooter>
         </Card>
       </div>
