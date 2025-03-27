@@ -3,10 +3,15 @@ import GithubProvider from "next-auth/providers/github"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { dbClient } from "@/src/shared/lib/db"
 import { privateConfig } from "@/src/shared/config/private"
-import {compact} from 'lodash-es'
+import { compact } from 'lodash-es'
 
 export const nextAuthConfig: AuthOptions = {
   adapter: PrismaAdapter(dbClient),
+  pages: {
+    signIn: '/auth/sign-in',
+    newUser: '/auth/new-user',
+    verifyRequest: '/auth/verify-request',
+  },
   providers: compact([
     privateConfig.GITHUB_ID &&
         privateConfig.GITHUB_SECRET &&
@@ -15,6 +20,16 @@ export const nextAuthConfig: AuthOptions = {
               clientSecret: privateConfig.GITHUB_SECRET,
             }),
   ]),
+  callbacks: {
+    async session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+        const isAdmin = user.email === privateConfig.ADMIN_EMAIL;
+        session.user.role = isAdmin ? 'admin' : 'user';
+      }
+      return session;
+    },
+  },
 }
 
 export default nextAuthConfig
