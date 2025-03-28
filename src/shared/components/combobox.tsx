@@ -72,7 +72,7 @@ export const Combobox = ({ onSelect }:ICombobox) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onClick={(e) => e.stopPropagation()}
-              className={cn("py-0 h-6 border-none focus-visible:ring-0")}
+              className={cn("py-0 h-8 border-none focus-visible:ring-0  ")}
             />
           </div>
 

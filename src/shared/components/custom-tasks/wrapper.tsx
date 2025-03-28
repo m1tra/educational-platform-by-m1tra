@@ -15,6 +15,43 @@ import { ProgrammingTask } from "./code-panel/code-panel-interface"
 import { WordAnswerPanel } from "./word-answer-panel/word-answer-panel"
 import { ExamTicketProps } from "./word-answer-panel/exam-ticket-interface"
 import { useAppSession } from "@/src/entities/session/use-app-session"
+import { toast } from "sonner"
+import { useUserRole } from "@/src/entities/session/use-user-role"
+
+// const getTestPayload = (selectedValue: string) => {
+//   const basePayload = {
+//     title,
+//     description,
+//     expectedOutput ,
+//     authorId: session.data?.user?.id,
+//   }
+
+//   const payloadByType = {
+//     "words": {
+//       ...basePayload,
+//       type: "words",
+//       category: "ege",
+//       difficulty: "Лёгкий",
+//       icon: "📝",
+//     },
+//     "examTicket": {
+//       ...basePayload,
+//       type: "language",
+//       category: "language",
+//       difficulty: "Средний",
+//       icon: "🗣️",
+//     },
+//     "code": {
+//       ...basePayload,
+//       type: "math",
+//       category: "math",
+//       difficulty: "Сложный",
+//       icon: "🔢",
+//     }
+//   }
+
+//   return payloadByType[selectedValue as keyof typeof payloadByType]
+// }
 
 export enum TestType {
   WORD = "words",
@@ -23,14 +60,17 @@ export enum TestType {
 }
 
 export const Wrapper = () => {
+  const { isAdmin } = useUserRole()
+
   const [title, setTitle] = useState("Мой тест")
   const [description, setDescription] = useState("Заполните пропущенные буквы")
   const [showTest, setShowTest] = useState(false)
   const [selectedValue, setSelectedValue] = useState("words")
   const [testData, setTestData] = useState<Array<Word | ProgrammingTask | ExamTicketProps>>([])
-  
   const session = useAppSession()
   
+  const [loading, setLoading] = useState(false)
+
   const handleTakeValue = (value: Array<Word | ProgrammingTask | ExamTicketProps>) => {
     setTestData(value)
   }  
@@ -44,9 +84,14 @@ export const Wrapper = () => {
   }
 
   const handleCreateTest = async () => {
+    setLoading(true)
     try {
-      if (!session?.data?.user?.id) {
+      if (!isAdmin) {
         console.error("Необходимо авторизоваться")
+        return
+      }
+      if (testData.length === 0) {
+        toast.error('Необходимо добавить задания')
         return
       }
 
@@ -69,9 +114,9 @@ export const Wrapper = () => {
       if (!response.ok) {
         throw new Error('Ошибка при создании теста')
       }
-
-      const createdTest = await response.json()
-      console.log('Тест успешно создан:', createdTest)
+      console.log(response)
+     
+      toast.success('Тест успешно создан')
       
 
       setTitle("Мой тест")
@@ -80,6 +125,9 @@ export const Wrapper = () => {
 
     } catch (error) {
       console.error('Ошибка при создании теста:', error)
+    }
+    finally {
+      setLoading(false)
     }
   }
 
@@ -112,8 +160,11 @@ export const Wrapper = () => {
       <div className={`${selectedValue==="code"?"md:max-w-7xl":"md:max-w-3xl"} w-full mx-auto space-y-6`}>
         <Combobox onSelect={handleSelect} />
         <Card className="md:shadow-lg shadow-none md:border-2 border-0">
-          <CardHeader className="md:px-6 px-2">
+          <CardHeader className=" flex flex-row justify-between md:px-6 px-2">
             <CardTitle>Создайте свой тест</CardTitle>
+            <Button variant="outline" disabled={testData.length === 0 || loading}  onClick={handleCreateTest} >
+                Создать
+              </Button>
           </CardHeader>
           <CardContent className="md:px-6 px-2">
             <div className="space-y-5 grid grid-cols-2 gap-2">
@@ -162,9 +213,7 @@ export const Wrapper = () => {
               Очистить всё
             </Button>
             <div>
-              <Button variant="outline" onClick={handleCreateTest}>
-                Создать
-              </Button>
+
               <Button variant="default" disabled={isStartDisabled} onClick={startTest}>
                 Начать тест
               </Button>

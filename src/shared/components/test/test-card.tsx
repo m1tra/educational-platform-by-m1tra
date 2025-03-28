@@ -13,6 +13,7 @@ import { correctAnswerOfWords, pairOfWords } from "@/src/shared/lib/words"
 import { CardPythonInterpreter } from "../custom-tasks/code-panel/compiler"
 import { AnswerFeedback } from "./check-input"
 import { ExamTicketProps } from "../custom-tasks/word-answer-panel/exam-ticket-interface"
+import { RadioSelect } from "./radio-select"
 
 
 
@@ -40,6 +41,9 @@ export function TestCard({
   const [code, setCode] = useState<string>("")
   const [output, setOutput] = useState<string>("")
 
+  //radio 
+  const [selectedOption, setSelectedOption] = useState<string>("")
+
   useEffect(() => {
     setCurrentTaskAttempts(0)
     setIsCorrect(null)
@@ -59,39 +63,44 @@ export function TestCard({
     }
   }, [currentTaskIndex])
 
-  const checkAnswer = () => {
-    if (!("expectedOutput" in task)) return // Проверка только для Word
+// ... existing code ...
+const checkAnswer = () => {
+  if (!("expectedOutput" in task)) return 
+  const isRadioTask = "options" in task && task.options && task.options?.length > 0
+  const isCorrectAnswer = isRadioTask 
+    ? selectedOption === correctAnswer
+    : correctAnswer.toLowerCase() === userInput.toLowerCase()
 
-    if (currentTaskIndex === tasks.length - 1 && (currentTaskAttempts === 2 || correctAnswer.toLowerCase() === userInput)) {
-      setTimeout(() => {
-        handleFinish()
-      }, 1500)
-    }
-
-    if (currentTaskAttempts === 2) {
-      setShowCorrectAnswer(true)
-      setTimeout(() => {
-        setCurrentTaskIndex(currentTaskIndex + 1)
-      }, 1500)
-    }
-
-    if (correctAnswer.toLowerCase() === userInput) {
-      setIsCorrect(true)
-      setTimeout(() => {
-        setCurrentTaskIndex(currentTaskIndex + 1)
-      }, 1500)
-      setCorrectTasksCount(correctTasksCount + 1)
-    } else {
-      setCurrentTaskAttempts(currentTaskAttempts + 1)
-      setIsCorrect(false)
-    }
-    setTotalAttempts(totalAttempts + 1)
+  if (currentTaskIndex === tasks.length - 1 && (currentTaskAttempts === 2 || isCorrectAnswer)) {
+    setTimeout(() => {
+      handleFinish()
+    }, 1500)
   }
+
+  if (currentTaskAttempts === 2) {
+    setShowCorrectAnswer(true)
+    setTimeout(() => {
+      setCurrentTaskIndex(currentTaskIndex + 1)
+    }, 1500)
+  }
+
+  if (isCorrectAnswer) {
+    setIsCorrect(true)
+    setTimeout(() => {
+      setCurrentTaskIndex(currentTaskIndex + 1)
+    }, 1500)
+    setCorrectTasksCount(correctTasksCount + 1)
+  } else {
+    setCurrentTaskAttempts(currentTaskAttempts + 1)
+    setIsCorrect(false)
+  }
+  setTotalAttempts(totalAttempts + 1)
+}
 
   const progressPercentage = tasks.length ? (currentTaskIndex / tasks.length) * 100 : 0
   return (
     <motion.div
-      key={`quiz-${currentTaskIndex}`}
+      key={`quiz-${currentTaskIndex}-${task.type}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -146,15 +155,31 @@ export function TestCard({
                   {pairOfWords((task as ExamTicketProps).question.toLowerCase())}
                 </motion.p>
                 )}
-              <AnswerFeedback
-                userInput={userInput}
-                setUserInput={setUserInput}
-                isCorrect={isCorrect}
-                checkAnswer={checkAnswer}
-                currentTaskAttempts={currentTaskAttempts}
-                showCorrectAnswer={showCorrectAnswer}
-                correctAnswer={correctAnswer}
-              />  
+                {task.type==='examTicket' && task.options && task.options.length>0?(
+                  <RadioSelect  
+                    isCorrect={isCorrect} 
+                    correctAnswer={correctAnswer} 
+                    options={task.options} 
+                    selectedOption={selectedOption} 
+                    setSelectedOption={setSelectedOption} 
+                    checkAnswer={checkAnswer}
+                    currentTaskAttempts={currentTaskAttempts}
+                  />
+                )
+                :
+                (
+                  <AnswerFeedback   
+                    userInput={userInput}
+                    setUserInput={setUserInput}
+                    isCorrect={isCorrect}
+                    checkAnswer={checkAnswer}
+                    currentTaskAttempts={currentTaskAttempts}
+                    showCorrectAnswer={showCorrectAnswer}
+                    correctAnswer={correctAnswer}
+                />  
+                )
+              }
+
             </div>
           )}
         </CardContent>

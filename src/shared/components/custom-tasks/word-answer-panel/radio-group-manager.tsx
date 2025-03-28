@@ -10,7 +10,7 @@ import { Label } from "../../ui/label";
 
 
 
-export function RadioGroupManager({radioOptions,newOption,selectedOption,setRadioOptions,setNewOption,setSelectedOption}:RadioGroupManagerProps) {
+export function RadioGroupManager({radioOptions,newOption,selectedOption,setRadioOptions,setNewOption,setSelectedOption,variant}:RadioGroupManagerProps) {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingValue, setEditingValue] = useState("");
 
@@ -89,6 +89,7 @@ export function RadioGroupManager({radioOptions,newOption,selectedOption,setRadi
           )}
         </div>
       ))}
+      {variant==='view'&&(
       <div className="flex items-center space-x-2">
         <Input
           value={newOption}
@@ -99,6 +100,7 @@ export function RadioGroupManager({radioOptions,newOption,selectedOption,setRadi
           <Plus />
         </Button>
       </div>
+      )}
     </RadioGroup>
   );
 }

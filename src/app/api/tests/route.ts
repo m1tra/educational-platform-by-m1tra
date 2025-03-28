@@ -35,3 +35,13 @@ export async function GET(request: NextRequest) {
     }
   }
 
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
+  if (!id) {
+    return NextResponse.json({ error: 'ID is required' }, { status: 400 })
+  }
+  const test = await TestModel.delete(id)
+  return NextResponse.json(test, { status: 200 })
+}
+
