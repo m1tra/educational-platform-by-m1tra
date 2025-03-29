@@ -29,6 +29,13 @@ export const nextAuthConfig: AuthOptions = {
       }
       return session;
     },
+    async signIn() {
+      if (!process.env.NEXTAUTH_SECRET) {
+        console.error("NEXTAUTH_SECRET is not defined")
+        return false
+      }
+      return true
+    },
   },
 }
 
