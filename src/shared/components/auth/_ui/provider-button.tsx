@@ -5,7 +5,6 @@ import { ClientSafeProvider, signIn } from "next-auth/react";
 import { Button } from "../../ui/button";
 import { useState } from "react";
 import { useAppSession } from "@/src/entities/session/use-app-session";
-import nextAuthConfig from "@/src/entities/session/next-auth-config";
 
 export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   const { status } = useAppSession()
@@ -27,7 +26,6 @@ export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
       redirect: true 
     });
   };
-  console.log("Providers:", nextAuthConfig.providers);
   return (
     <Button
       variant="outline"
