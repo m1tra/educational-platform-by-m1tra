@@ -62,7 +62,7 @@ model Test {
   id          String   @id @default(cuid())
   title       String
   description String?
-  difficulty  String
+  difficulty  String @default("easy")
   type        String   
   questions   Json     
   authorId    String   
