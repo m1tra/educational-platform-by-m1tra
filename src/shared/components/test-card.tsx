@@ -7,24 +7,28 @@ import { motion } from "framer-motion"
 import { useUserRole } from "@/src/entities/session/use-user-role"
 import { Trash } from "lucide-react"
 import { Button } from "./ui/button"
-import { Test } from "@/src/types/test"
+import { Test } from "../types/test"
+
 
 interface TestProps {
   test: Test
   handleDelete:(id:string)=>void
-  response:Response | undefined
 }
 
-export function TestCard({ test, handleDelete ,response}: TestProps) {
-  const difficultyColor =
-    {
-      Лёгкий: "bg-green-500",
-      Средний: "bg-yellow-500",
-      Сложный: "bg-red-500",
-    }[test.difficulty] || "bg-blue-500"
+export const Difficulty = {
+  Лёгкий: "bg-green-500",
+  Средний: "bg-yellow-500",
+  Сложный: "bg-red-500",
+}
+
+export function TestCard({ test, handleDelete }: TestProps) {
+
+  const questionsCount = JSON.parse(test.questions).length
+
+  const difficultyColor = Difficulty[test.difficulty as keyof typeof Difficulty]
 
   const { isAdmin } = useUserRole()
-  console.log(response)
+
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
       <Card className="overflow-hidden h-88 flex flex-col transition-all hover:shadow-md border-2 relative">
@@ -43,7 +47,7 @@ export function TestCard({ test, handleDelete ,response}: TestProps) {
           <CardDescription>{test.description}</CardDescription>
         </CardHeader>
         <CardContent className="flex-grow">
-          <p className="text-sm text-muted-foreground">Вопросов: {test.questionsCount}</p>
+          <p className="text-sm text-muted-foreground">Вопросов: {questionsCount}</p>
         </CardContent>
         <CardFooter className="pt-2">
           {isAdmin && (

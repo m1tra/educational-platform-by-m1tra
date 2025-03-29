@@ -13,6 +13,8 @@ export class TestModel {
     questions: Word[] // JSON с вопросами
     authorId: string
   }) {
+
+
     return prisma.test.create({
       data: {
         ...data,

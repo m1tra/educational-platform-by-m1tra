@@ -5,10 +5,12 @@ import { TestCard } from "@/src/shared/components/test-card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/shared/components/ui/tabs"
 import { BookOpen, Brain  } from "lucide-react"
 import { toast } from "sonner"
-import { Test } from "@/src/types/test"
+
 
 import { Card, CardFooter, CardContent, CardHeader } from "./ui/card"
 import { Skeleton } from "./ui/skeleton"
+import { Test } from "../types/test"
+
 
 const TestCardSkeleton = () => {
     return (
@@ -116,7 +118,7 @@ export function TestsList() {
                             key={test.id} 
                             test={test} 
                             handleDelete={handleDelete} 
-                            response={response}
+                        
                           />
                         ))
                     )}
@@ -142,7 +144,6 @@ export function TestsList() {
                             key={test.id} 
                             test={test} 
                             handleDelete={handleDelete} 
-                            response={response}
                           />
                         ))
                     )}

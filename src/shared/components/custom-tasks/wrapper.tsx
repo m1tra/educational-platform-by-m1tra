@@ -17,6 +17,9 @@ import { ExamTicketProps } from "./word-answer-panel/exam-ticket-interface"
 import { useAppSession } from "@/src/entities/session/use-app-session"
 import { toast } from "sonner"
 import { useUserRole } from "@/src/entities/session/use-user-role"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { Difficulty } from "../test-card"
+import { Badge } from "../ui/badge"
 
 // const getTestPayload = (selectedValue: string) => {
 //   const basePayload = {
@@ -64,6 +67,7 @@ export const Wrapper = () => {
 
   const [title, setTitle] = useState("Мой тест")
   const [description, setDescription] = useState("Заполните пропущенные буквы")
+  const [difficulty, setDifficulty] = useState("Средний")
   const [showTest, setShowTest] = useState(false)
   const [selectedValue, setSelectedValue] = useState("words")
   const [testData, setTestData] = useState<Array<Word | ProgrammingTask | ExamTicketProps>>([])
@@ -98,6 +102,7 @@ export const Wrapper = () => {
       const testPayload = {
         title,
         description,
+        difficulty,
         type: selectedValue,
         questions: testData,
         authorId: session.data?.user?.id
@@ -139,6 +144,7 @@ export const Wrapper = () => {
     }
   }
 
+  const difficultyColor = Difficulty[difficulty as keyof typeof Difficulty]
   const isStartDisabled = testData.length === 0
   const isClearDisabled = testData.length === 0
   if (showTest) {
@@ -185,6 +191,24 @@ export const Wrapper = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Введите описание теста"
                 />
+              </div>
+              <div className="space-y-2 flex flex-col">
+                <Label htmlFor="difficulty" className="space-x-2">
+                    <span>Сложность теста:</span>
+                    <Badge className={difficultyColor}>{difficulty}</Badge>
+                  </Label>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                      {difficulty}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => setDifficulty("Легкий")}>Легкий</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setDifficulty("Средний")}>Средний</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setDifficulty("Сложный")}  >Сложный</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
             {selectedValue === TestType.WORD && (
