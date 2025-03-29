@@ -44,12 +44,12 @@ export default function TestPage() {
     const questions = JSON.parse(test.questions) as Word[]
 
     return (
-        <div className="container mx-auto md:px-4 py-8 md:py-12 flex flex-col items-center">
-        <Test 
-            tasks={questions} 
-            title={test.title} 
-            description={test.description} 
-        />
+        <div className="inset-0 flex flex-col items-center justify-center absolute ">
+            <Test 
+                tasks={questions} 
+                title={test.title} 
+                description={test.description} 
+            />
         </div>
     )
 }

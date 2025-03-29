@@ -5,10 +5,10 @@ export async function POST(request: NextRequest ) {
   try {
     const body = await request.json() 
 
-    const test = await TestModel.create(body)
-    return NextResponse.json(test, { status: 201 })
-  } catch (error) {
-    return    error
+    await TestModel.create(body)
+    return NextResponse.json({ message: 'Success' }, { status: 200 })
+  } catch  {
+    return NextResponse.json({ error: 'Error occurred' }, { status: 500 })
   }
 }
 
