@@ -1,8 +1,9 @@
 /* eslint-disable no-var */
-import { PrismaClient } from '@prisma/client';
+import { dbClient } from '@/src/shared/lib/db';
+
 
 const prismaClientSingleton = () => {
-  return new PrismaClient();
+  return dbClient
 };
 
 declare global {

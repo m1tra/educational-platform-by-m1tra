@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Badge } from "./ui/badge"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import { Badge } from "../ui/badge"
 import { motion } from "framer-motion"
 import { useUserRole } from "@/src/entities/session/use-user-role"
 import { Trash } from "lucide-react"
-import { Button } from "./ui/button"
-import { Test } from "../types/test"
+import { Button } from "../ui/button"
+import { Test } from "../../types/test"
 
 
 interface TestProps {

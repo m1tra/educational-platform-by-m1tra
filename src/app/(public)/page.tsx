@@ -1,5 +1,5 @@
 
-import { TestsList } from "@/src/shared/components/test-list"
+import { TestsList } from "@/src/shared/components/test-list/test-list"
 import { Button } from "@/src/shared/components/ui/button"
 import { Plus } from "lucide-react"
 import Link from "next/link"

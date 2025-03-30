@@ -18,10 +18,13 @@ export async function GET(request: NextRequest) {
     try {
       const { searchParams } = new URL(request.url)
       const id = searchParams.get('id')
-  
+      const categoryId = searchParams.get('categoryId')
       if (id) {
         const test = await TestModel.getById(id)
         return NextResponse.json(test, { status: 200 })
+      } else if (categoryId) {
+        const tests = await TestModel.getByCategoryId(categoryId)
+        return NextResponse.json(tests, { status: 200 })
       } else {
         const tests = await TestModel.getAll()
         return NextResponse.json(tests, { status: 200 })

@@ -62,13 +62,22 @@ model Test {
   id          String   @id @default(cuid())
   title       String
   description String?
-  difficulty  String @default("easy")
+  difficulty  String @default("Легкий")
   type        String   
   questions   Json     
   authorId    String   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   published   Boolean  @default(false)
-
+  categoryId  String[]
+  category    Category @relation(fields: [categoryId], references: [id])
   @@map("tests")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  tests       Test[]
+  @@map("categories")
 }

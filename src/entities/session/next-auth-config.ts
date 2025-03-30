@@ -9,7 +9,6 @@ export const nextAuthConfig: AuthOptions = {
   adapter: PrismaAdapter(dbClient),
   pages: {
     signIn: '/auth/sign-in',
-    newUser: '/auth/new-user',
     verifyRequest: '/auth/verify-request',
   },
   providers: [

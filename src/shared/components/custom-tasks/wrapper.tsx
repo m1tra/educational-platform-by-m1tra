@@ -18,7 +18,7 @@ import { useAppSession } from "@/src/entities/session/use-app-session"
 import { toast } from "sonner"
 import { useUserRole } from "@/src/entities/session/use-user-role"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import { Difficulty } from "../test-card"
+import { Difficulty } from "../test-list/test-card"
 import { Badge } from "../ui/badge"
 
 // const getTestPayload = (selectedValue: string) => {
@@ -72,7 +72,8 @@ export const Wrapper = () => {
   const [selectedValue, setSelectedValue] = useState("words")
   const [testData, setTestData] = useState<Array<Word | ProgrammingTask | ExamTicketProps>>([])
   const session = useAppSession()
-  
+  const [category, setCategory] = useState("")
+
   const [loading, setLoading] = useState(false)
 
   const handleTakeValue = (value: Array<Word | ProgrammingTask | ExamTicketProps>) => {
@@ -81,6 +82,7 @@ export const Wrapper = () => {
   const handleDeleteAll = () => {
     setTestData([])
   }
+
 
   const handleSelect = (option: IWordObject) => {
 
@@ -103,6 +105,7 @@ export const Wrapper = () => {
         title,
         description,
         difficulty,
+        category,
         type: selectedValue,
         questions: testData,
         authorId: session.data?.user?.id
@@ -173,7 +176,7 @@ export const Wrapper = () => {
               </Button>
           </CardHeader>
           <CardContent className="md:px-6 px-2">
-            <div className="space-y-5 grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-5">
               <div className="space-y-2">
                 <Label htmlFor="title">Название теста</Label>
                 <Input
@@ -192,7 +195,7 @@ export const Wrapper = () => {
                   placeholder="Введите описание теста"
                 />
               </div>
-              <div className="space-y-2 flex flex-col">
+              <div className="justify-between flex items-end">
                 <Label htmlFor="difficulty" className="space-x-2">
                     <span>Сложность теста:</span>
                     <Badge className={difficultyColor}>{difficulty}</Badge>
@@ -206,9 +209,18 @@ export const Wrapper = () => {
                   <DropdownMenuContent>
                     <DropdownMenuItem onClick={() => setDifficulty("Легкий")}>Легкий</DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setDifficulty("Средний")}>Средний</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setDifficulty("Сложный")}  >Сложный</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setDifficulty("Сложный")} >Сложный</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="category">Категория теста</Label>
+                <Input
+                  id="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  placeholder="Введите категорию к которой будет относиться тест"
+                />
               </div>
             </div>
             {selectedValue === TestType.WORD && (
