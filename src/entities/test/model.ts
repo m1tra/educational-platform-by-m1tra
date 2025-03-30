@@ -70,12 +70,11 @@ export class TestModel {
     })
     console.log(category,categoryIds)
     return prisma.test.findMany({
-      where: { categoryId: { in: category.map((category) => category.id) } }, // Проверяет, есть ли пересечения
+      where: { categoryId: { hasSome: category.map(c => c.id) } },
       orderBy: { createdAt: 'desc' }
     });
   }
   
-  // Получение тестов конкретного автора
   static async getByAuthor(authorId: string) {
     return prisma.test.findMany({
       where: { authorId },
