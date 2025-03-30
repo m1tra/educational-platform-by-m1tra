@@ -65,16 +65,29 @@ export class TestModel {
   // Получение тестов по типу
   static async getByCategoryId(id: string) {
     const categoryIds = id.split(',');
-    const category = await prisma.category.findMany({
-      where: { name: { in: categoryIds } },
-    })
-    console.log(category,categoryIds)
-    return prisma.test.findMany({
-      where: { categoryId: { hasSome: category.map(c => c.id) } },
-      orderBy: { createdAt: 'desc' }
+
+    if (!categoryIds.length) {
+        return []; // Ensure it's always an array
+    }
+
+    const categories = await prisma.category.findMany({
+        where: { name: { in: categoryIds } },
     });
-  }
+
+    console.log(categories, categoryIds);
+
+    if (!categories || categories.length === 0) {
+        return []; // Ensure an empty array is returned if no categories found
+    }
+
+    return prisma.test.findMany({
+        where: { categoryId: { in: categories.map(c => c.id) } },
+        orderBy: { createdAt: 'desc' }
+    }) || [];
+}
+
   
+  // Получение тестов конкретного автора
   static async getByAuthor(authorId: string) {
     return prisma.test.findMany({
       where: { authorId },

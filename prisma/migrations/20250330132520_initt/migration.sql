@@ -49,15 +49,25 @@ CREATE TABLE "tests" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "difficulty" TEXT NOT NULL DEFAULT 'easy',
+    "difficulty" TEXT NOT NULL DEFAULT 'Легкий',
     "type" TEXT NOT NULL,
     "questions" JSONB NOT NULL,
     "authorId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "published" BOOLEAN NOT NULL DEFAULT false,
+    "categoryId" TEXT NOT NULL,
 
     CONSTRAINT "tests_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "categories" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+
+    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -77,3 +87,6 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user
 
 -- AddForeignKey
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "tests" ADD CONSTRAINT "tests_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
