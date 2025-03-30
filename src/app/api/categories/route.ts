@@ -20,3 +20,11 @@ export async function GET(request: NextRequest) {
       )
     }
   }
+export async function DELETE(request: NextRequest) {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('name')
+    if (id) {
+        const category = await CategoryModel.delete(id)
+        return NextResponse.json(category, { status: 200 })
+    }
+}

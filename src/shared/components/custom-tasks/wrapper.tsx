@@ -20,6 +20,7 @@ import { useUserRole } from "@/src/entities/session/use-user-role"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Difficulty } from "../test-list/test-card"
 import { Badge } from "../ui/badge"
+import TagInput from "../test-list/_ui/tags"
 
 // const getTestPayload = (selectedValue: string) => {
 //   const basePayload = {
@@ -72,7 +73,7 @@ export const Wrapper = () => {
   const [selectedValue, setSelectedValue] = useState("words")
   const [testData, setTestData] = useState<Array<Word | ProgrammingTask | ExamTicketProps>>([])
   const session = useAppSession()
-  const [category, setCategory] = useState("")
+  const [tags, setTags] = useState<string[]>([])
 
   const [loading, setLoading] = useState(false)
 
@@ -105,7 +106,7 @@ export const Wrapper = () => {
         title,
         description,
         difficulty,
-        category,
+        tags,
         type: selectedValue,
         questions: testData,
         authorId: session.data?.user?.id
@@ -118,7 +119,7 @@ export const Wrapper = () => {
         },
         body: JSON.stringify(testPayload)
       })
-
+      console.log(response)
       if (!response.ok) {
         throw new Error('Ошибка при создании теста')
       }
@@ -176,7 +177,7 @@ export const Wrapper = () => {
               </Button>
           </CardHeader>
           <CardContent className="md:px-6 px-2">
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid md:grid-cols-2 gap-5">
               <div className="space-y-2">
                 <Label htmlFor="title">Название теста</Label>
                 <Input
@@ -214,13 +215,7 @@ export const Wrapper = () => {
                 </DropdownMenu>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="category">Категория теста</Label>
-                <Input
-                  id="category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  placeholder="Введите категорию к которой будет относиться тест"
-                />
+                <TagInput tags={tags} setTags={setTags} loading={loading}/>
               </div>
             </div>
             {selectedValue === TestType.WORD && (

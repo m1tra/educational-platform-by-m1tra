@@ -43,18 +43,10 @@ export function TestsList() {
   const [loading, setLoading] = useState(false)
 
   const [response, setResponse] = useState<Response>()
-
-  useEffect(() => {
-    const fetchTests = async () => {
-      const response = await fetch(`/api/tests?categoryId=${tags}`) 
-      const tests = await response.json()
-      setTestsData(tests)
-    }
-    fetchTests()
-  }, [tags])
-
   const handleDelete = async (id: string) => {
+
     try {
+
     const response = await fetch(`/api/tests?id=${id}`, {
       method: 'DELETE',
       headers: {
@@ -88,7 +80,22 @@ export function TestsList() {
     }
     fetchTests()
   }, [response])
-  console.log(tags)
+  
+  useEffect(() => {
+    if (tags.length > 0) {
+      const fetchTests = async () => {
+        try {
+          const response = await fetch(`/api/tests?categoryId=${tags}`)
+          const tests = await response.json()
+          setTestsData(tests)
+        } catch (error) {
+          console.error('Ошибка при загрузке тестов:', error)
+        }
+      }
+      fetchTests()
+    }
+  }, [tags]) 
+  console.log(22,tests)
   return (
     <>
         <div className="w-full space-y-10">
@@ -109,7 +116,6 @@ export function TestsList() {
                     ) : (
                             
                       tests
-                        .filter((test:Test) => test.type === "words")
                         .map((test:Test) => (
                           <TestCard 
                             key={test.id} 

@@ -9,43 +9,51 @@ export class TestModel {
   static async create(data: {
     title: string
     description?: string
-    category: string
+    tags: string[]
+    difficulty:string
     type: string
     questions: Word[] // JSON с вопросами
     authorId: string
   }) {
-    let category = await prisma.category.findFirst({
+    const validateTags = data.tags.filter(c => c.length > 2);
+    if (validateTags.length !== data.tags.length) {
+      return null; 
+    }
+    const existingCategories = await prisma.category.findMany({
       where: {
-        name: data.category,
+        name: { in: data.tags }
       },
     });
-  
-    if (!category) {
-      category = await prisma.category.create({
-        data: {
-          name: data.category,
-        },
-      });
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { category: _, ...restData } = data; 
+    const existingCategoryNames = existingCategories.map(cat => cat.name);
+    const newTags = data.tags.filter(tag => !existingCategoryNames.includes(tag));
+    const newCategories = await Promise.all(
+      newTags.map(tag =>
+        prisma.category.create({
+          data: { name: tag }
+        })
+      )
+    );
+    const allCategories = [...existingCategories, ...newCategories];
     try {
-      const createdTest = await prisma.test.create({
+      const test = await prisma.test.create({
         data: {
-          ...restData,
-          published: false,
+          title: data.title,
+          description: data.description,
+          type: data.type,
+          difficulty: data.difficulty,
           questions: JSON.stringify(data.questions),
-          category: {  
-            connect: {
-              id: category.id, 
-            },
-          },
-        },
+          authorId: data.authorId,
+          categories: {
+            connect: allCategories.map(cat => ({ id: cat.id }))
+          }
+        }
       });
-      console.log(createdTest); // You can log the created test
+      return test;
     } catch (error) {
-      console.error('Error creating test:', error);
+      console.error('Error creating test or categories:', error);
+      return null;
     }
+
   }
 
   // Получение теста по ID
@@ -67,24 +75,25 @@ export class TestModel {
     const categoryIds = id.split(',');
 
     if (!categoryIds.length) {
-        return []; // Ensure it's always an array
+        return []; 
     }
 
     const categories = await prisma.category.findMany({
-        where: { name: { in: categoryIds } },
-    });
+      where: { name: { in: categoryIds } },
+  });
 
-    console.log(categories, categoryIds);
-
-    if (!categories || categories.length === 0) {
-        return []; // Ensure an empty array is returned if no categories found
-    }
-
-    return prisma.test.findMany({
-        where: { categoryId: { in: categories.map(c => c.id) } },
+    const tests = await prisma.test.findMany({
+        where: {
+            categories: {
+                some: { id: { in: categories.map(c => c.id) } } 
+            }
+        },
         orderBy: { createdAt: 'desc' }
-    }) || [];
+    });
+    console.log(tests)
+    return tests;
 }
+
 
   
   // Получение тестов конкретного автора

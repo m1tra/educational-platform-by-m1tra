@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 
 import { Trash, X } from "lucide-react";
 import { Input } from "../../ui/input";
@@ -9,15 +9,13 @@ const TagsSkeleton = () => {
   return (
     <>
       <Skeleton className="h-8 w-20 rounded-lg" />
+      <Skeleton className="h-8 w-32 rounded-lg" />
+      <Skeleton className="h-8 w-32 rounded-lg" />
+      <Skeleton className="h-8 w-20 rounded-lg" />
+      <Skeleton className="h-8 w-32 rounded-lg" />
       <Skeleton className="h-8 w-20 rounded-lg" />
       <Skeleton className="h-8 w-20 rounded-lg" />
-      <Skeleton className="h-8 w-20 rounded-lg" />
-      <Skeleton className="h-8 w-20 rounded-lg" />
-      <Skeleton className="h-8 w-20 rounded-lg" />
-      <Skeleton className="h-8 w-20 rounded-lg" />
-      <Skeleton className="h-8 w-20 rounded-lg" />
-      <Skeleton className="h-8 w-20 rounded-lg" />
-
+      <Skeleton className="h-8 w-32 rounded-lg" />
     </>
   )
 }
@@ -31,6 +29,8 @@ interface TagInputProps {
 
 export default function TagInput({ tags, setTags, loading}: TagInputProps) {
   const [inputValue, setInputValue] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [deleteTag, setDeleteTag] = useState<string | null>(null);
 
   const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
@@ -43,6 +43,24 @@ export default function TagInput({ tags, setTags, loading}: TagInputProps) {
     setTags(tags.filter((_, i) => i !== index));
   };
 
+  // useEffect(() => {
+  //   const deleteTags = async () => {
+  //     console.log(deleteTag)
+  //     const response = await fetch(`/api/categories?name=${deleteTag}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //     if (response.ok) {
+  //       toast.success('Тег удален')
+  //     } else {
+  //       toast.error('Ошибка при удалении тега')
+  //     }
+  //   }
+  //   deleteTags()
+  // }, [deleteTag])
+
   return (
     <div className="w-full max-w-md  space-y-2">
       <div className="flex flex-wrap gap-2">
@@ -54,6 +72,13 @@ export default function TagInput({ tags, setTags, loading}: TagInputProps) {
               key={index}
             className="flex items-center bg-muted pl-2 gap-2  rounded-lg"
           >
+            {/* <Button
+              onClick={() => setDeleteTag(tag)}
+              size={"icon"}
+              variant={"ghost"}
+              >
+              <Trash></Trash>
+            </Button> */}
             <span>{tag}</span>
             <Button
               onClick={() => removeTag(index)}
