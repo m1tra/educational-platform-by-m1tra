@@ -101,17 +101,37 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   const addBulkTests = () => {
     const testsArray: ExamTicketProps[] = bulkTests
       .split(/\n+/)
-      .map((line) => line.split("-").map((item) => item.trim()))
-      .filter(([question, expectedOutput]) => question && expectedOutput)
-      .map(([question, expectedOutput]) => ({ type: TestType.EXAM_TICKET, question, expectedOutput }))
-
+      .map((line) => {
+        if (line.includes("|")) {
+          const [question, optionsString] = line.split(/\s(.+)/);
+          if (!optionsString) return null;
+  
+          const options = optionsString.split("|");
+          const correctAnswer = options.find((opt) => opt.startsWith("!"));
+          
+          if (!correctAnswer) return null;
+  
+          return {
+            type: TestType.EXAM_TICKET,
+            question: question.trim(),
+            expectedOutput: correctAnswer.replace("!", "").trim(),
+            options: options.map(opt => opt.replace("!", "").trim()),
+          };
+        } else {
+          const [question, expectedOutput] = line.split("-").map((item) => item.trim());
+          if (!question || !expectedOutput) return null;
+          return { type: TestType.EXAM_TICKET, question, expectedOutput };
+        }
+      })
+      .filter(Boolean) as ExamTicketProps[];
+  
     if (testsArray.length > 0) {
-      const updatedList = [...testList, ...testsArray]
-      setTestList(updatedList)
-      handleTakeValue(updatedList)
-      setBulkTests("")
+      const updatedList = [...testList, ...testsArray];
+      setTestList(updatedList);
+      handleTakeValue(updatedList);
+      setBulkTests("");
     }
-  }
+  };
   console.log(testList)
   return (
     <Tabs defaultValue="one" className="mt-6">

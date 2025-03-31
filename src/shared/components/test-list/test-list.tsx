@@ -80,7 +80,7 @@ export function TestsList() {
     }
     fetchTests()
   }, [response])
-  
+
   useEffect(() => {
     if (tags.length > 0) {
       const fetchTests = async () => {
@@ -95,7 +95,6 @@ export function TestsList() {
       fetchTests()
     }
   }, [tags]) 
-  console.log(22,tests)
   return (
     <>
         <div className="w-full space-y-10">
@@ -104,7 +103,7 @@ export function TestsList() {
           </div>
           <div className="mt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-                  {loading ? (
+                  {loading && tests.length===0 ? (
                     <>
                       <TestCardSkeleton />
                       <TestCardSkeleton />
@@ -114,16 +113,17 @@ export function TestsList() {
                       <TestCardSkeleton />
                     </>
                     ) : (
-                            
-                      tests
-                        .map((test:Test) => (
-                          <TestCard 
+                      tests.length > 0 && (
+                        tests
+                          .map((test:Test) => (
+                            <TestCard 
                             key={test.id} 
                             test={test} 
                             handleDelete={handleDelete} 
                         
                           />
                         ))
+                      )
                     )}
                   </div>
           </div>
