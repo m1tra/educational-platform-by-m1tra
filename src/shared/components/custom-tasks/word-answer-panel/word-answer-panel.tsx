@@ -105,10 +105,9 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
         if (line.includes("|")) {
           const [question, optionsString] = line.split(/\s(.+)/);
           if (!optionsString) return null;
-  
+
           const options = optionsString.split("|");
           const correctAnswer = options.find((opt) => opt.startsWith("!"));
-          
           if (!correctAnswer) return null;
   
           return {

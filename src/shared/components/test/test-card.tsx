@@ -44,6 +44,7 @@ export function TestCard({
   //radio 
   const [selectedOption, setSelectedOption] = useState<string>("")
 
+  console.log(selectedOption,correctAnswer)
   useEffect(() => {
     setCurrentTaskAttempts(0)
     setIsCorrect(null)
@@ -55,7 +56,8 @@ export function TestCard({
       setCorrectAnswer(correctAnswerOfWords(tasks[currentTaskIndex].expectedOutput ) || "")
     } 
     else if (tasks[currentTaskIndex].type==="examTicket"){
-      setCorrectAnswer(correctAnswerOfWords(tasks[currentTaskIndex].expectedOutput.toLowerCase() ) || "")
+      console.log(tasks[currentTaskIndex])
+      setCorrectAnswer(tasks[currentTaskIndex].expectedOutput || "")
     }
     else {
       setCorrectAnswer(tasks[currentTaskIndex].expectedOutput.toLowerCase())
@@ -63,19 +65,18 @@ export function TestCard({
     }
   }, [currentTaskIndex])
 
-// ... existing code ...
-const checkAnswer = () => {
-  if (!("expectedOutput" in task)) return 
-  const isRadioTask = "options" in task && task.options && task.options?.length > 0
-  const isCorrectAnswer = isRadioTask 
-    ? selectedOption === correctAnswer
-    : correctAnswer.toLowerCase() === userInput.toLowerCase()
-
-  if (currentTaskIndex === tasks.length - 1 && (currentTaskAttempts === 2 || isCorrectAnswer)) {
-    setTimeout(() => {
-      handleFinish()
-    }, 1500)
-  }
+  const checkAnswer = () => {
+    if (!("expectedOutput" in task)) return 
+    const isRadioTask = "options" in task && task.options && task.options?.length > 0
+    const isCorrectAnswer = isRadioTask 
+      ? selectedOption === correctAnswer
+      : correctAnswer.toLowerCase() === userInput.toLowerCase()
+  
+    if (currentTaskIndex === tasks.length - 1 && (currentTaskAttempts === 2 || isCorrectAnswer)) {
+      setTimeout(() => {
+        handleFinish()
+      }, 1500)
+    }
 
   if (currentTaskAttempts === 2) {
     setShowCorrectAnswer(true)
@@ -96,7 +97,7 @@ const checkAnswer = () => {
   }
   setTotalAttempts(totalAttempts + 1)
 }
-
+  
   const progressPercentage = tasks.length ? (currentTaskIndex / tasks.length) * 100 : 0
   return (
     <motion.div
