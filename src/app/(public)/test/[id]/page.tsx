@@ -44,7 +44,7 @@ export default function TestPage() {
     const questions = JSON.parse(test.questions) as Word[]
 
     return (
-        <div className="">
+        <div className="h-full flex items-center justify-center">
             <Test 
                 tasks={questions} 
                 title={test.title} 

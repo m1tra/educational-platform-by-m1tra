@@ -42,7 +42,6 @@ export function Test({
   //cocтояние ответов
   const [correctTasksCount,setCorrectTasksCount] = useState<number>(0)
   const [totalAttempts,setTotalAttempts] = useState<number>(0)
-
   useEffect(() => {
     const shuffled = [...tasks].sort(() => Math.random() - 0.5);
     setShuffledTasks(shuffled);
@@ -73,7 +72,7 @@ export function Test({
   }
   
   return (
-    <div className="w-full max-w-4xl  mx-auto">
+    <div className="w-full max-w-4xl flex items-center justify-center h-full mx-auto">
       <AnimatePresence mode="wait">
         {!completed ? (
           <TestCard 

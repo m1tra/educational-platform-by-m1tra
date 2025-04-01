@@ -20,17 +20,21 @@ export function RadioSelect({checkAnswer, currentTaskAttempts, isCorrect, option
         <div className="space-y-4">
             <RadioGroup> 
                 {options.map((option) => (
-                    <div key={option} className="flex items-center space-x-5">  
-                        <RadioGroupItem
-                            className="w-4 h-4 "
-                            id ={option}
-                            key={option} 
-                            value={option}
-                            checked={selectedOption === option}
-                            onClick={() => setSelectedOption(option)}
-                         /> 
-                        <Label htmlFor={option} className={`text-xl`}>{option}</Label>     
-                    </div>
+                    <div key={option}  className={`flex items-center space-x-2 rounded-lg border p-4 transition-colors ${
+                      selectedOption === option
+                        ? "border- "
+                        : "border-border hover:border-purple-200 hover:bg-background-foreground/50"
+                      }`}>  
+                      <RadioGroupItem
+                          className="w-4 h-4 "
+                          id ={option}
+                          key={option} 
+                          value={option}
+                          checked={selectedOption === option}
+                          onClick={() => setSelectedOption(option)}
+                       /> 
+                      <Label htmlFor={option} className={`text-xl flex-grow text-start` }>{option}</Label>     
+                  </div>
                 ))}
             </RadioGroup>
             {isCorrect !== null && (
