@@ -8,7 +8,7 @@ import { Card, CardFooter, CardContent, CardHeader } from "../ui/card"
 import { Skeleton } from "../ui/skeleton"
 import { Test } from "../../types/test"
 import { Category } from "@prisma/client"
-import TagInput from "./_ui/tags"
+import TagInput from "../ui/tags"
 
 
 
@@ -99,7 +99,7 @@ export function TestsList() {
     <>
         <div className="w-full space-y-10">
           <div>
-            <TagInput tags={tags} setTags={setTags} loading={loading}/>   
+            <TagInput tags={tags} setTags={setTags}/>   
           </div>
           <div className="mt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">

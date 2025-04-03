@@ -1,13 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft} from "lucide-react"
 
-import { Combobox, type IWordObject } from "../combobox"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
 import { type Word, Test } from "../test/tests"
 import { WordsPanel } from "./words-panel/words-panel"
 import { CodePanel } from "./code-panel/code-panel"
@@ -17,10 +14,10 @@ import { ExamTicketProps } from "./word-answer-panel/exam-ticket-interface"
 import { useAppSession } from "@/src/entities/session/use-app-session"
 import { toast } from "sonner"
 import { useUserRole } from "@/src/entities/session/use-user-role"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import { Difficulty } from "../test-list/test-card"
-import { Badge } from "../ui/badge"
-import TagInput from "../test-list/_ui/tags"
+import { BaseSettings } from "./_ui/base-settings"
+import { TestProperties } from "./_ui/test-properties"
+import { TestTypeSelector } from "./_ui/test-type"
+import { AdvancedSetting } from "./_ui/advanced-settting"
 
 // const getTestPayload = (selectedValue: string) => {
 //   const basePayload = {
@@ -85,11 +82,6 @@ export const Wrapper = () => {
   }
 
 
-  const handleSelect = (option: IWordObject) => {
-
-    setSelectedValue(option.value)
-  }
-
   const handleCreateTest = async () => {
     setLoading(true)
     try {
@@ -148,7 +140,6 @@ export const Wrapper = () => {
     }
   }
 
-  const difficultyColor = Difficulty[difficulty as keyof typeof Difficulty]
   const isStartDisabled = testData.length === 0
   const isClearDisabled = testData.length === 0
   if (showTest) {
@@ -164,11 +155,13 @@ export const Wrapper = () => {
       </div>
     )
   }
-
+  
+  console.log(selectedValue)
   return (
-    <div className="container mx-auto md:px-4 py-8 md:py-12 flex flex-col items-center">
-      <div className={`${selectedValue==="code"?"md:max-w-7xl":"md:max-w-3xl"} w-full mx-auto space-y-6`}>
-        <Combobox onSelect={handleSelect} />
+    <div className="grid gap-6">
+      <BaseSettings title={title} setTitle={setTitle} description={description} setDescription={setDescription}/>
+      <TestProperties difficulty={difficulty} setDifficulty={setDifficulty} tags={tags} setTags={setTags}/>
+      <TestTypeSelector setSelectedValue={setSelectedValue}/>
         <Card className="md:shadow-lg shadow-none md:border-2 border-0">
           <CardHeader className=" flex flex-row justify-between md:px-6 px-2">
             <CardTitle>Создайте свой тест</CardTitle>
@@ -178,45 +171,7 @@ export const Wrapper = () => {
           </CardHeader>
           <CardContent className="md:px-6 px-2">
             <div className="grid md:grid-cols-2 gap-5">
-              <div className="space-y-2">
-                <Label htmlFor="title">Название теста</Label>
-                <Input
-                  id="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Введите название теста"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="description">Описание теста</Label>
-                <Input
-                  id="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Введите описание теста"
-                />
-              </div>
-              <div className="justify-between flex items-end">
-                <Label htmlFor="difficulty" className="space-x-2">
-                    <span>Сложность теста:</span>
-                    <Badge className={difficultyColor}>{difficulty}</Badge>
-                  </Label>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline">
-                      {difficulty}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem onClick={() => setDifficulty("Легкий")}>Легкий</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setDifficulty("Средний")}>Средний</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setDifficulty("Сложный")} >Сложный</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              <div className="space-y-2">
-                <TagInput tags={tags} setTags={setTags} loading={loading}/>
-              </div>
+
             </div>
             {selectedValue === TestType.WORD && (
               <WordsPanel
@@ -251,7 +206,7 @@ export const Wrapper = () => {
             </div>
           </CardFooter>
         </Card>
-      </div>
+      <AdvancedSetting/>
     </div>
   )
 }
