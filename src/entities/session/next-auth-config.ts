@@ -3,7 +3,6 @@ import GithubProvider from "next-auth/providers/github"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { dbClient } from "@/src/shared/lib/db"
 import { privateConfig } from "@/src/shared/config/private"
-// import { compact } from 'lodash-es'
 
 export const nextAuthConfig: AuthOptions = {
   adapter: PrismaAdapter(dbClient),

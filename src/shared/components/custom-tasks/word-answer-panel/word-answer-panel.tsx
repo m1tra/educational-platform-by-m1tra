@@ -9,6 +9,7 @@ import { Input } from "../../ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu"
 import { Button } from "../../ui/button"
 import { Textarea } from "../../ui/textarea"
+import { AskImageQuestionForm } from "@/src/feature/ask-image-question/AskImageQuestionForm"
 
 
 export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
@@ -129,10 +130,10 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
 
   const addBulkTests = () => {
     const testsArray: ExamTicketProps[] = bulkTests
-      .split(/\n+/)
+      .split(";")
       .map((line) => {
         if (line.includes("|")) {
-          const [question, optionsString] = line.split(/\s(.+)/);
+          const [question, optionsString] = line.split(/:(.+)/);
           if (!optionsString) return null;
 
           const options = optionsString.split("|");
@@ -233,6 +234,7 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
       <TabsContent value="all">
         <div className="space-y-2">
           <Label>Добавить несколько тестов</Label>
+          <AskImageQuestionForm result={bulkTests} setResult={setBulkTests}/>
           <Textarea
             placeholder="Введите тесты в формате вопрос-ответ через дефис и с новой строки"
             className="min-h-[150px]"

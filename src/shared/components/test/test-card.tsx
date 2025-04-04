@@ -92,7 +92,6 @@ export function TestCard({
   }
   const progressPercentage = tasks.length ? (currentTaskIndex / tasks.length) * 100 : 0
 
-  // Check if the task has an image
   const hasImage = "image" in task && task.image
 
   return (
