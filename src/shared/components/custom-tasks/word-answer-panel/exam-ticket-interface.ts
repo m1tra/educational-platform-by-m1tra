@@ -12,6 +12,7 @@ export interface RadioGroupManagerProps{
 
 export interface ExamTicketProps {
   type: TestType.EXAM_TICKET;
+  image?: string,
   question: string;
   expectedOutput: string ;
   options?: string[]; 

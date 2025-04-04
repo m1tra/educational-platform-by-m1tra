@@ -12,6 +12,7 @@ export class TestModel {
     tags: string[]
     difficulty:string
     type: string
+    image?:string
     questions: Word[] // JSON с вопросами
     authorId: string
   }) {
@@ -41,6 +42,7 @@ export class TestModel {
           description: data.description,
           type: data.type,
           difficulty: data.difficulty,
+          image:data.image,
           questions: JSON.stringify(data.questions),
           authorId: data.authorId,
           categories: {

@@ -12,7 +12,6 @@ export const TestConfig = ({
     title,
     description
 }:TestConfigProps) => {  
-    console.log(taskCount)   
     return (
       <div className="w-full max-w-md mx-auto">
       <Card className=" md:shadow-lg shadow-none md:border-2 border-0">

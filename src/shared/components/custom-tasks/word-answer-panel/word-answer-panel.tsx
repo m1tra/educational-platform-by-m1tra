@@ -24,6 +24,7 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editingTest, setEditingTest] = useState<ExamTicketProps>({
     type: TestType.EXAM_TICKET,
+    image:"",
     question: "",
     expectedOutput: "",
   })
@@ -31,10 +32,15 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   const [bulkTests, setBulkTests] = useState<string>("")
   const [answer, setAnswer] = useState<string>("input")
 
+  //img
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedName, setSelectedName] = useState<string | null>(null);
+  
   //radio
   const [radioOptions, setRadioOptions] = useState<string[]>([]);
   const [newOption, setNewOption] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [radioData,setRadioData] = useState<RadioOutput>({radioOptions:[],selectedOption:""})
 
   useEffect(() => {
@@ -45,15 +51,36 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
     setRadioData({radioOptions:radioOptions,selectedOption:selectedOption!})
   },[radioOptions,selectedOption])  
 
+  const handleUploadClick = () => {
+    const fileInput = document.getElementById('imageInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      setSelectedName(file.name)
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setSelectedImage(base64String);
+      };
+  
+      reader.readAsDataURL(file);
+    }
+    };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: "question" | "expectedOutput") => {
     setCurrentTest((prev) => ({ ...prev, [field]: e.target.value }))
   }
-  console.log(radioData)
   const addTest = () => {
     if (currentTest.question.length > 0) {
       const newTest: ExamTicketProps = { 
         ...currentTest, 
         type: TestType.EXAM_TICKET,
+        image: selectedImage?selectedImage:"",
         expectedOutput: answer === 'radio' ? selectedOption || '' : currentTest.expectedOutput,
         options: answer === 'radio' ? radioOptions : [], // Сохраняем варианты ответов
       }
@@ -61,7 +88,9 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
       setTestList(updatedList)
       handleTakeValue(updatedList)
       setCurrentTest({ type: TestType.EXAM_TICKET, question: "", expectedOutput: "", options: [] })
-
+      
+      setSelectedImage("")
+      setSelectedName("")
       setRadioOptions([])
       setSelectedOption(null)
       setNewOption("")
@@ -131,7 +160,7 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
       setBulkTests("");
     }
   };
-  console.log(testList)
+
   return (
     <Tabs defaultValue="one" className="mt-6">
       <TabsList className="grid w-full grid-cols-2">
@@ -139,7 +168,33 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
         <TabsTrigger value="all">Добавить всё</TabsTrigger>
       </TabsList>
       <TabsContent value="one">
+      {selectedImage && (
+        <img
+          src={selectedImage}
+          alt="Selected"
+          className="" />
+        )}
         <div className="space-y-2 relative">
+          <div className="space-y-3">
+            <Button
+              onClick={handleUploadClick}
+              size={"sm"}
+            >
+              Загрузить изображение
+            </Button>
+            <input
+              id="imageInput"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden" />
+            {selectedImage && (
+              <div className="">
+              
+                <p>Выбранное изображение: {selectedName}</p>
+              </div>
+            )}
+          </div>
           <Label>Вопрос</Label>
           <Input value={currentTest.question} onChange={(e) => handleChange(e, "question")} placeholder="Введите вопрос" />
           <DropdownMenu>
@@ -253,7 +308,9 @@ interface RadioEditProps {
 
 const InputEdit = ({item}:InputEditProps) => {
   return (
-    <span>{item.question} - {item.expectedOutput}</span>
+    <div className="flex items-center justify-start gap-5">
+      <span>{item.question} - {item.expectedOutput}</span>
+    </div>
   )
 }
 

@@ -64,7 +64,7 @@ export default function TagInput({ tags, setTags}: TagInputProps) {
 
   return (
     <div className="space-y-2">
-        <Label htmlFor="tags">Tags</Label>
+        <Label htmlFor="tags">Тэги</Label>
         <div className="flex gap-2">
           <Input
             id="tags"
@@ -80,7 +80,7 @@ export default function TagInput({ tags, setTags}: TagInputProps) {
           />
           <Button type="button" onClick={addTag} variant="outline">
             <Tag className="h-4 w-4 mr-2" />
-            Add
+            Добавить
           </Button>
         </div>
         <div className="flex flex-wrap gap-2 mt-2">
