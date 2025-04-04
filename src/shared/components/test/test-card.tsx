@@ -151,11 +151,11 @@ export function TestCard({
               )}
 
               {task.type === "words" ? (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-3xl font-medium mb-4">
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xl md:text-3xl font-medium mb-4">
                   {pairOfWords((task as Word).expectedOutput)}
                 </motion.p>
               ) : (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-3xl font-medium mb-4">
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xl md:text-3xl font-medium mb-4">
                   {pairOfWords((task as ExamTicketProps).question.toLowerCase())}
                 </motion.p>
               )}

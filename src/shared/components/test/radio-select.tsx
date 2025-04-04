@@ -52,7 +52,7 @@ export function RadioSelect({
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
             >
-              <span className="text-lg text-left">{option}</span>
+              <span className="md:text-lg text-base text-left">{option}</span>
             </motion.div>
           ))}
         </div>
