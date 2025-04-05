@@ -22,8 +22,17 @@ export const nextAuthConfig: AuthOptions = {
     async session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
-        const isAdmin = user.email === privateConfig.ADMIN_EMAIL;
-        session.user.role = isAdmin ? 'admin' : 'user';
+        if (user.email === privateConfig.ADMIN_EMAIL) {
+          session.user.role = 'admin';
+        }
+        else {
+          const dbUser = await dbClient.user.findUnique({
+            where: { id: user.id },
+            select: { role: true }
+          });
+          session.user.role = dbUser?.role.toLowerCase() as 'user' | 'moderator' | 'admin';
+        }
+  
       }
       return session;
     },

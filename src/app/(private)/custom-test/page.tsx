@@ -4,10 +4,10 @@ import { Wrapper } from "@/src/shared/components/custom-tasks/wrapper";
 
 
 export default function EditPage(){
-    const { isAdmin } = useUserRole();
+    const { isModerator,isAdmin } = useUserRole();
     return(
         <div className="flex min-h-screen flex-col">
-            {isAdmin ? (
+            {isModerator||isAdmin ? (
                 <main className="flex-1 bg-background flex justify-center">
                     <div className="container py-6 md:py-10">
                       <div className="mb-6">

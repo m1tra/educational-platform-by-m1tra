@@ -4,24 +4,28 @@
 import { Button } from "../../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import Link from "next/link";
-import { LogOut, User } from "lucide-react";
+import { LockKeyhole, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { useAppSession } from "@/src/entities/session/use-app-session";
 import { SignInButton } from "../../auth/sign-in-button";
 import { Skeleton } from "../../ui/skeleton";
 import { useSignOut } from "@/src/shared/hooks/use-sign-out";
+import { useUserRole } from "@/src/entities/session/use-user-role";
 
 
 
 export function Profile() {
   const session = useAppSession()
   const signOut = useSignOut()
-  
+  const {isAdmin} = useUserRole()
+
   if (session.status === "loading") return <Skeleton className="w-8 h-8 rounded-full" />
 
   if (session.status === "unauthenticated") return <SignInButton />
   
   const user = session?.data?.user
+
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -45,6 +49,14 @@ export function Profile() {
         <DropdownMenuGroup></DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+        {isAdmin&&
+          <DropdownMenuItem asChild>
+            <Link href={`/admin`}>
+              <LockKeyhole className="mr-2 h-4 w-4" />
+              <span>Admin</span>
+            </Link>
+          </DropdownMenuItem>
+        }
           <DropdownMenuItem asChild>
             <Link href={`/profile/${user?.id}`}>
               <User className="mr-2 h-4 w-4" />

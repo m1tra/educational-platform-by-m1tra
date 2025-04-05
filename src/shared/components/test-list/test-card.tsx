@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "../ui/badge"
 import { motion } from "framer-motion"
 import { useUserRole } from "@/src/entities/session/use-user-role"
-import { Trash } from "lucide-react"
+import { Edit, Trash } from "lucide-react"
 import { Button } from "../ui/button"
 import { Test } from "../../types/test"
 
@@ -23,11 +23,12 @@ export const Difficulty = {
 
 export function TestCard({ test, handleDelete }: TestProps) {
 
+
   const questionsCount = JSON.parse(test.questions).length
 
   const difficultyColor = Difficulty[test.difficulty as keyof typeof Difficulty]
 
-  const { isAdmin } = useUserRole()
+  const { isModerator } = useUserRole()
 
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
@@ -50,10 +51,13 @@ export function TestCard({ test, handleDelete }: TestProps) {
           <p className="text-sm text-muted-foreground">Вопросов: {questionsCount}</p>
         </CardContent>
         <CardFooter className="pt-2">
-          {isAdmin && (
+          {isModerator && (
               <div className="absolute bottom-20  ">
                 <Button variant="ghost" size="icon"  onClick={() => handleDelete(test.id)}>
                   <Trash className="w-4 h-4" />
+                </Button>
+                <Button variant="ghost" size="icon"  onClick={() => null}>
+                  <Edit className="w-4 h-4" />
                 </Button>
               </div>
             )}
