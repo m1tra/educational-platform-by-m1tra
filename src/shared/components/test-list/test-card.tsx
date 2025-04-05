@@ -8,6 +8,8 @@ import { useUserRole } from "@/src/entities/session/use-user-role"
 import { Edit, Trash } from "lucide-react"
 import { Button } from "../ui/button"
 import { Test } from "../../types/test"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 
 interface TestProps {
@@ -22,7 +24,7 @@ export const Difficulty = {
 }
 
 export function TestCard({ test, handleDelete }: TestProps) {
-
+  const [edit,setEdit] = useState<string | null>(null)
 
   const questionsCount = JSON.parse(test.questions).length
 
@@ -30,6 +32,13 @@ export function TestCard({ test, handleDelete }: TestProps) {
 
   const { isModerator } = useUserRole()
 
+  const router = useRouter()
+
+  useEffect(() => {
+    if (edit) {
+      router.push(`/custom-test?id=${edit}`);
+    }
+  }, [edit]);
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
       <Card className="overflow-hidden h-88 flex flex-col transition-all hover:shadow-md border-2 relative">
@@ -56,7 +65,7 @@ export function TestCard({ test, handleDelete }: TestProps) {
                 <Button variant="ghost" size="icon"  onClick={() => handleDelete(test.id)}>
                   <Trash className="w-4 h-4" />
                 </Button>
-                <Button variant="ghost" size="icon"  onClick={() => null}>
+                <Button variant="ghost" size="icon"  onClick={() => setEdit(test.id)}>
                   <Edit className="w-4 h-4" />
                 </Button>
               </div>

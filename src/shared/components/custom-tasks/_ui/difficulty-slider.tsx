@@ -16,10 +16,9 @@ const difficultyLevels = {
 
 export const DifficultySlider = ({ difficulty, setDifficulty }: DifficultySliderProps) => {
   const handleSliderChange = (value: number[]) => {
-    const newDifficulty = difficultyLevels[value[0] as 0 | 50 | 100]; 
-    setDifficulty(newDifficulty);
+    const newDifficulty = difficultyLevels[value[0] as 0 | 50 | 100];
+    setDifficulty(newDifficulty);  
   };
-
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">

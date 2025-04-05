@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
       const { searchParams } = new URL(request.url)
       const id = searchParams.get('id')
       if (id) {
-        const category = await CategoryModel.getById(id)
+        const category = await CategoryModel.getTestWithCategories(id)
         return NextResponse.json(category, { status: 200 })
       } else {
         const category = await CategoryModel.getAll()

@@ -12,6 +12,21 @@ export async function POST(request: NextRequest ) {
 }
 
 
+export async function PUT(request: NextRequest ) {
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
+  try {
+    if (id){
+      const body = await request.json() 
+      await TestModel.create({id,...body})
+    }
+    return NextResponse.json({ message: 'Success' }, { status: 200 })
+  } catch  {
+    return NextResponse.json({ error: 'Error occurred' }, { status: 500 })
+  }
+}
+
+
 
 export async function GET(request: NextRequest) {
     try {

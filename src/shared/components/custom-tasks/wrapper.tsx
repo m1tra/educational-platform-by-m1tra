@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowLeft} from "lucide-react"
+import { useEffect, useState } from "react"
+import { ArrowLeft, Loader2} from "lucide-react"
 
 import { Button } from "../ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
@@ -19,6 +19,8 @@ import { TestProperties } from "./_ui/test-properties"
 import { TestTypeSelector } from "./_ui/test-type"
 import { AdvancedSetting } from "./_ui/advanced-settting"
 
+import { useSearchParams } from 'next/navigation'
+import { Category } from "@prisma/client"
 // const getTestPayload = (selectedValue: string) => {
 //   const basePayload = {
 //     title,
@@ -63,6 +65,9 @@ export enum TestType {
 export const Wrapper = () => {
   const { isAdmin } = useUserRole()
 
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+
   const [title, setTitle] = useState("Мой тест")
   const [description, setDescription] = useState("Заполните пропущенные буквы")
   const [difficulty, setDifficulty] = useState("Средний")
@@ -74,6 +79,36 @@ export const Wrapper = () => {
 
   const [loading, setLoading] = useState(false)
 
+  useEffect(() => {
+    const fetchTestData = async () => {
+      try {
+        const response = await fetch(`/api/categories?id=${id}`);
+        if (!response.ok) {
+          throw new Error('Не удалось загрузить данные');
+        }
+        const test = await response.json();
+        if (test) {
+          const { title, description, difficulty, questions, type, categories } = test;
+          const tagName = categories.map((c: Category) => c.name);
+          setTitle(title);
+          setDescription(description);
+          setDifficulty(difficulty);
+          setSelectedValue(type);
+          setTestData(JSON.parse(questions));
+          setTags(tagName);
+        }
+      } catch (error) {
+        console.error('Ошибка при загрузке теста:', error);
+        toast.error('Ошибка при загрузке данных');
+      }
+    };
+  
+    if (id) {
+      fetchTestData();
+    }
+  }, [id]);
+  
+
   const handleTakeValue = (value: Array<Word | ProgrammingTask | ExamTicketProps>) => {
     setTestData(value)
   }  
@@ -81,7 +116,7 @@ export const Wrapper = () => {
     setTestData([])
   }
 
-
+  console.log(id)
   const handleCreateTest = async () => {
     setLoading(true)
     try {
@@ -93,7 +128,6 @@ export const Wrapper = () => {
         toast.error('Необходимо добавить задания')
         return
       }
-
       const testPayload = {
         title,
         description,
@@ -103,27 +137,50 @@ export const Wrapper = () => {
         questions: testData,
         authorId: session.data?.user?.id
       }
+      if(id){
+        const response = await fetch(`/api/tests?id=${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(testPayload)
+        })
 
-      const response = await fetch('/api/tests', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(testPayload)
-      })
-      console.log(response)
-      if (!response.ok) {
-        throw new Error('Ошибка при создании теста')
+
+        if (!response.ok) {
+          throw new Error('Ошибка при создании теста')
+        }
+
+
+        toast.success('Тест успешно обновлен')
+
+
+        setTitle("Мой тест")
+        setDescription("Заполните пропущенные буквы")
+        setTestData([])
       }
-      console.log(response)
-     
-      toast.success('Тест успешно создан')
-      
+      else{
+        const response = await fetch('/api/tests', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(testPayload)
+        })
 
-      setTitle("Мой тест")
-      setDescription("Заполните пропущенные буквы")
-      setTestData([])
 
+        if (!response.ok) {
+          throw new Error('Ошибка при создании теста')
+        }
+
+
+        toast.success('Тест успешно создан')
+
+
+        setTitle("Мой тест")
+        setDescription("Заполните пропущенные буквы")
+        setTestData([])
+    }
     } catch (error) {
       console.error('Ошибка при создании теста:', error)
     }
@@ -156,7 +213,7 @@ export const Wrapper = () => {
     )
   }
   
-  console.log(selectedValue)
+
   return (
     <div className="grid gap-6">
       <BaseSettings title={title} setTitle={setTitle} description={description} setDescription={setDescription}/>
@@ -165,9 +222,10 @@ export const Wrapper = () => {
         <Card className="md:shadow-lg shadow-none md:border-2 border-0">
           <CardHeader className=" flex flex-row justify-between md:px-6 px-2">
             <CardTitle>Создайте свой тест</CardTitle>
-            <Button variant="outline" disabled={testData.length === 0 || loading}  onClick={handleCreateTest} >
-                Создать
+              <Button variant="outline" disabled={testData.length === 0 || loading} onClick={handleCreateTest}>
+                {id ? (loading ? <> <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Обновление...</> : 'Обновить') : (loading ? <> <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Создание...</> : 'Создать')}
               </Button>
+
           </CardHeader>
           <CardContent className="md:px-6 px-2">
             <div className="grid md:grid-cols-2 gap-5">

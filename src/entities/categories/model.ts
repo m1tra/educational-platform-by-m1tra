@@ -5,9 +5,13 @@ const prisma = dbClient
 export class CategoryModel {
 
   // Получение теста по ID
-  static async getById(id: string) {
-    return await prisma.category.findUnique({
-      where: { id }
+
+  static async getTestWithCategories(id: string) {
+    return await prisma.test.findUnique({
+      where: { id },
+      include: {
+        categories: true,
+      },
     })
   }
 
