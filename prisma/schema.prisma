@@ -45,7 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-
+  role          Role         @default(USER)
   @@map("users")
 }
  
@@ -78,4 +78,10 @@ model Category {
   name        String
   description String?
   tests       Test[] @relation("TestCategories") // Correct many-to-many relation
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
 }

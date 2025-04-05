@@ -1,9 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image";
 
 import { fetchImageDescription } from "@/src/shared/api/openrouter/service"
-import { Loader2 } from "lucide-react"
+import { Loader2, X } from "lucide-react"
 import { Card, CardContent } from "@/src/shared/components/ui/card"
 import { Button } from "@/src/shared/components/ui/button"
 
@@ -74,21 +75,36 @@ export function AskImageQuestionForm({ result, setResult }: AskImageQuestionForm
           <Card className="overflow-hidden">
             <CardContent className="p-3">
               <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-5 items-start justify-between">
                   <p className="text-sm text-muted-foreground">Изображение готово к обработке</p>
-                  <Button variant="ghost" size="sm" onClick={() => setImage(null)} className="h-8 px-2 text-xs">
-                    Удалить
-                  </Button>
-                </div>
-                <img
-                  src={image || "/placeholder.svg"}
-                  alt="Вставленное изображение"
-                  className="w-full object-contain border rounded-md"
-                />
+                  
+                      <div className="px-6 ">
+                        <div className="relative inline-block">
+                          <div className="rounded-lg overflow-hidden border-2 border-purple-300 shadow-md">
+                            <Image
+                              src={image || "/placeholder.svg"}
+                              alt="Preview"
+                              width={120}
+                              height={120}
+                              className="object-cover"
+                            />
+                          </div>
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            className="absolute -top-2 -right-2 flex items-center justify-center h-6 w-6 rounded-full shadow-md bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600"
+                            onClick={()=>setImage(null)}
+                          >
+                            <X />
+                          </Button>
+                        </div>
+                      </div>
+                      </div>
+                    
                 <Button
                   onClick={handleAsk}
                   disabled={loading}
-                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition-all duration-200"
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition-all duration-200 w-52"
                 >
                   {loading ? (
                     <>

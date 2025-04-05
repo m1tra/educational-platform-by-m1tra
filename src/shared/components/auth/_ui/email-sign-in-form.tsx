@@ -30,14 +30,14 @@ export function EmailSignInForm() {
                     autoCapitalize="none"
                     autoComplete="email"
                     autoCorrect="off"
-                    
+                    disabled
                     {...field}
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-          <Button >
+          <Button disabled>
             Войти через Email
           </Button>
         </div>

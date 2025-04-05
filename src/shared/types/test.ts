@@ -14,3 +14,8 @@ interface   Test {
 }
 
 export type { Test }
+export enum Role {
+    USER,
+    MODERATOR,
+    ADMIN,
+}
