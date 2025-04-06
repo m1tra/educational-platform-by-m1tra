@@ -28,6 +28,7 @@ export function ImageUpload({setSelectedImage}:ImageUploadProps) {
 
     const clearImage = () => {
         setSelectedImage("")
+        setImagePreview("")
         if (fileInputRef.current) fileInputRef.current.value = ""
       }
     

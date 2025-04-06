@@ -21,40 +21,7 @@ import { AdvancedSetting } from "./_ui/advanced-settting"
 
 import { useSearchParams } from 'next/navigation'
 import { Category } from "@prisma/client"
-// const getTestPayload = (selectedValue: string) => {
-//   const basePayload = {
-//     title,
-//     description,
-//     expectedOutput ,
-//     authorId: session.data?.user?.id,
-//   }
-
-//   const payloadByType = {
-//     "words": {
-//       ...basePayload,
-//       type: "words",
-//       category: "ege",
-//       difficulty: "Лёгкий",
-//       icon: "📝",
-//     },
-//     "examTicket": {
-//       ...basePayload,
-//       type: "language",
-//       category: "language",
-//       difficulty: "Средний",
-//       icon: "🗣️",
-//     },
-//     "code": {
-//       ...basePayload,
-//       type: "math",
-//       category: "math",
-//       difficulty: "Сложный",
-//       icon: "🔢",
-//     }
-//   }
-
-//   return payloadByType[selectedValue as keyof typeof payloadByType]
-// }
+import { z, ZodFormattedError } from "zod"
 
 export enum TestType {
   WORD = "words",
@@ -62,8 +29,17 @@ export enum TestType {
   CODE = "code",
 }
 
+export const schemaWrapper = z.object({
+  title: z.string().min(1, "Название обязательно"),
+  description: z.string().min(1, "Описание обязательно"),
+  difficulty: z.string().min(1, "Сложность обязательна"),
+  tags:z.array(z.string().min(1, "Тег не может быть пустым")).min(1, "Нужен хотя бы один тег"),
+  questions: z.array(z.any()).min(1, "Нужен хотя бы один тест"),
+
+})
+
 export const Wrapper = () => {
-  const { isAdmin } = useUserRole()
+  const { isAdmin,isModerator } = useUserRole()
 
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
@@ -120,23 +96,53 @@ export const Wrapper = () => {
   const handleCreateTest = async () => {
     setLoading(true)
     try {
-      if (!isAdmin) {
-        console.error("Необходимо авторизоваться")
+      if (!isAdmin || !isModerator) {
+        toast.error("Необходимо авторизоваться")
         return
       }
-      if (testData.length === 0) {
-        toast.error('Необходимо добавить задания')
-        return
-      }
-      const testPayload = {
+      // const testPayload = {
+      //   title,
+      //   description,
+      //   difficulty,
+      //   tags,
+      //   type: selectedValue,
+      //   questions: testData,
+      //   authorId: session.data?.user?.id
+      // }
+      const questions = testData
+
+      const validation = schemaWrapper.safeParse({
         title,
         description,
         difficulty,
         tags,
-        type: selectedValue,
-        questions: testData,
-        authorId: session.data?.user?.id
+        questions,
+      })
+      if (!validation.success) {
+        const errors: ZodFormattedError<unknown> = validation.error.format();
+        for (const field in errors) {
+          const error = errors[field as keyof typeof errors];
+          if (
+            error &&
+            typeof error === "object" &&
+            "_errors" in error &&
+            Array.isArray(error._errors)
+          ) {
+            error._errors.forEach((msg: string) => {
+              toast.error(msg);
+            });
+          }
+        }
+      
+        return;
       }
+
+      const testPayload = {
+        ...validation.data,
+        authorId: session.data?.user?.id,
+        type: selectedValue,
+      }
+
       if(id){
         const response = await fetch(`/api/tests?id=${id}`, {
           method: 'PUT',

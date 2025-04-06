@@ -14,8 +14,11 @@ import { ImageUpload } from "./_ui/image-uploader"
 import { EditTask } from "./_ui/edit-task"
 
 
+
+
+
 export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
-  
+
   const [currentTest, setCurrentTest] = useState<ExamTicketProps>({
     type: TestType.EXAM_TICKET,
     question: "",
