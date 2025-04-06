@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
       if (id) {
         const test = await TestModel.getById(id)
         return NextResponse.json(test, { status: 200 })
-      } else if (categoryId) {
+      } else if (categoryId || categoryId=="") {
         const tests = await TestModel.getByCategoryId(categoryId)
         return NextResponse.json(tests, { status: 200 })
       } else {

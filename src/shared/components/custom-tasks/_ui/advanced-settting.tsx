@@ -5,36 +5,32 @@ import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
 import { TabsContent } from '../../ui/tabs';
 import { Switch } from '../../ui/switch';
 
-
-
 export const AdvancedSetting = () => {
-
-
   return (
     <Card>
         <CardHeader>
-          <CardTitle>Advanced Settings</CardTitle>
-          <CardDescription>Configure optional settings for your test</CardDescription>
+          <CardTitle>Расширенные настройки</CardTitle>
+          <CardDescription>Настройте дополнительные параметры теста</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="timing">
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="timing">Timing</TabsTrigger>
-              <TabsTrigger value="scoring">Scoring</TabsTrigger>
-              <TabsTrigger value="access">Access</TabsTrigger>
+              <TabsTrigger value="timing">Время</TabsTrigger>
+              <TabsTrigger value="scoring">Оценивание</TabsTrigger>
+              <TabsTrigger value="access">Доступ</TabsTrigger>
             </TabsList>
             <TabsContent value="timing" className="space-y-4 pt-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="time-limit">Time Limit</Label>
-                  <p className="text-sm text-muted-foreground">Set a time limit for completing the test</p>
+                  <Label htmlFor="time-limit">Лимит времени</Label>
+                  <p className="text-sm text-muted-foreground">Установите лимит времени на выполнение теста</p>
                 </div>
                 <Switch id="time-limit" />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="scheduled">Scheduled Availability</Label>
-                  <p className="text-sm text-muted-foreground">Make the test available during specific dates</p>
+                  <Label htmlFor="scheduled">Доступ по расписанию</Label>
+                  <p className="text-sm text-muted-foreground">Сделать тест доступным в определённые даты</p>
                 </div>
                 <Switch id="scheduled" />
               </div>
@@ -42,15 +38,15 @@ export const AdvancedSetting = () => {
             <TabsContent value="scoring" className="space-y-4 pt-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="auto-grade">Auto Grading</Label>
-                  <p className="text-sm text-muted-foreground">Automatically grade objective questions</p>
+                  <Label htmlFor="auto-grade">Автоматическая проверка</Label>
+                  <p className="text-sm text-muted-foreground">Автоматически оценивать объективные вопросы</p>
                 </div>
                 <Switch id="auto-grade" defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="partial-credit">Partial Credit</Label>
-                  <p className="text-sm text-muted-foreground">Allow partial credit for partially correct answers</p>
+                  <Label htmlFor="partial-credit">Частичный балл</Label>
+                  <p className="text-sm text-muted-foreground">Разрешить частичную оценку за частично правильные ответы</p>
                 </div>
                 <Switch id="partial-credit" />
               </div>
@@ -58,15 +54,15 @@ export const AdvancedSetting = () => {
             <TabsContent value="access" className="space-y-4 pt-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="password-protected">Password Protected</Label>
-                  <p className="text-sm text-muted-foreground">Require a password to access the test</p>
+                  <Label htmlFor="password-protected">Защита паролем</Label>
+                  <p className="text-sm text-muted-foreground">Требовать пароль для доступа к тесту</p>
                 </div>
                 <Switch id="password-protected" />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="public-results">Public Results</Label>
-                  <p className="text-sm text-muted-foreground">Make test results visible to all participants</p>
+                  <Label htmlFor="public-results">Публичные результаты</Label>
+                  <p className="text-sm text-muted-foreground">Сделать результаты теста видимыми для всех участников</p>
                 </div>
                 <Switch id="public-results" />
               </div>

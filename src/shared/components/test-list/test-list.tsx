@@ -84,7 +84,6 @@ export function TestsList() {
   }, [response])
 
   useEffect(() => {
-    if (tags.length > 0) {
       const fetchTests = async () => {
         try {
           const response = await fetch(`/api/tests?categoryId=${tags}`)
@@ -95,7 +94,7 @@ export function TestsList() {
         }
       }
       fetchTests()
-    }
+    
   }, [tags]) 
   return (
     <>

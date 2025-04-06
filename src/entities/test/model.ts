@@ -33,7 +33,6 @@ export class TestModel {
         })
       )
     );
-    console.log('why')
     const allCategories = [...existingCategories, ...newCategories];
     try {
       const test = await prisma.test.create({
@@ -52,7 +51,7 @@ export class TestModel {
       });
       return test;
     } catch (error) {
-      console.error('Error creating test or categories:', error);
+      console.error('Ошибка создания тестов или категорий', error);
       return null;
     }
 
@@ -105,7 +104,7 @@ export class TestModel {
       });
       return test;
     } catch (error) {
-      console.error('Error creating test or categories:', error);
+      console.error('Ошибка создания тестов или категорий', error);
       return null;
     }
 
@@ -125,8 +124,8 @@ export class TestModel {
 
   static async getByCategoryId(id: string) {
     const categoryIds = id.split(',');
-
-    if (!categoryIds.length) {
+    if (categoryIds.length==0) {
+        
         return []; 
     }
 

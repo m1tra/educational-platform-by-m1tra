@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import { Edit, Trash, Save, X } from "lucide-react"
+import { Edit, Trash } from "lucide-react"
 import { TestType } from "../wrapper"
-import { RadioGroupManager } from "./radio-group-manager"
+import { RadioGroupManager } from "./_ui/radio-group-manager"
 import { ExamTicketProps, RadioOutput, TestPanelProps } from "./exam-ticket-interface"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import { Label } from "../../ui/label"
@@ -10,6 +10,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "../../ui/button"
 import { Textarea } from "../../ui/textarea"
 import { AskImageQuestionForm } from "@/src/feature/ask-image-question/AskImageQuestionForm"
+import { ImageUpload } from "./_ui/image-uploader"
+import { EditTask } from "./_ui/edit-task"
 
 
 export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
@@ -34,8 +36,8 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
   const [answer, setAnswer] = useState<string>("input")
 
   //img
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [selectedName, setSelectedName] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string >("");
+
   
   //radio
   const [radioOptions, setRadioOptions] = useState<string[]>([]);
@@ -52,26 +54,7 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
     setRadioData({radioOptions:radioOptions,selectedOption:selectedOption!})
   },[radioOptions,selectedOption])  
 
-  const handleUploadClick = () => {
-    const fileInput = document.getElementById('imageInput') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
-  };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      setSelectedName(file.name)
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setSelectedImage(base64String);
-      };
-  
-      reader.readAsDataURL(file);
-    }
-    };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: "question" | "expectedOutput") => {
     setCurrentTest((prev) => ({ ...prev, [field]: e.target.value }))
@@ -91,7 +74,6 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
       setCurrentTest({ type: TestType.EXAM_TICKET, question: "", expectedOutput: "", options: [] })
       
       setSelectedImage("")
-      setSelectedName("")
       setRadioOptions([])
       setSelectedOption(null)
       setNewOption("")
@@ -110,16 +92,12 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
     setEditingTest({ ...testList[index] })
   }
 
-  const cancelEditing = () => {
-    setEditingIndex(null)
-  }
 
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>, field: "question" | "expectedOutput") => {
-    setEditingTest((prev) => ({ ...prev, [field]: e.target.value }))
-  }
+
 
   const saveEdit = (index: number) => {
     if (editingTest.question.length > 0 && editingTest.expectedOutput.length > 0) {
+      console.log(editingTest.image)
       const updatedList = [...testList]
       updatedList[index] = { ...editingTest, type: TestType.EXAM_TICKET }
       setTestList(updatedList)
@@ -169,33 +147,11 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
         <TabsTrigger value="all">Добавить всё</TabsTrigger>
       </TabsList>
       <TabsContent value="one">
-      {selectedImage && (
-        <img
-          src={selectedImage}
-          alt="Selected"
-          className="" />
-        )}
+      <ImageUpload setSelectedImage={(base64) => {
+        setSelectedImage(base64)
+        setEditingTest(prev => ({ ...prev, image: base64 }))
+        }}/>
         <div className="space-y-2 relative">
-          <div className="space-y-3">
-            <Button
-              onClick={handleUploadClick}
-              size={"sm"}
-            >
-              Загрузить изображение
-            </Button>
-            <input
-              id="imageInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden" />
-            {selectedImage && (
-              <div className="">
-              
-                <p>Выбранное изображение: {selectedName}</p>
-              </div>
-            )}
-          </div>
           <Label>Вопрос</Label>
           <Input value={currentTest.question} onChange={(e) => handleChange(e, "question")} placeholder="Введите вопрос" />
           <DropdownMenu>
@@ -248,37 +204,17 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
         {testList.map((item: ExamTicketProps, index) => (
           <div key={index} className="flex w-full justify-between border p-3 rounded-md">
             {editingIndex === index ? (
-              <div className="flex flex-col w-full gap-2">
-                <Label>Вопрос</Label>
-                <Input value={editingTest.question} onChange={(e) => handleEditChange(e, "question")} />
-                {item.options && item.options.length > 0 ? (
-                <div className="space-y-2">
-                  <Label>Варианты ответов</Label>
-                  <RadioGroupManager 
-                    variant='edit'
-                    radioOptions={editingTest.options || []}
-                    newOption={newOption}
-                    setRadioOptions={(options) => setEditingTest(prev => ({...prev, options}))}
-                    setNewOption={setNewOption}
-                    selectedOption={editingTest.expectedOutput}
-                    setSelectedOption={(option) => setEditingTest(prev => ({...prev, expectedOutput: option || ''}))}
-                  />
-                </div>
-                ) : (
-                  <>
-                    <Label>Ответ</Label>
-                    <Input value={editingTest.expectedOutput} onChange={(e) => handleEditChange(e, "expectedOutput")} />
-                  </>
-                )}
-                <div className="flex justify-between gap-2">
-                  <Button variant="outline" size="sm" onClick={cancelEditing}>
-                    <X className="h-4 w-4 mr-1" /> Отмена
-                  </Button>
-                  <Button variant="default" size="sm" onClick={() => saveEdit(index)}>
-                    <Save className="h-4 w-4 mr-1" /> Сохранить
-                  </Button>
-                </div>
-              </div>
+              <EditTask 
+                selectedImage={selectedImage} 
+                setSelectedImage={setSelectedImage}
+                item={item} 
+                editingTest={editingTest} 
+                setEditingTest={setEditingTest}
+                newOption={newOption} 
+                setNewOption={setNewOption} 
+                saveEdit={saveEdit} 
+                index={index} 
+                setEditingIndex={setEditingIndex}/>
             ) : (
               
               <div className="flex w-full justify-between">

@@ -4,7 +4,7 @@ const prisma = dbClient
 
 export class CategoryModel {
 
-  // Получение теста по ID
+
 
   static async getTestWithCategories(id: string) {
     return await prisma.test.findUnique({
