@@ -8,9 +8,9 @@ interface DifficultySliderProps {
 }
 
 const difficultyLevels = {
-  0: 'Легко',
-  50: 'Средне',
-  100: 'Сложно',
+  0: 'Лёгкий',
+  50: 'Средний',
+  100: 'Сложный',
 };
 
 

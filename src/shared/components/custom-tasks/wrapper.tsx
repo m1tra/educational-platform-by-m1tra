@@ -92,7 +92,6 @@ export const Wrapper = () => {
     setTestData([])
   }
 
-  console.log(id)
   const handleCreateTest = async () => {
     setLoading(true)
     try {

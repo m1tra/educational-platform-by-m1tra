@@ -32,13 +32,15 @@ export function EditTask({index,setEditingIndex,setSelectedImage,item,editingTes
 
   return (
       <div className="flex flex-col w-full gap-2">
-          <Image
-            src={item.image! || "/placeholder.svg"}
-            alt="Preview"
-            width={120}
-            height={120}
-            className="object-cover"
-          />
+          {item.image&&
+            <Image
+              src={item.image! || "/placeholder.svg"}
+              alt="Preview"
+              width={120}
+              height={120}
+              className="object-cover"
+            />
+          }
           <ImageUpload                 
             setSelectedImage={(base64) => {
               setSelectedImage(base64)

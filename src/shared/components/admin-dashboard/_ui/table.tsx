@@ -58,9 +58,9 @@ export function AdminTable({filteredUsers,roles,statusColors,formatDate,openRole
                   <div className="flex items-center gap-2">
                     <Shield
                       className={`h-4 w-4 ${
-                        user.role === "admin"
+                        user.role === "ADMIN"
                           ? "text-red-500"
-                          : user.role === "moderator"
+                          : user.role === "MODERATOR"
                             ? "text-blue-500"
                             : "text-gray-500"
                       }`}
@@ -69,7 +69,7 @@ export function AdminTable({filteredUsers,roles,statusColors,formatDate,openRole
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge className={statusColors[user.status] || "bg-gray-100"}>
+                  <Badge className={statusColors[user.status] || "bg-foreground"}>
                     {user.status === "active" ? "Активен" : user.status === "inactive" ? "Неактивен" : "Ожидает"}
                   </Badge>
                 </TableCell>
