@@ -79,7 +79,7 @@ export const CreateTab = ({ tasks, handleTakeValue }: CreateTabProps) => {
     setEditingTask({ ...tasksList[index] })
     setEditIndex(index)
   }
-
+  console.log(currentTask)
   return (
     <div className="space-y-6">
       <div className="space-y-2">

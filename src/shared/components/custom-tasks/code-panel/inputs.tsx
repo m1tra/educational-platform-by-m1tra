@@ -41,8 +41,21 @@ export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEd
               id={mode === "create" ? "description" : `edit-description-${index}`}
               value={task.description || ""}
               onChange={(e) => onChange("description", e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Tab") {
+                  
+                  const start = e.currentTarget.selectionStart
+                  const end = e.currentTarget.selectionEnd
+                  const value = task.description || ""
+                  const newValue = value.substring(0, start) + "\t" + value.substring(end)
+                  onChange("description", newValue)
+                  setTimeout(() => {
+                    e.currentTarget.selectionStart = e.currentTarget.selectionEnd = start + 1
+                  }, 0)
+                }
+              }}
               placeholder="Опишите задачу"
-              className="min-h-[100px]"
+              className="min-h-[100px] whitespace-pre-wrap font-mono"
             />
           </div>
 
@@ -73,8 +86,10 @@ export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEd
           <div className="space-y-2">
             <Label htmlFor={mode === "create" ? "generateScript" : `edit-generateScript-${index}`}>
               Скрипт генерации задачи(опционально)
+              !Временно не работает
             </Label>
             <Textarea
+              disabled
               id={mode === "create" ? "generateScript" : `edit-generateScript-${index}`}
               value={task.generateScript || ""}
               onChange={(e) => onChange("generateScript", e.target.value)}
@@ -85,8 +100,10 @@ export const TaskEditForm = ({ task, mode, index = 0, onSave, onChange }: TaskEd
           <div className="space-y-2">
             <Label htmlFor={mode === "create" ? "answerScript" : `edit-answerScript-${index}`}>
               Скрипт проверки ответа(опционально, работает вместе с скриптом генерации)
+              !Временно не работает
             </Label>
             <Textarea
+              disabled
               id={mode === "create" ? "answerScript" : `edit-answerScript-${index}`}
               value={task.answerScript || ""}
               onChange={(e) => onChange("answerScript", e.target.value)}

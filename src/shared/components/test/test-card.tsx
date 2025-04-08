@@ -121,7 +121,7 @@ export function TestCard({
             <div className="space-y-6 flex flex-col ">
               <div className="p-4 bg-muted rounded-md border">
                 <h4 className="text-lg font-semibold">{task.title}</h4>
-                <p className="text-sm text-muted-foreground">{task.description}</p>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap" >{task.description}</p>
 
               </div>
               <CardPythonInterpreter code={code} setCode={setCode} output={output} setOutput={setOutput} />

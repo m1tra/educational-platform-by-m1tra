@@ -221,16 +221,21 @@ export const Wrapper = () => {
 
   return (
     <div className="grid gap-6">
+      <div className="md:flex  w-full justify-between">
+        <div className="mb-6 ">
+          <h1 className="text-3xl font-bold tracking-tight">Создайте новый тест</h1>
+          <p className="mt-1 text-muted-foreground">Настройте параметры и содержание теста</p>
+        </div>
+        <Button variant="outline" disabled={testData.length === 0 || loading} onClick={handleCreateTest} >
+                {id ? (loading ? <> <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Обновление...</> : 'Обновить тест') : (loading ? <> <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Создание...</> : 'Создать тест')}
+        </Button>
+      </div>
       <BaseSettings title={title} setTitle={setTitle} description={description} setDescription={setDescription}/>
       <TestProperties difficulty={difficulty} setDifficulty={setDifficulty} tags={tags} setTags={setTags}/>
       <TestTypeSelector setSelectedValue={setSelectedValue}/>
         <Card className="md:shadow-lg shadow-none md:border-2 border-0">
           <CardHeader className=" flex flex-row justify-between md:px-6 px-2">
             <CardTitle>Создайте свой тест</CardTitle>
-              <Button variant="outline" disabled={testData.length === 0 || loading} onClick={handleCreateTest}>
-                {id ? (loading ? <> <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Обновление...</> : 'Обновить') : (loading ? <> <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Создание...</> : 'Создать')}
-              </Button>
-
           </CardHeader>
           <CardContent className="md:px-6 px-2">
             <div className="grid md:grid-cols-2 gap-5">
