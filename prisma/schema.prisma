@@ -70,14 +70,14 @@ model Test {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   published   Boolean  @default(false)
-  categories  Category[] @relation("TestCategories") // Correct many-to-many relation
+  categories  Category[] @relation("TestCategories") // много ко многим
 }
 
 model Category {
   id          String   @id @default(cuid())
   name        String
   description String?
-  tests       Test[] @relation("TestCategories") // Correct many-to-many relation
+  tests       Test[] @relation("TestCategories") // много ко многим
 }
 
 enum Role {

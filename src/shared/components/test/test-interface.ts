@@ -33,6 +33,7 @@ export interface TestCardProps {
 
 export type CheckInputProps = {
   userInput:string
+  currentTaskAttempts:number
   setUserInput:(e:string)=>void
   isCorrect:boolean | null
   checkAnswer:()=>void

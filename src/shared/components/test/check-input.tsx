@@ -29,7 +29,7 @@ export function AnswerFeedback({
 }: AnswerFeedbackProps) {
   return (
     <div className="mt-6 text-center space-y-4">
-      <CheckInput userInput={userInput} setUserInput={setUserInput} isCorrect={isCorrect} checkAnswer={checkAnswer} />
+      <CheckInput userInput={userInput} setUserInput={setUserInput} isCorrect={isCorrect} checkAnswer={checkAnswer} currentTaskAttempts={currentTaskAttempts}/>
 
       <AnimatePresence>
         {isCorrect !== null && (
@@ -72,7 +72,7 @@ export function AnswerFeedback({
 }
 
 
-const CheckInput = ({userInput,setUserInput,isCorrect,checkAnswer}: CheckInputProps) => {
+const CheckInput = ({userInput,setUserInput,isCorrect,checkAnswer,currentTaskAttempts}: CheckInputProps) => {
   return (
     <div className="flex gap-2">
         <Input
@@ -89,7 +89,7 @@ const CheckInput = ({userInput,setUserInput,isCorrect,checkAnswer}: CheckInputPr
           }`}
           autoFocus
         />
-        <Button onClick={checkAnswer} disabled={userInput === ""}>
+        <Button onClick={checkAnswer} disabled={userInput === "" || currentTaskAttempts===3}>
           Проверить
         </Button>
   </div>
