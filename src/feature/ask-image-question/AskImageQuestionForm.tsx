@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Image from "next/image";
+import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 
 import { fetchImageDescription } from "@/src/shared/api/openrouter/service"
 import { Loader2, X } from "lucide-react"
@@ -16,6 +16,7 @@ interface AskImageQuestionFormProps {
 export function AskImageQuestionForm({ result, setResult }: AskImageQuestionFormProps) {
   const [image, setImage] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
@@ -29,7 +30,6 @@ export function AskImageQuestionForm({ result, setResult }: AskImageQuestionForm
             const reader = new FileReader()
             reader.onload = () => {
               setImage(reader.result as string)
-
             }
             reader.readAsDataURL(file)
           }
@@ -41,7 +41,18 @@ export function AskImageQuestionForm({ result, setResult }: AskImageQuestionForm
     return () => {
       window.removeEventListener("paste", handlePaste)
     }
-  }, [setResult])
+  }, [])
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = () => {
+        setImage(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const handleAsk = async () => {
     if (!image) return
@@ -59,7 +70,7 @@ export function AskImageQuestionForm({ result, setResult }: AskImageQuestionForm
         ],
       })
 
-      setResult(result+response.choices?.[0]?.message?.content || "No response.")
+      setResult(result +' ; '+ response.choices?.[0]?.message?.content || "No response.")
     } catch (e) {
       console.error(e)
       setResult("Error while fetching.")
@@ -77,30 +88,29 @@ export function AskImageQuestionForm({ result, setResult }: AskImageQuestionForm
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-5 items-start justify-between">
                   <p className="text-sm text-muted-foreground">Изображение готово к обработке</p>
-                  
-                      <div className="px-6 ">
-                        <div className="relative inline-block">
-                          <div className="rounded-lg overflow-hidden border-2 border-purple-300 shadow-md">
-                            <Image
-                              src={image || "/placeholder.svg"}
-                              alt="Preview"
-                              width={120}
-                              height={120}
-                              className="object-cover"
-                            />
-                          </div>
-                          <Button
-                            variant="destructive"
-                            size="icon"
-                            className="absolute -top-2 -right-2 flex items-center justify-center h-6 w-6 rounded-full shadow-md bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600"
-                            onClick={()=>setImage(null)}
-                          >
-                            <X />
-                          </Button>
-                        </div>
+                  <div className="px-6">
+                    <div className="relative inline-block">
+                      <div className="rounded-lg overflow-hidden border-2 border-purple-300 shadow-md">
+                        <Image
+                          src={image || "/placeholder.svg"}
+                          alt="Preview"
+                          width={120}
+                          height={120}
+                          className="object-cover"
+                        />
                       </div>
-                      </div>
-                    
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        className="absolute -top-2 -right-2 h-6 w-6 rounded-full shadow-md bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600"
+                        onClick={() => setImage(null)}
+                      >
+                        <X />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
                 <Button
                   onClick={handleAsk}
                   disabled={loading}
@@ -119,15 +129,26 @@ export function AskImageQuestionForm({ result, setResult }: AskImageQuestionForm
             </CardContent>
           </Card>
         ) : (
-          <div className="flex items-center justify-center border border-dashed rounded-lg p-8 bg-muted/30">
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-2">Нажмите Ctrl+V для вставки изображения</p>
-              <p className="text-xs text-muted-foreground">Поддерживаются форматы JPG, PNG, GIF</p>
-            </div>
-          </div>
+          <>
+            <button
+              className="flex items-center justify-center border border-dashed rounded-lg p-8 bg-muted/30"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-2">Нажмите Ctrl+V или кликните для загрузки изображения</p>
+                <p className="text-xs text-muted-foreground">Поддерживаются форматы JPG, PNG, GIF</p>
+              </div>
+            </button>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </>
         )}
       </div>
-
     </div>
   )
 }

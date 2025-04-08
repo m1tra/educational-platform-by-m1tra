@@ -1,6 +1,7 @@
 import { dbClient } from '@/src/shared/lib/db'
 import {  User } from '@prisma/client'
 
+
 const prisma = dbClient
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UserSubset = Pick<User, 'id'> & { role: any };

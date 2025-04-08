@@ -18,6 +18,7 @@ export const nextAuthConfig: AuthOptions = {
         })]
       : [])
   ],
+  
   callbacks: {
     async session({ session, user }) {
       if (session.user) {

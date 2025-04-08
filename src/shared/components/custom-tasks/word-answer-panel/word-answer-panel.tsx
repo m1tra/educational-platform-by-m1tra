@@ -113,24 +113,44 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
     const testsArray: ExamTicketProps[] = bulkTests
       .split(";")
       .map((line) => {
+        line = line.trim();
+        if (!line) return null;
+  
         if (line.includes("|")) {
-          const [question, optionsString] = line.split(/:(.+)/);
+          const index = line.indexOf(":");
+          if (index === -1) return null;
+  
+          const question = line.slice(0, index).trim();
+          const optionsString = line.slice(index + 1).trim();
           if (!optionsString) return null;
-
-          const options = optionsString.split("|");
-          const correctAnswer = options.find((opt) => opt.startsWith("!"));
-          if (!correctAnswer) return null;
+  
+          const options = optionsString
+            .split("|")
+            .map((opt) => opt.trim());
+  
+          const correctAnswers = options.filter((opt) => opt.startsWith("!"));
+          if (correctAnswers.length !== 1) return null;
+  
+          const correctAnswer = correctAnswers[0];
   
           return {
             type: TestType.EXAM_TICKET,
-            question: question.trim(),
-            expectedOutput: correctAnswer.replace("!", "").trim(),
-            options: options.map(opt => opt.replace("!", "").trim()),
+            question,
+            expectedOutput: correctAnswer.replace(/^!/, "").trim(),
+            options: options.map((opt) => opt.replace(/^!/, "").trim()),
           };
         } else {
-          const [question, expectedOutput] = line.split("-").map((item) => item.trim());
+          const [question, expectedOutput] = line
+            .split("-")
+            .map((item) => item.trim());
+  
           if (!question || !expectedOutput) return null;
-          return { type: TestType.EXAM_TICKET, question, expectedOutput };
+  
+          return {
+            type: TestType.EXAM_TICKET,
+            question,
+            expectedOutput,
+          };
         }
       })
       .filter(Boolean) as ExamTicketProps[];
@@ -142,6 +162,8 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
       setBulkTests("");
     }
   };
+  
+  
 
   return (
     <Tabs defaultValue="one" className="mt-6">
@@ -194,8 +216,21 @@ export const WordAnswerPanel = ({ handleTakeValue, tests }: TestPanelProps) => {
         <div className="space-y-2">
           <Label>Добавить несколько тестов</Label>
           <AskImageQuestionForm result={bulkTests} setResult={setBulkTests}/>
+          <div className="space-y-2">
+            <div className="text-sm text-muted-foreground">
+              Введите тесты через ; 
+              <ul className="list-disc list-inside">
+                <li>Текстовые — <code>вопрос - ответ;</code></li>
+                <li>Выбор вырианта — <code>вопрос: вариант 1 | !вариант 2</code>, где ! - правильный ответ</li>
+              </ul>
+              <div className="mt-1 text-xs text-muted-foreground">
+                Пример: Сколько будет 2+2 - 4<br />
+                Столица Германии: !Берлин | Мюнхен 
+              </div>
+            </div>
+          </div>
           <Textarea
-            placeholder="Введите тесты в формате вопрос-ответ через дефис и с новой строки"
+            placeholder="Введите тесты в формате: вопрос - ответ или вопрос: вар1 | !вар2"
             className="min-h-[150px]"
             value={bulkTests}
             onChange={(e) => setBulkTests(e.target.value)}
