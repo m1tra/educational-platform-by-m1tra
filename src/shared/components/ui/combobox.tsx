@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
+import { Button } from "./button"
+import { Input } from "./input"
 import { cn } from "@/src/shared/lib/utils"
 
 export interface IWordObject{

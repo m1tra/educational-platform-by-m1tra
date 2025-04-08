@@ -30,14 +30,18 @@ interface TagInputProps {
 }
 
 export default function TagInput({ tags, setTags}: TagInputProps) {
-    const [tagInput, setTagInput] = useState("")
+  const [tagInput, setTagInput] = useState("")
 
   const addTag = () => {
-    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags([...tags, tagInput.trim()])
-      setTagInput("")
+    const normalizedInput = tagInput.trim().toLowerCase();
+    const normalizedTags = tags.map(tag => tag.toLowerCase());
+  
+    if (normalizedInput && !normalizedTags.includes(normalizedInput)) {
+      setTags([...tags, tagInput.trim()]);
+      setTagInput("");
     }
-  }
+  };
+  
 
   const removeTag = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove))
@@ -94,7 +98,7 @@ export default function TagInput({ tags, setTags}: TagInputProps) {
                   <path d="M18 6 6 18" />
                   <path d="m6 6 12 12" />
                 </svg>
-                <span className="sr-only">Remove {tag}</span>
+                <span className="sr-only">Удалить {tag}</span>
               </button>
             </Badge>
           ))}

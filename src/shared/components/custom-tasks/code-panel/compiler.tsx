@@ -1,13 +1,13 @@
 "use client"
 
-
 import { Play } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
-import { cardPythonInterpreterProps } from "./code-panel-interface"
+import type { cardPythonInterpreterProps } from "./code-panel-interface"
 import { Button } from "../../ui/button"
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../../ui/sheet"
-import { Textarea } from "../../ui/textarea"
-
+import CodeMirror from "@uiw/react-codemirror"
+import { python } from "@codemirror/lang-python"
+import { vscodeDark } from "@uiw/codemirror-theme-vscode"
 
 interface PythonInterpreterProps {
   code: string
@@ -50,7 +50,7 @@ const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
     }
 
     loadPyodide()
-  }, [])
+  }, [onOutput])
 
   const executeCode = () => {
     if (!isPyodideReady) {
@@ -70,7 +70,7 @@ const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
       pyodideRef.current.runPython(code)
       const stdout = pyodideRef.current.runPython("sys.stdout.getvalue()")
       onOutput(stdout)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       onOutput(`Ошибка: ${error.message}`)
     } finally {
@@ -80,51 +80,77 @@ const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
 
   return (
     <Button onClick={executeCode} disabled={isRunning || !code.trim()} size="sm">
-        <Play className="h-4 w-4 mr-2" />
-        Запустить
+      <Play className="h-4 w-4 mr-2" />
+      Запустить
     </Button>
   )
 }
 
-export const CardPythonInterpreter = ({code,setCode,output,setOutput}:cardPythonInterpreterProps) => {
-    const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setCode(e.target.value)
-    }
-    return (
-      <Sheet>
-        <SheetTrigger asChild className="m-0">
-          <Button variant="default" >Открыть редактор</Button>
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Ваше рещение</SheetTitle>
-          </SheetHeader>
-              <div className=" md:px-6 px-0">
-                <div className="relative space-y-4 ">
-                  <Textarea
-                    value={code}
-                    onChange={handleCodeChange}
-                    placeholder="# Введите ваш код на Python здесь"
-                    className="font-mono md:min-h-[200px] min-h-[100px] resize-y"
-                  />
+export const CardPythonInterpreter = ({ code, setCode, output, setOutput }: cardPythonInterpreterProps) => {
+  const handleCodeChange = (value: string) => {
+    setCode(value)
+  }
 
-                  {output && (
-                    <div>
-                      <h4 className="text-sm font-medium mb-1">Результат выполнения:</h4>
-                      <pre className="bg-muted p-3 rounded-md text-xs overflow-x-scroll whitespace-pre-wrap max-h-100">
-                        {output}
-                      </pre>
-                    </div>
-                  )}
-                </div>
+  return (
+    <Sheet>
+      <SheetTrigger asChild className="m-0">
+        <Button variant="default">Открыть редактор</Button>
+      </SheetTrigger>
+      <SheetContent className="sm:max-w-md md:max-w-2xl">
+        <SheetHeader>
+          <SheetTitle>Ваше решение</SheetTitle>
+        </SheetHeader>
+        <div className="md:px-6 px-0 py-4">
+          <div className="relative space-y-4">
+            <div className="border rounded-md overflow-hidden">
+              <CodeMirror
+                value={code}
+                height="300px"
+                onChange={handleCodeChange}
+                theme={vscodeDark}
+                extensions={[python()]}
+                basicSetup={{
+                  lineNumbers: true,
+                  highlightActiveLineGutter: true,
+                  highlightSpecialChars: true,
+                  foldGutter: true,
+                  dropCursor: true,
+                  allowMultipleSelections: true,
+                  indentOnInput: true,
+                  syntaxHighlighting: true,
+                  bracketMatching: true,
+                  closeBrackets: true,
+                  autocompletion: true,
+                  rectangularSelection: true,
+                  crosshairCursor: true,
+                  highlightActiveLine: true,
+                  highlightSelectionMatches: true,
+                  closeBracketsKeymap: true,
+                  defaultKeymap: true,
+                  searchKeymap: true,
+                  historyKeymap: true,
+                  foldKeymap: true,
+                  completionKeymap: true,
+                  lintKeymap: true,
+                }}
+                placeholder="# Введите ваш код на Python здесь"
+              />
+            </div>
+
+            {output && (
+              <div>
+                <h4 className="text-sm font-medium mb-1">Результат выполнения:</h4>
+                <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto whitespace-pre-wrap max-h-[200px]">
+                  {output}
+                </pre>
               </div>
-          <SheetFooter>
-            <PythonInterpreter code={code} onOutput={setOutput} />      
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-
-    )
+            )}
+          </div>
+        </div>
+        <SheetFooter>
+          <PythonInterpreter code={code} onOutput={setOutput} />
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  )
 }
-
-
