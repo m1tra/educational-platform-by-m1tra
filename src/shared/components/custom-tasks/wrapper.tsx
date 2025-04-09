@@ -96,7 +96,7 @@ export const Wrapper = () => {
     setLoading(true)
     try {
       if (!isAdmin || !isModerator) {
-        toast.error("Необходимо авторизоваться")
+        toast.error("403 forbidden")
         return
       }
       // const testPayload = {
