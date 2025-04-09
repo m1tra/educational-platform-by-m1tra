@@ -8,48 +8,40 @@ import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger
 import CodeMirror from "@uiw/react-codemirror"
 import { python } from "@codemirror/lang-python"
 import { vscodeDark } from "@uiw/codemirror-theme-vscode"
+import { loadPyodideOnce } from "./pyodide-loader"
 
 interface PythonInterpreterProps {
   code: string
   onOutput: (output: string) => void
 }
 
-const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
+interface PythonInterpreterProps {
+  code: string
+  onOutput: (output: string) => void
+}
+
+export const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
   const [isRunning, setIsRunning] = useState(false)
   const [isPyodideReady, setIsPyodideReady] = useState(false)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pyodideRef = useRef<any>(null)
 
   useEffect(() => {
-    async function loadPyodide() {
+    const init = async () => {
       setIsRunning(true)
       try {
-        if (typeof window !== "undefined") {
-          await new Promise((resolve, reject) => {
-            const script = document.createElement("script")
-            script.src = "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"
-            script.onload = resolve
-            script.onerror = reject
-            document.head.appendChild(script)
-          })
-
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          pyodideRef.current = await window.loadPyodide({
-            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/",
-          })
-
-          setIsPyodideReady(true)
-        }
-      } catch (error) {
-        console.error("Ошибка загрузки Pyodide:", error)
+        pyodideRef.current = await loadPyodideOnce()
+        if (pyodideRef.current) setIsPyodideReady(true)
+        else onOutput("Pyodide не был загружен.")
+      } catch (err) {
+        console.error("Ошибка загрузки Pyodide:", err)
         onOutput("Ошибка загрузки Python-интерпретатора.")
       } finally {
         setIsRunning(false)
       }
     }
 
-    loadPyodide()
+    init()
   }, [onOutput])
 
   const executeCode = () => {
@@ -57,6 +49,7 @@ const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
       onOutput("Python-интерпретатор еще загружается...")
       return
     }
+
     setIsRunning(true)
     onOutput("Выполнение кода...")
 
@@ -70,7 +63,7 @@ const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
       pyodideRef.current.runPython(code)
       const stdout = pyodideRef.current.runPython("sys.stdout.getvalue()")
       onOutput(stdout)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       onOutput(`Ошибка: ${error.message}`)
     } finally {
@@ -85,6 +78,7 @@ const PythonInterpreter = ({ code, onOutput }: PythonInterpreterProps) => {
     </Button>
   )
 }
+
 
 export const CardPythonInterpreter = ({ code, setCode, output, setOutput }: cardPythonInterpreterProps) => {
   const handleCodeChange = (value: string) => {

@@ -9,6 +9,7 @@ moder page
 ИИ МОДЕРИРУЕТ 
 измение теста с пропущенной буквы с капса на ковычки 
 custom test в local storage
+lazy loading
 
 middleware
 баг дублирования обновления
@@ -17,4 +18,5 @@ middleware
 баг сложности
 task в json
 вынести логику во wrapper за разметку
+настройка конфига
 
