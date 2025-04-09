@@ -97,7 +97,7 @@ export function RadioSelect({
         )}
         <Button 
           onClick={checkAnswer} 
-          disabled={selectedOption === "" || currentTaskAttempts===3} 
+          disabled={selectedOption === "" || currentTaskAttempts===3 || isCorrect!} 
           className="w-full text-lg font-medium"
         >
           Проверить

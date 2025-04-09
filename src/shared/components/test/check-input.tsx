@@ -89,7 +89,7 @@ const CheckInput = ({userInput,setUserInput,isCorrect,checkAnswer,currentTaskAtt
           }`}
           autoFocus
         />
-        <Button onClick={checkAnswer} disabled={userInput === "" || currentTaskAttempts===3}>
+        <Button onClick={checkAnswer} disabled={userInput === "" || currentTaskAttempts===3 || isCorrect!}>
           Проверить
         </Button>
   </div>
