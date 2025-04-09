@@ -10,7 +10,7 @@ export const AdvancedSetting = () => {
     <Card>
         <CardHeader>
           <CardTitle>Расширенные настройки</CardTitle>
-          <CardDescription>Настройте дополнительные параметры теста</CardDescription>
+          <CardDescription>Настройте дополнительные параметры теста(временно не работают)</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="timing">
