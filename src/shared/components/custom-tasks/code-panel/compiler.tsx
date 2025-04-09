@@ -140,7 +140,7 @@ export const CardPythonInterpreter = ({ code, setCode, output, setOutput }: card
             {output && (
               <div>
                 <h4 className="text-sm font-medium mb-1">Результат выполнения:</h4>
-                <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto whitespace-pre-wrap max-h-[200px]">
+                <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto whitespace-pre-wrap max-h-[100px]">
                   {output}
                 </pre>
               </div>

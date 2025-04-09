@@ -4,8 +4,6 @@ const prisma = dbClient
 
 export class CategoryModel {
 
-
-
   static async getTestWithCategories(id: string) {
     return await prisma.test.findUnique({
       where: { id },
@@ -16,7 +14,12 @@ export class CategoryModel {
   }
 
   static async getAll() {
-    return await prisma.category.findMany()
+    return await prisma.category.findMany({
+      include: {
+        tests: true,
+      },
+    }
+    )
   }
 
   static async delete(name: string) {

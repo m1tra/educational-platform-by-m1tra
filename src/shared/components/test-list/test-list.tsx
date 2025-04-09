@@ -1,16 +1,19 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { toast } from "sonner"
 import { TestCard } from "./test-card"
 
 import { Card, CardFooter, CardContent, CardHeader } from "../ui/card"
 import { Skeleton } from "../ui/skeleton"
 import { Test } from "../../types/test"
-import { Category } from "@prisma/client"
 import TagInput from "../ui/tags"
 
-
+interface Category{
+  id:string,
+  name:string,
+  tests: Test[]
+}
 
 
 const TestCardSkeleton = () => {
@@ -39,7 +42,7 @@ const TestCardSkeleton = () => {
 
 
 export function TestsList() {
-  const [tests, setTestsData] = useState([])
+  const [tests, setTestsData] = useState<Test[]>([])
   const [tags, setTags] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -67,36 +70,33 @@ export function TestsList() {
     }
   }
 
+  const initialLoad = useRef(true)
+
   useEffect(() => {
-    const fetchTests = async () => {
-    setLoading(true)
+    const fetchAll = async () => {
+      setLoading(true)
       try {
-        const category = await fetch(`/api/categories`)
-        const categories = await category.json()
-        setTags(categories.map((category: Category) => category.name))
+        if (initialLoad.current) {
+          const categoryRes = await fetch(`/api/categories`)
+          const categories = await categoryRes.json()
+          setTags(categories.map((category: Category) => category.name))
+          initialLoad.current = false
+        } else {
+          const res = await fetch(`/api/tests?categoryId=${tags}`)
+          const tests = await res.json()
+          setTestsData(tests)
+        }
       } catch (error) {
-        console.error('Ошибка при загрузке тестов:', error)
-      }
-      finally {
+        console.error('Ошибка при загрузке:', error)
+      } finally {
         setLoading(false)
       }
     }
-    fetchTests()
-  }, [response])
+  
+    fetchAll()
+  }, [tags, response])
+  
 
-  useEffect(() => {
-      const fetchTests = async () => {
-        try {
-          const response = await fetch(`/api/tests?categoryId=${tags}`)
-          const tests = await response.json()
-          setTestsData(tests)
-        } catch (error) {
-          console.error('Ошибка при загрузке тестов:', error)
-        }
-      }
-      fetchTests()
-    
-  }, [tags]) 
   return (
     <>
         <div className="w-full space-y-10">
