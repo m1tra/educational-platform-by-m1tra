@@ -38,6 +38,7 @@ export function TestCard({
   const [code, setCode] = useState<string>("")
   const [output, setOutput] = useState<string>("")
 
+
   //radio
   const [selectedOption, setSelectedOption] = useState<string>("")
 
@@ -166,7 +167,8 @@ export function TestCard({
                   selectedOption={selectedOption}
                   setSelectedOption={setSelectedOption}
                   checkAnswer={checkAnswer}
-                  currentTaskAttempts={currentTaskAttempts}
+                  currentTaskAttempts={currentTaskAttempts}  
+                  showCorrectAnswer={showCorrectAnswer}              
                 />
               ) : (
                 <AnswerFeedback

@@ -220,7 +220,7 @@ export const Wrapper = () => {
   
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 px-6">
       <div className="md:flex  w-full justify-between">
         <div className="mb-6 ">
           <h1 className="text-3xl font-bold tracking-tight">Создайте новый тест</h1>

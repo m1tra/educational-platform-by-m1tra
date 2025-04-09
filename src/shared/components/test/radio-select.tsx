@@ -7,13 +7,14 @@ import { useMemo } from 'react';
 
 
 interface RadioSelectProps {
-  options: string[];
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  checkAnswer: () => void;
-  isCorrect: boolean | null;
-  correctAnswer: string;
-  currentTaskAttempts: number;
+  options: string[]
+  selectedOption: string
+  setSelectedOption: (option: string) => void
+  checkAnswer: () => void
+  isCorrect: boolean | null
+  correctAnswer: string
+  currentTaskAttempts: number
+  showCorrectAnswer:boolean
 }
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -29,13 +30,15 @@ export function RadioSelect({
   checkAnswer,
   currentTaskAttempts,
   isCorrect,
+  correctAnswer,
   options,
+  showCorrectAnswer,
   selectedOption,
   setSelectedOption,
 }: RadioSelectProps) {
   
   const shuffledOptions = useMemo(() => shuffleArray(options), [options]);
-  
+
   return (
     <AnimatePresence>
       <div className="space-y-4">
@@ -83,10 +86,18 @@ export function RadioSelect({
             )}
           </motion.div>
         )}
-
+        {showCorrectAnswer && !isCorrect && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-2 p-2 bg-blue-50 text-blue-600 rounded-md dark:bg-blue-900/20 dark:text-blue-400"
+          >
+            <p>Правильный ответ: {correctAnswer}</p>
+          </motion.div>
+        )}
         <Button 
           onClick={checkAnswer} 
-          disabled={selectedOption === ""} 
+          disabled={selectedOption === "" || currentTaskAttempts===3} 
           className="w-full text-lg font-medium"
         >
           Проверить
