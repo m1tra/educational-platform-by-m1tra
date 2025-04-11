@@ -4,11 +4,12 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { AnimatePresence } from "framer-motion"
 import { TestConfig } from "./test-config"
-import { TestResults } from "./test-result"
+import { TestResults } from "./test-result/test-result"
 import { TestCard } from "./test-card"
 import { ProgrammingTask } from "../custom-tasks/code-panel/code-panel-interface"
 import { TestType } from "../custom-tasks/wrapper"
 import { ExamTicketProps } from "../custom-tasks/word-answer-panel/exam-ticket-interface"
+import { answerListProps } from "./test-interface"
 
 export interface tasks {
   tasks: (Word | ProgrammingTask | ExamTicketProps)[]
@@ -38,7 +39,9 @@ export function Test({
   const [currentTaskIndex, setCurrentTaskIndex] = useState<number>(0)
   const [correctTasksCount, setCorrectTasksCount] = useState<number>(0)
   const [totalAttempts, setTotalAttempts] = useState<number>(0)
-
+  const [answerList,setAnswerList] = useState<answerListProps[]>([])
+  const [taskId,setTaskId] = useState<number>(1)
+  
   //Время
   const [startTime, setStartTime] = useState<number>(0)
   const [taskStartTime, setTaskStartTime] = useState<number>(0)
@@ -58,6 +61,7 @@ export function Test({
   }
 
   const completeCurrentTask = () => {
+    setTaskId(taskId+1)
     const currentTaskTime = (Date.now() - taskStartTime) / 1000;
     setTaskTimes(prev => [...prev, currentTaskTime]);
     setTaskStartTime(Date.now());
@@ -75,6 +79,8 @@ export function Test({
     setCorrectTasksCount(0)
     setCurrentTaskIndex(0)
     setTaskTimes([])
+    setAnswerList([])
+    setTaskId(1)
   }
 
   const getStats = () => {
@@ -121,6 +127,9 @@ export function Test({
             totalAttempts={totalAttempts}
             setTotalAttempts={setTotalAttempts}
             handleFinish={onFinish}
+            taskId={taskId}
+            answerList={answerList}
+            setAnswerList={setAnswerList}
           />
         ) : (
           <TestResults
@@ -128,6 +137,7 @@ export function Test({
               correctCount={correctTasksCount}
               totalAttempts={totalAttempts}
               onRestart={onRestart}
+              answerList={answerList}
               {...getStats()}          />
         )}
       </AnimatePresence>

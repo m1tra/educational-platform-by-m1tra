@@ -24,7 +24,7 @@ export const WordsPanel = ({ handleTakeValue, words }: WordsPanelProps) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editingWord, setEditingWord] = useState<Word>({ type: TestType.WORD,expectedOutput: "" })
   const [bulkWords, setBulkWords] = useState<string>("")
-  console.log(wordsList,words)
+
   useEffect(() => {
     setWordsList(words)
   }, [words])

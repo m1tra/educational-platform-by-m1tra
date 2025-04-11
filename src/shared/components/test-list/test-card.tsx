@@ -75,7 +75,7 @@ export function TestCard({ test, handleDelete }: TestProps) {
               В разработке
             </div>
           ) : (
-            <Link href={`/test/${test.id}`} className="w-full">
+            <Link href={`/tests/test/${test.id}`} className="w-full">
               <div className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2.5 px-4 rounded-md text-center transition-colors">
                 Начать
               </div>

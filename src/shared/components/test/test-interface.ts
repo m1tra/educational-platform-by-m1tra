@@ -23,6 +23,9 @@ export interface TestCardProps {
   title: string
   description: string 
   currentTaskIndex:number
+  taskId:number
+  answerList:answerListProps[]
+  setAnswerList: React.Dispatch<React.SetStateAction<answerListProps[]>>
   setCurrentTaskIndex: (currentTaskIndex:number)=>void
   correctTasksCount:number
   setCorrectTasksCount: (currentTaskIndex:number)=>void
@@ -37,4 +40,10 @@ export type CheckInputProps = {
   setUserInput:(e:string)=>void
   isCorrect:boolean | null
   checkAnswer:()=>void
+}
+export type answerListProps = {
+  id:number
+  task:string
+  correctAnswer:string
+  userAnswer:string
 }

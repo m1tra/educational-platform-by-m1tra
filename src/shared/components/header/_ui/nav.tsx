@@ -6,11 +6,11 @@ export function Nav() {
       <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
         Главная
       </Link>
-      <Link href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-        Все тесты
+      <Link href="/tests" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+        Тесты
       </Link>
-      <Link href="/about-project" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-        О проекте
+      <Link href="/courses" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+        Курсы
       </Link>
     </nav>
   )

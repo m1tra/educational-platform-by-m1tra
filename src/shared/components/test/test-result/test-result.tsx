@@ -1,13 +1,14 @@
 "use client"
 
 
-import { Trophy, Info, Clock, CheckCircle, XCircle, BarChart3, Repeat } from "lucide-react"
+import { Trophy, Info, Clock, CheckCircle, XCircle, BarChart3, Repeat, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
-import { Button } from "../ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip"
+import { Button } from "../../ui/button"
+import { answerListProps } from "../test-interface"
 
 
 
@@ -15,6 +16,7 @@ export interface TestResultsProps {
   totalTasks: number
   correctCount: number
   totalAttempts: number
+  answerList: answerListProps[]
   totalTime: number 
   onRestart: () => void
   averageTimePerTask: number 
@@ -32,6 +34,7 @@ export function TestResults({
   totalTasks,
   correctCount,
   totalAttempts,
+  answerList,
   totalTime,
   onRestart,
   averageTimePerTask = 0,
@@ -46,7 +49,6 @@ export function TestResults({
   const formattedAvgTime = formatTime(averageTimePerTask )
   const formattedFastestTime = formatTime(fastestTask || 0)
   const formattedSlowestTime = formatTime(slowestTask || 0)
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -67,10 +69,11 @@ export function TestResults({
 
         <CardContent className="space-y-6 py-6">
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid grid-cols-3 mb-4">
+            <TabsList className="grid grid-cols-4 mb-4">
               <TabsTrigger value="overview">Обзор</TabsTrigger>
               <TabsTrigger value="details">Детали</TabsTrigger>
               <TabsTrigger value="time">Время</TabsTrigger>
+              <TabsTrigger value="answer-details">Детали ответов</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
@@ -217,6 +220,33 @@ export function TestResults({
                   </>
                 )}
               </div>
+            </TabsContent>
+            <TabsContent value="answer-details" className="space-y-4">
+            {answerList.map((answer, index: number) => (
+                  <div key={index} className="border rounded-lg p-3">
+                    <div className="flex items-start gap-2">
+                      {answer.correctAnswer === answer.userAnswer ? (
+                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                      ) : (
+                        <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
+                      )}
+                      <div>
+                        <p className="font-medium">
+                          {`${answer.id}. ${answer.task}`}
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Ваш ответ:{" "}
+                          {answer.userAnswer}
+                        </p>
+                        {answer.correctAnswer !== answer.userAnswer && (
+                          <p className="text-sm text-green-600 mt-1">
+                            Правильный ответ: {answer.correctAnswer}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </TabsContent>
           </Tabs>
 

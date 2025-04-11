@@ -1,58 +1,58 @@
 'use client'
 
 import { useAppSession } from "@/src/entities/session/use-app-session";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { BarLoader } from "../ui/loader";
 
-// function ActivityGrid() {
-//     const [activities, setActivities] = useState<number[][]>([]);
+function ActivityGrid() {
+    const [activities, setActivities] = useState<number[][]>([]);
 
-//     useEffect(() => {
-//         const newActivities = Array(52).fill(0).map(() => 
-//             Array(7).fill(0).map(() => Math.floor(Math.random() * 4))
-//         );
-//         setActivities(newActivities);
-//     }, []);
+    useEffect(() => {
+        const newActivities = Array(52).fill(0).map(() => 
+            Array(7).fill(0).map(() => Math.floor(Math.random() * 4))
+        );
+        setActivities(newActivities);
+    }, []);
 
-//     if (activities.length === 0) {
-//         return (
-//             <div className="flex flex-wrap gap-1">
-//                 {Array(52).fill(0).map((_, weekIndex) => (
-//                     <div key={weekIndex} className="flex flex-col gap-1">
-//                         {Array(7).fill(0).map((_, dayIndex) => (
-//                             <div
-//                                 key={dayIndex}
-//                                 className="w-3 h-3 rounded-sm bg-muted"
-//                             />
-//                         ))}
-//                     </div>
-//                 ))}
-//             </div>
-//         );
-//     }
+    if (activities.length === 0) {
+        return (
+            <div className="flex flex-wrap gap-1">
+                {Array(52).fill(0).map((_, weekIndex) => (
+                    <div key={weekIndex} className="flex flex-col gap-1">
+                        {Array(7).fill(0).map((_, dayIndex) => (
+                            <div
+                                key={dayIndex}
+                                className="w-3 h-3 rounded-sm bg-muted"
+                            />
+                        ))}
+                    </div>
+                ))}
+            </div>
+        );
+    }
 
-//     return (
-//         <div className="flex flex-wrap gap-1">
-//             {activities.map((week, weekIndex) => (
-//                 <div key={weekIndex} className="flex flex-col gap-1">
-//                     {week.map((intensity, dayIndex) => (
-//                         <div
-//                             key={dayIndex}
-//                             className={`w-3 h-3 rounded-sm ${
-//                                 intensity === 0 ? 'bg-muted' :
-//                                 intensity === 1 ? 'bg-primary/30' :
-//                                 intensity === 2 ? 'bg-primary/60' :
-//                                 'bg-primary'
-//                             }`}
-//                             title="Активность"
-//                         />
-//                     ))}
-//                 </div>
-//             ))}
-//         </div>
-//     );
-// }
+    return (
+        <div className="flex flex-wrap gap-1">
+            {activities.map((week, weekIndex) => (
+                <div key={weekIndex} className="flex flex-col gap-1">
+                    {week.map((intensity, dayIndex) => (
+                        <div
+                            key={dayIndex}
+                            className={`w-3 h-3 rounded-sm ${
+                                intensity === 0 ? 'bg-muted' :
+                                intensity === 1 ? 'bg-primary/30' :
+                                intensity === 2 ? 'bg-primary/60' :
+                                'bg-primary'
+                            }`}
+                            title="Активность"
+                        />
+                    ))}
+                </div>
+            ))}
+        </div>
+    );
+}
 
 export function ProfileStats() {
     const stats = [
@@ -97,7 +97,7 @@ export function ProfileStats() {
                         <h1 className="text-2xl font-bold">Добро пожаловать, {user?.name}</h1>
                         <p className="text-muted-foreground">{user?.email}</p>
                         <div className="mt-4">
-                            {/* <ActivityGrid /> */}
+                            <ActivityGrid />
                         </div>
                     </div>
                     </div>

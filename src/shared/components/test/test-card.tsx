@@ -15,11 +15,20 @@ import type { ExamTicketProps } from "../custom-tasks/word-answer-panel/exam-tic
 import { RadioSelect } from "./radio-select"
 import Image from "next/image"
 
+const getTaskTitle = (task: ProgrammingTask | Word | ExamTicketProps) => {
+  if ("title" in task) return task.title
+  if ("question" in task) return task.question
+  if ("expectedOutput" in task) return pairOfWords(task.expectedOutput)
+  return "Неизвестное задание"
+}
+
 export function TestCard({
   title,
   description,
   tasks,
   currentTaskIndex,
+  taskId,
+  setAnswerList,
   setCurrentTaskIndex,
   correctTasksCount,
   setCorrectTasksCount,
@@ -58,8 +67,10 @@ export function TestCard({
       setCode((tasks[currentTaskIndex] as ProgrammingTask).initialCode || "")
     }
   }, [currentTaskIndex])
-
   const checkAnswer = () => {
+    const s ={id:taskId,correctAnswer:correctAnswer,userAnswer:selectedOption!==""?selectedOption:userInput,task:getTaskTitle(task)}
+    setAnswerList(prev => [...prev, s])
+
     if (!("expectedOutput" in task)) return
     const isRadioTask = "options" in task && task.options && task.options?.length > 0
     const isCorrectAnswer = isRadioTask
@@ -78,7 +89,7 @@ export function TestCard({
         setCurrentTaskIndex(currentTaskIndex + 1)
       }, 1500)
     }
-
+    
     if (isCorrectAnswer) {
       setIsCorrect(true)
       setTimeout(() => {
