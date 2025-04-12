@@ -225,11 +225,13 @@ export function TestResults({
             {answerList.map((answer, index: number) => (
                   <div key={index} className="border rounded-lg p-3">
                     <div className="flex items-start gap-2">
-                      {answer.correctAnswer === answer.userAnswer ? (
-                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      ) : (
-                        <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
-                      )}
+                      <div className="grid place-items-center w-6 h-6">
+                        {answer.correctAnswer === answer.userAnswer ? (
+                          <CheckCircle className="h-5 w-5 text-green-500" />
+                        ) : (
+                          <AlertCircle className="h-5 w-5 text-red-500" />
+                        )}
+                      </div>
                       <div>
                         <p className="font-medium">
                           {`${answer.id}. ${answer.task}`}

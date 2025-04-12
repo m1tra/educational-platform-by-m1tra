@@ -80,6 +80,7 @@ export function TestsList() {
           const categoryRes = await fetch(`/api/categories`)
           const categories = await categoryRes.json()
           setTags(categories.map((category: Category) => category.name))
+          console.log(categories)
           initialLoad.current = false
         } else {
           const res = await fetch(`/api/tests?categoryId=${tags}`)
