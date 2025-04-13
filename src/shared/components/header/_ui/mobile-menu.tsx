@@ -1,6 +1,9 @@
-import Link from "next/link"
-import { Github } from "lucide-react"
+'use client'
+
+import { cn } from '@/src/shared/lib/utils'
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '../../ui/drawer'
+import { NavLinks } from './nav'
+
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -11,29 +14,21 @@ interface MobileMenuProps {
 export function MobileMenu({ isOpen, onOpenChange, onLinkClick }: MobileMenuProps) {
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange}>
-      <DrawerContent>
-        <DrawerHeader className='p-0 m-0'>
-          <DrawerTitle></DrawerTitle>
+      <DrawerContent className={cn("h-3/4 md:hidden")}>
+        <DrawerHeader className="px-5 pt-4 pb-0">
+          <DrawerTitle className="text-lg font-semibold">Меню</DrawerTitle>
         </DrawerHeader>
-        <div className='flex flex-col gap-4 h-96 p-5'>
-          <Link href="/" onClick={onLinkClick}>
-            <div className='text-secondary-foreground text-base'>Главная</div>
-          </Link>
-          <Link href="/" onClick={onLinkClick}>
-            <div className='text-secondary-foreground text-base'>Все тесты</div>
-          </Link>
-          <Link href="/" onClick={onLinkClick}>
-            <div className='text-secondary-foreground text-base'>О проекте</div>
-          </Link>
-        </div>
+
+        <nav className="flex flex-col gap-4 px-5 py-6" aria-label="Мобильная навигация">
+          <NavLinks onClick={onLinkClick} className="text-base text-secondary-foreground" />
+        </nav>
+
         <DrawerFooter>
-          <div className='flex gap-2 justify-end'>
-            <Link href="https://github.com/m1tra/educational-platform-by-m1tra">
-              <Github className='text-secondary-foreground' strokeWidth={1} />
-            </Link>
+          <div className="flex justify-end gap-2">
+
           </div>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )
-} 
+}

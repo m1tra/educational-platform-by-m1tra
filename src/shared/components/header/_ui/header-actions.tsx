@@ -1,9 +1,5 @@
-import Link from "next/link"
-
-import { Github } from "lucide-react"
 import { Profile } from "./profile";
 import { ThemeToggle } from "../../theme-toggle";
-import { Button } from "../../ui/button";
 
 type HeaderVariant = 'auth' | 'private' | 'public';
 
@@ -14,18 +10,13 @@ interface HeaderActionsProps {
 export function HeaderActions({ variant = 'public' }: HeaderActionsProps) {
   return (
     <div className="flex items-center gap-4">
-      <ThemeToggle />
-      <Link href="https://github.com/m1tra/educational-platform-by-m1tra">
-          <Button variant="outline" size="icon">
-            <Github strokeWidth={2} className='h-[1.2rem] w-[1.2rem] text-secondary-foreground' />
-          </Button>
-        </Link>
       {variant === 'public' && (
         <Profile/>
       )}
       {(variant === 'private' || variant === 'auth') && (
         <Profile/>
       )}
+      <ThemeToggle />
     </div>
   )
 } 

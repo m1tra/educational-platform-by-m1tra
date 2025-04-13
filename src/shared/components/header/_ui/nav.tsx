@@ -1,17 +1,41 @@
-import Link from "next/link"
+'use client'
 
-export function Nav() {
+import { cn } from '@/src/shared/lib/utils'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+interface NavLinksProps {
+  onClick?: () => void
+  className?: string
+}
+
+export function NavLinks({ onClick, className }: NavLinksProps) {
+  const pathname = usePathname()
+
+  const links = [
+    { href: '/', label: 'Главная' },
+    { href: '/tests', label: 'Все тесты' },
+    { href: '/courses', label: 'Курсы' },
+  ]
+
+
+
   return (
-    <nav className="hidden md:flex items-center gap-6">
-      <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
-        Главная
-      </Link>
-      <Link href="/tests" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-        Тесты
-      </Link>
-      <Link href="/courses" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-        Курсы
-      </Link>
-    </nav>
+    <>
+      {links.map(({ href, label }) => (
+        <Link
+          key={href}
+          href={href}
+          onClick={onClick}
+          className={cn(
+            'text-sm font-medium transition-colors hover:text-primary',
+            pathname === href ? 'text-primary' : 'text-muted-foreground',
+            className
+          )}
+        >
+          {label}
+        </Link>
+      ))}
+    </>
   )
-} 
+}
