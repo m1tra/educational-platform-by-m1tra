@@ -3,11 +3,11 @@
 
 import {  Save  } from "lucide-react"
 import { TaskEditFormProps } from "./code-panel-interface"
-import { CardContent } from "../../ui/card"
-import { Label } from "../../ui/label"
-import { Input } from "../../ui/input"
-import { Textarea } from "../../ui/textarea"
-import { Button } from "../../ui/button"
+import { CardContent } from "../../../ui/card"
+import { Label } from "../../../ui/label"
+import { Input } from "../../../ui/input"
+import { Textarea } from "../../../ui/textarea"
+import { Button } from "../../../ui/button"
 
 
 

@@ -6,7 +6,7 @@ import { CreateTab } from "./create-tab"
 import { TestTab } from "./test-tab"
 import { CodePanelProps, ProgrammingTask } from "./code-panel-interface"
 import { Tabs } from "@radix-ui/react-tabs"
-import { TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
+import { TabsContent, TabsList, TabsTrigger } from "../../../ui/tabs"
 
 
 export const CodePanel = ({ handleTakeValue, initialTasks = [] }: CodePanelProps) => {

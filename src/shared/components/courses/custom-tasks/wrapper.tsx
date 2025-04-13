@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import { ArrowLeft, Loader2} from "lucide-react"
 
-import { Button } from "../ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { type Word, Test } from "../test/tests"
+import { Button } from "../../ui/button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../ui/card"
+import { type Word, Test } from "../../test/tests"
 import { WordsPanel } from "./words-panel/words-panel"
 import { CodePanel } from "./code-panel/code-panel"
 import { ProgrammingTask } from "./code-panel/code-panel-interface"

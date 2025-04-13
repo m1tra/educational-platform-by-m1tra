@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../ui/card';
-import TagInput from '../../ui/tags';
+import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../../ui/card';
+import TagInput from '../../../ui/tags';
 import { DifficultySlider } from './difficulty-slider';
 
 interface TestPropertiesProps {

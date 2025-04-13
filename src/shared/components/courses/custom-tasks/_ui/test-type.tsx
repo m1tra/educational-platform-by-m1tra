@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../ui/card';
+import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../../ui/card';
 import { Code, ListChecks, Type } from 'lucide-react';
-import { Label } from '../../ui/label';
+import { Label } from '../../../ui/label';
 
 interface TestTypeSelectorProps {
     setSelectedValue: (e: string) => void;

@@ -5,8 +5,8 @@ import { Edit, Trash } from "lucide-react"
 import { TaskEditForm } from "./inputs"
 import { CreateTabProps, ProgrammingTask } from "./code-panel-interface"
 import { TestType } from "../wrapper"
-import { Button } from "../../ui/button"
-import { Card, CardContent, CardHeader } from "../../ui/card"
+import { Button } from "../../../ui/button"
+import { Card, CardContent, CardHeader } from "../../../ui/card"
 
 
 

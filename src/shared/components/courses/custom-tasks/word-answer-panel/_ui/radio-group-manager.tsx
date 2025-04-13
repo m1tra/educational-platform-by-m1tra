@@ -3,10 +3,10 @@ import { Plus, Edit, Trash, Save, X, CheckCircle } from "lucide-react";
 
 
 import { RadioGroupManagerProps } from "../exam-ticket-interface";
-import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
-import { Input } from "../../../ui/input";
-import { Button } from "../../../ui/button";
-import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../../ui/radio-group";
+import { Input } from "../../../../ui/input";
+import { Button } from "../../../../ui/button";
+import { Label } from "../../../../ui/label";
 
 
 

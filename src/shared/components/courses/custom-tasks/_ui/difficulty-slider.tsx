@@ -1,6 +1,6 @@
 import React from 'react';
-import { Label } from '../../ui/label';
-import { Slider } from '../../ui/slider';
+import { Label } from '../../../ui/label';
+import { Slider } from '../../../ui/slider';
 
 interface DifficultySliderProps {
   difficulty: string;

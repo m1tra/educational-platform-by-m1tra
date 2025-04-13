@@ -1,6 +1,6 @@
 import { ImageIcon, X } from "lucide-react";
-import { Button } from "../../../ui/button";
-import { Input } from "../../../ui/input";
+import { Button } from "../../../../ui/button";
+import { Input } from "../../../../ui/input";
 import Image from "next/image"
 import { useRef, useState } from "react";
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Label } from '../../ui/label';
-import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../ui/card';
-import { Input } from '../../ui/input';
+import { Label } from '../../../ui/label';
+import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../../ui/card';
+import { Input } from '../../../ui/input';
 
 interface BaseSettingsProps {
   title: string;

@@ -7,7 +7,7 @@ import { cn } from "@/src/shared/lib/utils"
 import { ChevronRight } from "lucide-react"
 import { TestTabProps } from "./code-panel-interface"
 import { CardPythonInterpreter } from "./compiler"
-import { Card, CardContent, CardHeader } from "../../ui/card"
+import { Card, CardContent, CardHeader } from "../../../ui/card"
 
 
 

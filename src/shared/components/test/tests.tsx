@@ -6,9 +6,9 @@ import { AnimatePresence } from "framer-motion"
 import { TestConfig } from "./test-config"
 import { TestResults } from "./test-result/test-result"
 import { TestCard } from "./test-card"
-import { ProgrammingTask } from "../custom-tasks/code-panel/code-panel-interface"
-import { TestType } from "../custom-tasks/wrapper"
-import { ExamTicketProps } from "../custom-tasks/word-answer-panel/exam-ticket-interface"
+import { ProgrammingTask } from "../courses/custom-tasks/code-panel/code-panel-interface"
+import { TestType } from "../courses/custom-tasks/wrapper"
+import { ExamTicketProps } from "../courses/custom-tasks/word-answer-panel/exam-ticket-interface"
 import { answerListProps } from "./test-interface"
 
 export interface tasks {

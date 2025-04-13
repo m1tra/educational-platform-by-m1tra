@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../ui/card';
-import { Label } from '../../ui/label';
-import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
-import { TabsContent } from '../../ui/tabs';
-import { Switch } from '../../ui/switch';
+import { Card, CardContent, CardDescription, CardTitle, CardHeader } from '../../../ui/card';
+import { Label } from '../../../ui/label';
+import { Tabs, TabsList, TabsTrigger } from '../../../ui/tabs';
+import { TabsContent } from '../../../ui/tabs';
+import { Switch } from '../../../ui/switch';
 
 export const AdvancedSetting = () => {
   return (

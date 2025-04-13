@@ -1,5 +1,5 @@
-import { ProgrammingTask } from "../custom-tasks/code-panel/code-panel-interface";
-import { ExamTicketProps } from "../custom-tasks/word-answer-panel/exam-ticket-interface";
+import { ProgrammingTask } from "../courses/custom-tasks/code-panel/code-panel-interface";
+import { ExamTicketProps } from "../courses/custom-tasks/word-answer-panel/exam-ticket-interface";
 
 import { Word } from "./tests";
 

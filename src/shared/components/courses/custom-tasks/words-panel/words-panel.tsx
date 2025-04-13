@@ -6,12 +6,12 @@ import { Edit, Trash, Save, X } from "lucide-react"
 
 
 import { TestType } from "../wrapper"
-import { Word } from "../../test/tests"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
-import { Label } from "../../ui/label"
-import { Input } from "../../ui/input"
-import { Button } from "../../ui/button"
-import { Textarea } from "../../ui/textarea"
+import { Word } from "../../../test/tests"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../ui/tabs"
+import { Label } from "../../../ui/label"
+import { Input } from "../../../ui/input"
+import { Button } from "../../../ui/button"
+import { Textarea } from "../../../ui/textarea"
 
 interface WordsPanelProps {
   handleTakeValue: (words: Word[]) => void
