@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation"
 import { ChevronLeft, Plus, Trash2, FileText } from "lucide-react"
 
 import Link from "next/link"
-import { Button } from "../ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
-import { Label } from "../ui/label"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
-import { Badge } from "../ui/badge"
-import { Switch } from "../ui/switch"
+import { Button } from "../../ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card"
+import { Label } from "../../ui/label"
+import { Input } from "../../ui/input"
+import { Textarea } from "../../ui/textarea"
+import { Badge } from "../../ui/badge"
+import { Switch } from "../../ui/switch"
 
 export interface course{
     id:number
@@ -179,7 +179,7 @@ export default function CoursesWrapper() {
 
   
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto ">
       <div className="mb-6">
         <Link href="/courses">
           <Button variant="ghost" className="mb-4">

@@ -9,7 +9,7 @@ export function Nav() {
       <Link href="/tests" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
         Тесты
       </Link>
-      <Link href="/courses" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+      <Link href="/teach" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
         Курсы
       </Link>
     </nav>
