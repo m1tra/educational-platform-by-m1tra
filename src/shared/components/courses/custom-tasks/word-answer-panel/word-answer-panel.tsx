@@ -9,7 +9,7 @@ import { Input } from "../../../ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../../ui/dropdown-menu"
 import { Button } from "../../../ui/button"
 import { Textarea } from "../../../ui/textarea"
-import { AskImageQuestionForm } from "@/src/feature/ask-image-question/AskImageQuestionForm"
+import { AskImageQuestionForm } from "@/src/features/ask-image-question/AskImageQuestionForm"
 import { ImageUpload } from "./_ui/image-uploader"
 import { EditTask } from "./_ui/edit-task"
 
