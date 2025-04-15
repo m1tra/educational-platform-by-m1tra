@@ -4,13 +4,13 @@ import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/src/shared/components/ui/button"
-import { CourseHeader } from "@/src/widgets/course-editor/course-header"
-import { CourseInfoWidget } from "@/src/widgets/course-editor/course-info-widget"
-import { CourseStructureWidget } from "@/src/widgets/course-editor/course-structure-widget"
-import { LessonEditorWidget } from "@/src/widgets/course-editor/lesson-editor-widget"
+import { CourseHeader } from "@/src/widgets/course/course-editor/course-header"
+import { CourseInfoWidget } from "@/src/widgets/course/course-editor/course-info-widget"
+import { CourseStructureWidget } from "@/src/widgets/course/course-editor/course-structure-widget"
+import { LessonEditorWidget } from "@/src/widgets/course/course-editor/lesson-editor-widget"
 import { useCourseEditor } from "@/src/features/course-editor/use-course-editor"
 import { toast } from "sonner"
-import { course } from "@/src/entities/course/model/types"
+import { course } from "@/src/entities/course/types"
 
 
 export default function EditCoursePage() {

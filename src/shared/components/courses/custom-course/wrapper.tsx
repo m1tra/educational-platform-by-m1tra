@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, Plus, Trash2, FileText } from "lucide-react"
+import {  Plus, Trash2, FileText } from "lucide-react"
 
-import Link from "next/link"
+
 import { Button } from "../../ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card"
@@ -181,11 +181,6 @@ export default function CoursesWrapper() {
   return (
     <div className="container mx-auto ">
       <div className="mb-6">
-        <Link href="/courses">
-          <Button variant="ghost" className="mb-4">
-            <ChevronLeft className="mr-2 h-4 w-4" /> Назад к курсам
-          </Button>
-        </Link>
         <h1 className="text-3xl font-bold">Создание нового курса</h1>
       </div>
 

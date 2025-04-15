@@ -10,7 +10,7 @@ import { Separator } from "@/src/shared/components/ui/separator"
 import { Switch } from "@/src/shared/components/ui/switch"
 import { Label } from "@/src/shared/components/ui/label"
 import { ImageIcon } from "lucide-react"
-import { course } from "@/src/entities/course/model/types"
+import { course } from "@/src/entities/course/types"
 
 
 interface CourseInfoWidgetProps {

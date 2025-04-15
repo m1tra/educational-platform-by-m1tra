@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/shared/components/ui/dialog"
-import { course } from "@/src/entities/course/model/types"
+import { course } from "@/src/entities/course/types"
 import { EmptyCoursesState } from "@/src/features/courses/empty-courses-state"
 import { CourseCard } from "@/src/features/courses/course-card"
 
@@ -196,7 +196,7 @@ export function CoursesDashboard() {
     setCreateCourseDialogOpen(false)
 
     // Перенаправление на страницу редактирования нового курса
-    router.push(`/teaching/courses/edit/${newCourse.id}`)
+    router.push(`/teach/edit/${newCourse.id}`)
   }
 
   // Фильтрация курсов

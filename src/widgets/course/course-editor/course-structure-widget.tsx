@@ -17,7 +17,7 @@ import {
 import { Input } from "@/src/shared/components/ui/input"
 import { Textarea } from "@/src/shared/components/ui/textarea"
 import { FolderPlus } from "lucide-react"
-import { course, lesson, module } from "@/src/entities/course/model/types"
+import { course, lesson, module } from "@/src/entities/course/types"
 import { ModuleItem } from "@/src/features/course-editor/module-item"
 
 

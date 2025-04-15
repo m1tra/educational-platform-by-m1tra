@@ -7,7 +7,7 @@ import { Separator } from "@/src/shared/components/ui/separator"
 import { Folder, Edit, MoveUp, MoveDown, CheckCircle, XCircle, Trash2, Plus } from "lucide-react"
 
 import { LessonItem } from "./lesson-item"
-import { lesson, module } from "@/src/entities/course/model/types"
+import { lesson, module } from "@/src/entities/course/types"
 
 interface ModuleItemProps {
   module: module

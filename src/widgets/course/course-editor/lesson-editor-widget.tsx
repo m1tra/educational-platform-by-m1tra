@@ -11,7 +11,7 @@ import { Switch } from "@/src/shared/components/ui/switch"
 import { Separator } from "@/src/shared/components/ui/separator"
 import { Button } from "@/src/shared/components/ui/button"
 import { FileText, ImageIcon, Video, Upload, FolderPlus, Plus } from "lucide-react"
-import { course } from "@/src/entities/course/model/types"
+import { course } from "@/src/entities/course/types"
 
 
 interface LessonEditorWidgetProps {

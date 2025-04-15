@@ -7,7 +7,7 @@ import Link from "next/link";
 import { LockKeyhole, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { useAppSession } from "@/src/entities/session/use-app-session";
-// import { SignInButton } from "../../auth/sign-in-button";
+import { SignInButton } from "../../auth/sign-in-button";
 import { Skeleton } from "../../ui/skeleton";
 import { useSignOut } from "@/src/shared/hooks/use-sign-out";
 import { useUserRole } from "@/src/entities/session/use-user-role";
@@ -21,7 +21,7 @@ export function Profile() {
 
   if (session.status === "loading") return <Skeleton className="w-8 h-8 rounded-full" />
 
-  if (session.status === "unauthenticated") return <Button>Войти</Button>
+  if (session.status === "unauthenticated") return <SignInButton/>
 
   const user = session?.data?.user
 

@@ -6,7 +6,7 @@ import type React from "react"
 import { Save } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/src/shared/components/ui/button"
-import { course } from "@/src/entities/course/model/types"
+import { course } from "@/src/entities/course/types"
 
 
 

@@ -2,7 +2,7 @@
 
 import { Badge } from "@/src/shared/components/ui/badge"
 import { Button } from "@/src/shared/components/ui/button"
-import { lesson } from "@/src/entities/course/model/types"
+import { lesson } from "@/src/entities/course/types"
 import { MoveUp, MoveDown, Trash2 } from "lucide-react"
 
 

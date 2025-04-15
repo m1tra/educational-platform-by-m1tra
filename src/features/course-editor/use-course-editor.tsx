@@ -1,6 +1,6 @@
 "use client"
 
-import { course, lesson, module } from "@/src/entities/course/model/types"
+import { course, lesson, module } from "@/src/entities/course/types"
 import { useState } from "react"
 
 

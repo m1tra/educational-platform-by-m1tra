@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/src/shared/components/ui/dropdown-menu"
-import { course } from "@/src/entities/course/model/types"
+import { course } from "@/src/entities/course/types"
 
 
 interface CourseCardProps {
