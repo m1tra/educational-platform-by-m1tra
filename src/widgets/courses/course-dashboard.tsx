@@ -14,12 +14,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/shared/components/ui/dialog"
-import { course } from "@/src/entities/course/types"
+
 import { EmptyCoursesState } from "@/src/features/courses/empty-courses-state"
 import { CourseCard } from "@/src/features/courses/course-card"
+import { Course } from "@/src/entities/course/types"
 
 // Пример данных курсов для первоначальной загрузки, если в localStorage ничего нет
-const mockCourses: course[] = [
+const mockCourses: Course[] = [
   {
     id: 1,
     title: "Веб-разработка",
@@ -119,11 +120,11 @@ const mockCourses: course[] = [
 
 export function CoursesDashboard() {
   const router = useRouter()
-  const [courses, setCourses] = useState<course[]>([])
+  const [courses, setCourses] = useState<Course[]>([])
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("all")
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [courseToDelete, setCourseToDelete] = useState<course | null>(null)
+  const [courseToDelete, setCourseToDelete] = useState<Course | null>(null)
   const [createCourseDialogOpen, setCreateCourseDialogOpen] = useState(false)
   const [newCourseTitle, setNewCourseTitle] = useState("")
   const [newCourseDescription, setNewCourseDescription] = useState("")
@@ -150,7 +151,7 @@ export function CoursesDashboard() {
     setCourses(courses.map((course) => (course.id === courseId ? { ...course, isPinned: !course.isPinned } : course)))
   }
 
-  const handleDeleteCourse = (course: course) => {
+  const handleDeleteCourse = (course: Course) => {
     setCourseToDelete(course)
     // Добавляем небольшую задержку перед открытием диалога, чтобы избежать рекурсии
     setTimeout(() => {
@@ -178,7 +179,7 @@ export function CoursesDashboard() {
   const createNewCourse = () => {
     if (!newCourseTitle.trim()) return
 
-    const newCourse: course = {
+    const newCourse: Course = {
       id: Date.now(),
       title: newCourseTitle,
       description: newCourseDescription,

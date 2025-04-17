@@ -10,17 +10,18 @@ import { Separator } from "@/src/shared/components/ui/separator"
 import { Switch } from "@/src/shared/components/ui/switch"
 import { Label } from "@/src/shared/components/ui/label"
 import { ImageIcon } from "lucide-react"
-import { course } from "@/src/entities/course/types"
+import { Course } from "@/src/entities/course/types"
+
 
 
 interface CourseInfoWidgetProps {
-  course: course
-  setCourse: React.Dispatch<React.SetStateAction<course | null>>
+  course: Course
+  setCourse: React.Dispatch<React.SetStateAction<Course | null>>
 }
 
 export function CourseInfoWidget({ course, setCourse }: CourseInfoWidgetProps) {
   // Обновление основной информации о курсе
-  const updateCourseInfo = (field: keyof course, value: course[typeof field]) => {
+  const updateCourseInfo = (field: keyof Course, value: Course[typeof field]) => {
     if (!course) return
     setCourse({ ...course, [field]: value })
   }

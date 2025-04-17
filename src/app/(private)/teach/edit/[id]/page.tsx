@@ -10,7 +10,8 @@ import { CourseStructureWidget } from "@/src/widgets/course/course-editor/course
 import { LessonEditorWidget } from "@/src/widgets/course/course-editor/lesson-editor-widget"
 import { useCourseEditor } from "@/src/features/course-editor/use-course-editor"
 import { toast } from "sonner"
-import { course } from "@/src/entities/course/types"
+import { Course } from "@/src/entities/course/types"
+
 
 
 export default function EditCoursePage() {
@@ -36,7 +37,7 @@ export default function EditCoursePage() {
     // Загрузка курса из localStorage
     const storedCourses = localStorage.getItem("courses")
     if (storedCourses) {
-      const courses = JSON.parse(storedCourses) as course[]
+      const courses = JSON.parse(storedCourses) as Course[]
       const foundCourse = courses.find((c) => c.id === courseId)
       if (foundCourse) {
         setCourse(foundCourse)
@@ -67,7 +68,7 @@ export default function EditCoursePage() {
     setTimeout(() => {
       const storedCourses = localStorage.getItem("courses")
       if (storedCourses) {
-        const courses = JSON.parse(storedCourses) as course[]
+        const courses = JSON.parse(storedCourses) as Course[]
         const updatedCourses = courses.map((c) =>
           c.id === course.id ? { ...course, updatedAt: new Date().toISOString() } : c,
         )

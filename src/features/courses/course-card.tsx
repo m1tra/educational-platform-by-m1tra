@@ -13,13 +13,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/src/shared/components/ui/dropdown-menu"
-import { course } from "@/src/entities/course/types"
+import { Course } from "@/src/entities/course/types"
+
 
 
 interface CourseCardProps {
-  course: course
+  course: Course
   onTogglePin: (courseId: number) => void
-  onDelete: (course: course) => void
+  onDelete: (course: Course) => void
 }
 
 export function CourseCard({ course, onTogglePin, onDelete }: CourseCardProps) {
@@ -36,7 +37,7 @@ export function CourseCard({ course, onTogglePin, onDelete }: CourseCardProps) {
   }
 
   const navigateToViewCourse = () => {
-    router.push(`/teach/view/${course.id}`)
+    router.push(`/course/${course.id}`)
   }
 
   const navigateToCourseAnalytics = (e: React.MouseEvent) => {

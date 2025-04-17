@@ -11,12 +11,13 @@ import { Switch } from "@/src/shared/components/ui/switch"
 import { Separator } from "@/src/shared/components/ui/separator"
 import { Button } from "@/src/shared/components/ui/button"
 import { FileText, ImageIcon, Video, Upload, FolderPlus, Plus } from "lucide-react"
-import { course } from "@/src/entities/course/types"
+import { Course } from "@/src/entities/course/types"
+
 
 
 interface LessonEditorWidgetProps {
-  course: course
-  setCourse: React.Dispatch<React.SetStateAction<course | null>>
+  course: Course
+  setCourse: React.Dispatch<React.SetStateAction<Course | null>>
   activeModuleId: number | null
   activeLessonId: number | null
   activeTab: string

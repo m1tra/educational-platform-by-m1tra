@@ -17,13 +17,14 @@ import {
 import { Input } from "@/src/shared/components/ui/input"
 import { Textarea } from "@/src/shared/components/ui/textarea"
 import { FolderPlus } from "lucide-react"
-import { course, lesson, module } from "@/src/entities/course/types"
+
 import { ModuleItem } from "@/src/features/course-editor/module-item"
+import { Course, Lesson, Module } from "@/src/entities/course/types"
 
 
 interface CourseStructureWidgetProps {
-  course: course
-  setCourse: React.Dispatch<React.SetStateAction<course | null>>
+  course: Course
+  setCourse: React.Dispatch<React.SetStateAction<Course | null>>
   activeModuleId: number | null
   setActiveModuleId: (id: number | null) => void
   activeLessonId: number | null
@@ -55,15 +56,15 @@ export function CourseStructureWidget({
   const [newModuleTitle, setNewModuleTitle] = useState("")
   const [newModuleDescription, setNewModuleDescription] = useState("")
   const [newLessonTitle, setNewLessonTitle] = useState("")
-  const [moduleToDelete, setModuleToDelete] = useState<module | null>(null)
-  const [lessonToDelete, setLessonToDelete] = useState<lesson | null>(null)
-  const [moduleToEdit, setModuleToEdit] = useState<module | null>(null)
+  const [moduleToDelete, setModuleToDelete] = useState<Module | null>(null)
+  const [lessonToDelete, setLessonToDelete] = useState<Lesson | null>(null)
+  const [moduleToEdit, setModuleToEdit] = useState<Module | null>(null)
 
   // Добавление нового модуля
   const addNewModule = () => {
     if (!course || !newModuleTitle.trim()) return
 
-    const newModule: module = {
+    const newModule: Module = {
       id: Date.now(),
       title: newModuleTitle,
       description: newModuleDescription,
@@ -124,7 +125,7 @@ export function CourseStructureWidget({
   const addNewLesson = () => {
     if (!course || !activeModuleId || !newLessonTitle.trim()) return
 
-    const newLesson: lesson = {
+    const newLesson: Lesson = {
       id: Date.now(),
       title: newLessonTitle,
       content: "",

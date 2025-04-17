@@ -6,13 +6,13 @@ import type React from "react"
 import { Save } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/src/shared/components/ui/button"
-import { course } from "@/src/entities/course/types"
+import { Course } from "@/src/entities/course/types"
 
 
 
 interface CourseHeaderProps {
-  course: course
-  setCourse: React.Dispatch<React.SetStateAction<course | null>>
+  course: Course
+  setCourse: React.Dispatch<React.SetStateAction<Course | null>>
   isSaving: boolean
   onSave: () => void
 }

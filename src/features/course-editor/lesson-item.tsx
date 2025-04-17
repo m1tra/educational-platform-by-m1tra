@@ -1,13 +1,14 @@
 "use client"
 
+import { Lesson } from "@/src/entities/course/types"
 import { Badge } from "@/src/shared/components/ui/badge"
 import { Button } from "@/src/shared/components/ui/button"
-import { lesson } from "@/src/entities/course/types"
+
 import { MoveUp, MoveDown, Trash2 } from "lucide-react"
 
 
 interface LessonItemProps {
-  lesson: lesson
+  lesson: Lesson
   index: number
   totalLessons: number
   isActive: boolean

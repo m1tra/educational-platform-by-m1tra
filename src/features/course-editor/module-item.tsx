@@ -7,10 +7,12 @@ import { Separator } from "@/src/shared/components/ui/separator"
 import { Folder, Edit, MoveUp, MoveDown, CheckCircle, XCircle, Trash2, Plus } from "lucide-react"
 
 import { LessonItem } from "./lesson-item"
-import { lesson, module } from "@/src/entities/course/types"
+import { Lesson, Module } from "@/src/entities/course/types"
+
+
 
 interface ModuleItemProps {
-  module: module
+  module: Module
   index: number
   totalModules: number
   isActive: boolean
@@ -22,7 +24,7 @@ interface ModuleItemProps {
   onDeleteModule: () => void
   onMoveModule: (id: number, direction: "up" | "down") => void
   onMoveLesson: (moduleId: number, lessonId: number, direction: "up" | "down") => void
-  onDeleteLesson: (lesson: lesson) => void
+  onDeleteLesson: (lesson: Lesson) => void
   onTogglePublish: () => void
 }
 

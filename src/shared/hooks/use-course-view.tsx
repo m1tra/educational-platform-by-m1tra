@@ -1,18 +1,19 @@
 "use client"
 
-import { course } from "@/src/entities/course/types"
+
+import { Course } from "@/src/entities/course/types"
 import { useEffect, useState } from "react"
 
 
 export function useCourseView(courseId: string) {
-  const [course, setCourse] = useState<course | null>(null)
+  const [course, setCourse] = useState<Course | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     // Загрузка курса из localStorage
     const storedCourses = localStorage.getItem("courses")
     if (storedCourses) {
-      const courses = JSON.parse(storedCourses) as course[]
+      const courses = JSON.parse(storedCourses) as Course[]
       const foundCourse = courses.find((c) => c.id.toString() === courseId)
       if (foundCourse) {
         setCourse(foundCourse)
@@ -46,7 +47,7 @@ export function useCourseView(courseId: string) {
     // Обновление в localStorage
     const storedCourses = localStorage.getItem("courses")
     if (storedCourses) {
-      const courses = JSON.parse(storedCourses) as course[]
+      const courses = JSON.parse(storedCourses) as Course[]
       const updatedCourses = courses.map((c) => (c.id.toString() === courseId ? updatedCourse : c))
       localStorage.setItem("courses", JSON.stringify(updatedCourses))
     }

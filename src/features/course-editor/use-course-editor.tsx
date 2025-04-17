@@ -1,18 +1,18 @@
 "use client"
 
-import { course, lesson, module } from "@/src/entities/course/types"
+import { Course, Lesson, Module } from "@/src/entities/course/types"
 import { useState } from "react"
 
 
 export function useCourseEditor() {
-  const [course, setCourse] = useState<course | null>(null)
+  const [course, setCourse] = useState<Course | null>(null)
   const [activeTab, setActiveTab] = useState("content")
   const [activeModuleId, setActiveModuleId] = useState<number | null>(null)
   const [activeLessonId, setActiveLessonId] = useState<number | null>(null)
   const [expandedModules, setExpandedModules] = useState<string[]>([])
 
   // Обновление основной информации о курсе
-  const updateCourseInfo = (field: keyof course, value: course[typeof field]) => {
+  const updateCourseInfo = (field: keyof Course, value: Course[typeof field]) => {
     if (!course) return
     setCourse({ ...course, [field]: value })
   }
@@ -38,10 +38,10 @@ export function useCourseEditor() {
   }
 
   // Добавление нового модуля
-  const addModule = (moduleData: Omit<module, "id" | "lessons">) => {
+  const addModule = (moduleData: Omit<Module, "id" | "lessons">) => {
     if (!course) return
 
-    const newModule: module = {
+    const newModule: Module = {
       id: Date.now(),
       title: moduleData.title,
       description: moduleData.description,
@@ -58,7 +58,7 @@ export function useCourseEditor() {
   }
 
   // Обновление модуля
-  const updateModule = (moduleId: number, data: Partial<module>) => {
+  const updateModule = (moduleId: number, data: Partial<Module>) => {
     if (!course) return
 
     setCourse({
@@ -85,10 +85,10 @@ export function useCourseEditor() {
   }
 
   // Добавление нового урока
-  const addLesson = (moduleId: number, lessonData: Omit<lesson, "id" | "hasTest" | "testId">) => {
+  const addLesson = (moduleId: number, lessonData: Omit<Lesson, "id" | "hasTest" | "testId">) => {
     if (!course) return
 
-    const newLesson: lesson = {
+    const newLesson: Lesson = {
       id: Date.now(),
       title: lessonData.title,
       content: lessonData.content || "",
@@ -107,7 +107,7 @@ export function useCourseEditor() {
   }
 
   // Обновление урока
-  const updateLesson = (moduleId: number, lessonId: number, data: Partial<lesson>) => {
+  const updateLesson = (moduleId: number, lessonId: number, data: Partial<Lesson>) => {
     if (!course) return
 
     setCourse({
