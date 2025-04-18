@@ -17,46 +17,39 @@ import { useUserRole } from "@/src/entities/session/use-user-role";
 export function Profile() {
   const session = useAppSession()
   const signOut = useSignOut()
-  const {isAdmin} = useUserRole()
+  const { isAdmin } = useUserRole()
 
   if (session.status === "loading") return <Skeleton className="w-8 h-8 rounded-full" />
 
-  if (session.status === "unauthenticated") return <SignInButton />
-  
+  if (session.status === "unauthenticated") return <SignInButton/>
+
   const user = session?.data?.user
 
-  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="p-px rounded-full self-center h-8 w-8"
-        >
-        <Avatar>
-            <AvatarImage src={session.data?.user?.image || ""} alt="EP" />
-            <AvatarFallback>EP</AvatarFallback>
-        </Avatar>
+        <Button variant="ghost" className="p-px rounded-full self-center h-8 w-8">
+          <Avatar>
+            <AvatarImage src={session.data?.user?.image || ""} alt="ИП" />
+            <AvatarFallback>ИП</AvatarFallback>
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40 mr-2 ">
+      <DropdownMenuContent className="w-40 mr-2">
         <DropdownMenuLabel>
           <p>Мой аккаунт</p>
-          <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">
-            {session.data?.user?.name}
-          </p>
+          <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">{session.data?.user?.name}</p>
         </DropdownMenuLabel>
-        <DropdownMenuGroup></DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-        {isAdmin&&
-          <DropdownMenuItem asChild>
-            <Link href={`/admin`}>
-              <LockKeyhole className="mr-2 h-4 w-4" />
-              <span>Admin</span>
-            </Link>
-          </DropdownMenuItem>
-        }
+          {isAdmin && (
+            <DropdownMenuItem asChild>
+              <Link href={`/admin`}>
+                <LockKeyhole className="mr-2 h-4 w-4" />
+                <span>Admin</span>
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem asChild>
             <Link href={`/profile/${user?.id}`}>
               <User className="mr-2 h-4 w-4" />
@@ -70,5 +63,5 @@ export function Profile() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

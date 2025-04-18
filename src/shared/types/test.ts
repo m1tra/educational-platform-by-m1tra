@@ -1,4 +1,4 @@
-import { TestType } from "../components/custom-tasks/wrapper"
+import { TestType } from "../components/courses/custom-tasks/wrapper"
 
 
 interface   Test {

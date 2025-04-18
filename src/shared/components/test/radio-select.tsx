@@ -1,10 +1,9 @@
+"use client"
 
-import { Check, X } from 'lucide-react';
-
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from '../ui/button';
-import { useMemo } from 'react';
-
+import { Check, X } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Button } from "@/src/shared/components/ui/button"
+import { useMemo } from "react"
 
 interface RadioSelectProps {
   options: string[]
@@ -14,16 +13,16 @@ interface RadioSelectProps {
   isCorrect: boolean | null
   correctAnswer: string
   currentTaskAttempts: number
-  showCorrectAnswer:boolean
+  showCorrectAnswer: boolean
 }
 
 function shuffleArray<T>(array: T[]): T[] {
-  const copy = [...array];
+  const copy = [...array]
   for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
   }
-  return copy;
+  return copy
 }
 
 export function RadioSelect({
@@ -36,26 +35,32 @@ export function RadioSelect({
   selectedOption,
   setSelectedOption,
 }: RadioSelectProps) {
-  
-  const shuffledOptions = useMemo(() => shuffleArray(options), [options]);
+  const shuffledOptions = useMemo(() => shuffleArray(options), [options])
 
   return (
     <AnimatePresence>
       <div className="space-y-4">
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {shuffledOptions.map((option) => (
             <motion.div
               key={option}
               className={`flex items-center p-4 rounded-lg cursor-pointer transition-all duration-200 ${
                 selectedOption === option
-                  ? "border border-foreground shadow-sm"
-                  : "border border-border hover:border-foreground/30"
+                  ? "border-2 border-primary bg-primary/5 shadow-sm"
+                  : "border border-border hover:border-primary/30 hover:bg-primary/5"
               }`}
               onClick={() => setSelectedOption(option)}
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <span className="md:text-lg text-base text-left">{option}</span>
+              <div
+                className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                  selectedOption === option ? "border-primary" : "border-muted-foreground"
+                }`}
+              >
+                {selectedOption === option && <div className="w-3 h-3 rounded-full bg-primary" />}
+              </div>
+              <span className="md:text-lg text-base">{option}</span>
             </motion.div>
           ))}
         </div>
@@ -86,24 +91,28 @@ export function RadioSelect({
             )}
           </motion.div>
         )}
+
         {showCorrectAnswer && !isCorrect && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-2 p-2 bg-blue-50 text-blue-600 rounded-md dark:bg-blue-900/20 dark:text-blue-400"
+            className="mt-2 p-3 bg-blue-50 text-blue-600 rounded-md dark:bg-blue-900/20 dark:text-blue-400"
           >
-            <p>Правильный ответ: {correctAnswer}</p>
+            <p>
+              Правильный ответ: <span className="font-medium">{correctAnswer}</span>
+            </p>
           </motion.div>
         )}
-        <Button 
-          onClick={checkAnswer} 
-          disabled={selectedOption === "" || currentTaskAttempts===3 || isCorrect!} 
+
+        <Button
+          onClick={checkAnswer}
+          disabled={selectedOption === "" || currentTaskAttempts === 3 || isCorrect === true}
           className="w-full text-lg font-medium"
+          size="lg"
         >
-          Проверить
+          Ответить
         </Button>
       </div>
     </AnimatePresence>
-  );
+  )
 }
-

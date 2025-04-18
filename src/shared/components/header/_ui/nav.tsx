@@ -14,8 +14,9 @@ export function NavLinks({ onClick, className }: NavLinksProps) {
 
   const links = [
     { href: '/', label: 'Главная' },
-    { href: '/tests', label: 'Все тесты' },
+    { href: '/tests', label: 'Тесты' },
     { href: '/courses', label: 'Курсы' },
+    { href: '/teach', label: 'Преподавание' },
   ]
 
 

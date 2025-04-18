@@ -9,7 +9,7 @@ interface HeaderActionsProps {
 
 export function HeaderActions({ variant = 'public' }: HeaderActionsProps) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2 ">
       {variant === 'public' && (
         <Profile/>
       )}
@@ -17,6 +17,7 @@ export function HeaderActions({ variant = 'public' }: HeaderActionsProps) {
         <Profile/>
       )}
       <ThemeToggle />
+      
     </div>
   )
 } 
