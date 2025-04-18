@@ -14,6 +14,7 @@ interface RadioSelectProps {
   correctAnswer: string
   currentTaskAttempts: number
   showCorrectAnswer: boolean
+  isPaused:boolean
 }
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -33,6 +34,7 @@ export function RadioSelect({
   options,
   showCorrectAnswer,
   selectedOption,
+  isPaused,
   setSelectedOption,
 }: RadioSelectProps) {
   const shuffledOptions = useMemo(() => shuffleArray(options), [options])
@@ -106,7 +108,7 @@ export function RadioSelect({
 
         <Button
           onClick={checkAnswer}
-          disabled={selectedOption === "" || currentTaskAttempts === 3 || isCorrect === true}
+          disabled={selectedOption === "" || currentTaskAttempts === 3 || isCorrect === true || isPaused === true}
           className="w-full text-lg font-medium"
           size="lg"
         >

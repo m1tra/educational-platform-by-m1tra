@@ -15,6 +15,7 @@ interface AnswerFeedbackProps {
   currentTaskAttempts: number
   showCorrectAnswer: boolean
   correctAnswer: string
+  isPaused: boolean
 }
 
 export function AnswerFeedback({
@@ -25,6 +26,7 @@ export function AnswerFeedback({
   currentTaskAttempts,
   showCorrectAnswer,
   correctAnswer,
+  isPaused,
 }: AnswerFeedbackProps) {
   return (
     <div className="space-y-4">
@@ -34,6 +36,7 @@ export function AnswerFeedback({
         isCorrect={isCorrect}
         checkAnswer={checkAnswer}
         currentTaskAttempts={currentTaskAttempts}
+        isPaused = {isPaused}
       />
 
       <AnimatePresence>
@@ -80,7 +83,7 @@ export function AnswerFeedback({
   )
 }
 
-const CheckInput = ({ userInput, setUserInput, isCorrect, checkAnswer, currentTaskAttempts }: CheckInputProps) => {
+const CheckInput = ({ userInput, setUserInput, isCorrect, checkAnswer, currentTaskAttempts,isPaused }: CheckInputProps) => {
   return (
     <div className="flex gap-2">
       <Input
@@ -99,7 +102,7 @@ const CheckInput = ({ userInput, setUserInput, isCorrect, checkAnswer, currentTa
       />
       <Button
         onClick={checkAnswer}
-        disabled={userInput === "" || currentTaskAttempts === 3 || isCorrect === true}
+        disabled={userInput === "" || currentTaskAttempts === 3 || isCorrect === true || isPaused === true}
         size="lg"
       >
         Ответить

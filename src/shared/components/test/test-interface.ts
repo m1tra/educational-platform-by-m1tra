@@ -39,6 +39,7 @@ export interface TestCardProps {
 }
 
 export type CheckInputProps = {
+  isPaused:boolean
   userInput: string
   currentTaskAttempts: number
   setUserInput: (e: string) => void

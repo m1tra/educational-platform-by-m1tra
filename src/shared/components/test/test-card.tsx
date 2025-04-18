@@ -14,7 +14,7 @@ import { AnswerFeedback } from "./check-input"
 import type { ExamTicketProps } from "../courses/custom-tasks/word-answer-panel/exam-ticket-interface"
 import { RadioSelect } from "./radio-select"
 import Image from "next/image"
-import { Clock, Pause, Play, Volume2 } from "lucide-react"
+import { Clock, Pause, Play } from "lucide-react"
 
 const getTaskTitle = (task: ProgrammingTask | Word | ExamTicketProps) => {
   if ("title" in task) return task.title
@@ -69,7 +69,7 @@ export function TestCard({
     }
   }, [currentTaskIndex, tasks])
 
-  // Timer effect
+  // таймер
   useEffect(() => {
     let interval: NodeJS.Timeout
 
@@ -159,9 +159,6 @@ export function TestCard({
               <Button variant="outline" size="icon" onClick={() => setIsPaused(!isPaused)}>
                 {isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
               </Button>
-              <Button variant="outline" size="icon">
-                <Volume2 className="h-4 w-4" />
-              </Button>
             </div>
           </div>
         </div>
@@ -204,6 +201,7 @@ export function TestCard({
                   currentTaskAttempts={currentTaskAttempts}
                   showCorrectAnswer={showCorrectAnswer}
                   correctAnswer={correctAnswer}
+                  isPaused={isPaused}
                 />
               </div>
             ) : (
@@ -253,6 +251,7 @@ export function TestCard({
                         checkAnswer={checkAnswer}
                         currentTaskAttempts={currentTaskAttempts}
                         showCorrectAnswer={showCorrectAnswer}
+                        isPaused={isPaused}
                       />
                     </>
                   ) : (
@@ -264,6 +263,7 @@ export function TestCard({
                       currentTaskAttempts={currentTaskAttempts}
                       showCorrectAnswer={showCorrectAnswer}
                       correctAnswer={correctAnswer}
+                      isPaused={isPaused}
                     />
                   )}
                 </div>
