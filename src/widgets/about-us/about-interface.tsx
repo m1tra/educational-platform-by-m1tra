@@ -11,27 +11,21 @@ import { AboutUsHeader } from "./_ui/about-header"
 export function About() {
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header - Asymmetrical design */}
+
         <AboutUsHeader/>
 
-      {/* Hero Section - Asymmetrical grid layout */}
         <AboutUsPreview/>
 
-      {/* Divider with counter */}
         <AboutUsDivider/>
-      {/* Features - Asymmetrical layout */}
+
         <AboutUsFeatures/>
 
-      {/* AI Section - Asymmetrical design */}
         <AboutUsAi/>
 
-      {/* Admin Panel - Unique layout */}   
         <AboutUsAdmin/>
 
-      {/* CTA - Minimalist design */}
         <AboutUsCTA/>
 
-      {/* Footer - Minimalist */}
         <AboutUsFooter/>
     </div>
   )

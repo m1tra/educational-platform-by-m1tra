@@ -6,7 +6,7 @@ export function AboutUsFooter(){
         <div className="flex flex-col md:flex-row justify-between items-start">
           <div className="mb-8 md:mb-0">
             <div className="border border-white/30 p-1.5 rounded-sm inline-block mb-4">
-              <span className="font-mono text-sm">E/V</span>
+              <span className="font-mono text-sm">T/S</span>
             </div>
             <p className="text-white/50 text-xs max-w-xs mt-4">
               Образовательная платформа с интеллектуальной системой тестирования и интеграцией курсов
@@ -51,7 +51,7 @@ export function AboutUsFooter(){
         </div>
 
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-white/50 text-xs mb-4 md:mb-0">© 2025 Elvera. Все права защищены.</div>
+          <div className="text-white/50 text-xs mb-4 md:mb-0">© 2025 ThinkSera. Все права защищены.</div>
 
           <div className="flex gap-4">
             {["Условия", "Конфиденциальность", "Cookies"].map((item, i) => (
