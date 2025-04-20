@@ -3,6 +3,7 @@ import { GlitchText } from "@/src/shared/components/ui/glitch-text";
 import Link from "next/link";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion"
+import { GlitchButtonWrapper } from "@/src/shared/components/ui/glitch-button";
 
 export function AboutUsCTA(){
     const ctaRef = useRef<HTMLDivElement>(null)
@@ -27,19 +28,22 @@ export function AboutUsCTA(){
               animate={ctaInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <Link
-                href="/auth"
-                className="border-2 border-white px-8 py-4 font-mono text-sm hover:bg-white hover:text-black transition-colors text-center md:text-left"
-              >
-                РЕГИСТРАЦИЯ
-              </Link>
-
-              <Link
-                href="/contact"
-                className="border border-white/30 px-8 py-4 font-mono text-sm text-white/70 hover:text-white hover:border-white transition-colors text-center md:text-left"
-              >
-                СВЯЗАТЬСЯ
-              </Link>
+              <GlitchButtonWrapper>
+                <Link
+                  href="/auth"
+                  className="border-2 border-white px-8 py-4 font-mono text-sm hover:bg-white hover:text-black transition-colors text-center md:text-left"
+                >
+                  РЕГИСТРАЦИЯ
+                </Link>
+              </GlitchButtonWrapper>
+              <GlitchButtonWrapper>
+                <Link
+                  href="/contact"
+                  className="border border-white/30 px-8 py-4 font-mono text-sm text-white/70 hover:text-white hover:border-white transition-colors text-center md:text-left"
+                >
+                  СВЯЗАТЬСЯ
+                </Link>
+              </GlitchButtonWrapper>
             </motion.div>
           </div>
         </GlitchSection>

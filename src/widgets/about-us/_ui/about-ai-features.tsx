@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion,useInView } from "framer-motion"
 import { GlitchText } from "@/src/shared/components/ui/glitch-text";
+import { GlitchButtonWrapper } from "@/src/shared/components/ui/glitch-button";
 
 export function AboutUsAi(){
     const aiRef = useRef<HTMLDivElement>(null)
@@ -81,13 +82,15 @@ export function AboutUsAi(){
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  <Link
-                    href="/ai-demo"
-                    className="border border-white px-6 py-3 font-mono text-sm hover:bg-white hover:text-black transition-colors inline-flex items-center"
-                  >
-                    ПОДРОБНЕЕ ОБ ИИ
-                    <ArrowUpRight className="h-4 w-4 ml-2" />
-                  </Link>
+                  <GlitchButtonWrapper>
+                    <Link
+                      href="/ai-demo"
+                      className="border border-white px-6 py-3 font-mono text-sm hover:bg-white hover:text-black transition-colors inline-flex items-center"
+                    >
+                      ПОДРОБНЕЕ ОБ ИИ
+                      <ArrowUpRight className="h-4 w-4 ml-2" />
+                    </Link>
+                  </GlitchButtonWrapper>
                 </motion.div>
               </div>
             </motion.div>

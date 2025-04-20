@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion"
 import { GlitchText } from "@/src/shared/components/ui/glitch-text";
+import { GlitchButtonWrapper } from "@/src/shared/components/ui/glitch-button";
 
 export function AboutUsPreview(){
 
   const { scrollY } = useScroll()
-  
+
   const heroRef = useRef<HTMLDivElement>(null)
 
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 })
@@ -142,21 +143,24 @@ export function AboutUsPreview(){
         transition={{ duration: 0.7, delay: 0.5 }}
       >
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-          <Link
-            href="/demo"
-            className="border border-white px-6 py-3 font-mono text-sm hover:bg-white hover:text-black transition-colors flex items-center justify-between group"
-          >
-            <span>ДЕМОНСТРАЦИЯ</span>
-            <ArrowUpRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </Link>
-
-          <Link
-            href="/about"
-            className="border border-white/30 px-6 py-3 font-mono text-sm text-white/70 hover:text-white hover:border-white transition-colors flex items-center justify-between"
-          >
-            <span>О СИСТЕМЕ</span>
-            <span className="ml-2 text-lg">→</span>
-          </Link>
+          <GlitchButtonWrapper>
+            <Link
+              href="/demo"
+              className="border border-white px-6 py-3 font-mono text-sm hover:bg-white hover:text-black transition-colors flex items-center justify-between group"
+            >
+              <span>ДЕМОНСТРАЦИЯ</span>
+              <ArrowUpRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </Link>
+          </GlitchButtonWrapper>
+          <GlitchButtonWrapper>      
+            <Link
+              href="/about"
+              className="border border-white/30 px-6 py-3 font-mono text-sm text-white/70 hover:text-white hover:border-white transition-colors flex items-center justify-between"
+            >
+              <span>О СИСТЕМЕ</span>
+              <span className="ml-2 text-lg">→</span>
+            </Link>
+          </GlitchButtonWrapper>
         </div>
       </motion.div>
     </div>

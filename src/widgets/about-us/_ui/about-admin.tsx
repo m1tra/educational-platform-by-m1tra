@@ -4,6 +4,7 @@ import { motion,useInView } from "framer-motion"
 import { GlitchText } from "@/src/shared/components/ui/glitch-text";
 import { GlitchSection } from "@/src/shared/components/ui/glitch-section";
 import { useRef } from "react";
+import { GlitchButtonWrapper } from "@/src/shared/components/ui/glitch-button";
 
 export function AboutUsAdmin(){
   const adminRef = useRef<HTMLDivElement>(null)
@@ -30,13 +31,15 @@ export function AboutUsAdmin(){
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <Link
-              href="/admin-demo"
-              className="border border-white px-6 py-3 font-mono text-sm hover:bg-white hover:text-black transition-colors inline-flex items-center"
-            >
-              ДЕМО ПАНЕЛИ
-              <ArrowUpRight className="h-4 w-4 ml-2" />
-            </Link>
+            <GlitchButtonWrapper>
+              <Link
+                href="/admin-demo"
+                className="border border-white px-6 py-3 font-mono text-sm hover:bg-white hover:text-black transition-colors inline-flex items-center"
+              >
+                ДЕМО ПАНЕЛИ
+                <ArrowUpRight className="h-4 w-4 ml-2" />
+              </Link>
+              </GlitchButtonWrapper>
           </motion.div>
         </motion.div>
 
