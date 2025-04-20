@@ -110,27 +110,19 @@ export function AboutUsPreview(){
       >
         <div className="relative aspect-[4/3] md:aspect-[16/9] w-full overflow-hidden border border-white/20">
           <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-px bg-white/10">
-            <div className="bg-black relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 border border-white/30 rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 bg-white"></div>
-                </div>
+            <div className="bg-black relative flex items-center justify-center">
+              <div className="w-16 h-16 border border-white/30 rounded-full flex items-center justify-center">
+                <div className="w-3 h-3 bg-white"></div>
               </div>
             </div>
-            <div className="bg-black relative overflow-hidden">
-              <div className="h-full w-full flex items-center justify-center">
-                <div className="text-6xl font-mono font-bold opacity-20">T</div>
-              </div>
+            <div className="bg-black relative flex items-center justify-center">
+              <div className="text-4xl md:text-6xl font-mono font-bold opacity-20">T</div>
             </div>
-            <div className="bg-black relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-24 h-[1px] bg-white/30"></div>
-              </div>
+            <div className="bg-black relative flex items-center justify-center">
+              <div className="w-20 h-[1px] bg-white/30"></div>
             </div>
-            <div className="bg-black relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-xs font-mono tracking-widest">СИСТЕМА.ТЕСТИРОВАНИЯ</div>
-              </div>
+            <div className="bg-black relative flex items-center justify-center">
+              <div className="text-[10px] md:text-xs font-mono tracking-widest">СИСТЕМА.ТЕСТИРОВАНИЯ</div>
             </div>
           </div>
         </div>

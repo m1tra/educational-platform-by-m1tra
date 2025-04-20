@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react";
+import { GlitchButtonWrapper } from "@/src/shared/components/ui/glitch-button";
 
 export function AboutUsHeader(){
   const headerRef = useRef<HTMLDivElement>(null)
@@ -38,12 +39,14 @@ export function AboutUsHeader(){
           Управление
         </Link>
       </nav>  
-      <Link
-        href="/auth/sign-in"
-        className="border border-white px-4 py-1.5 text-sm font-mono hover:bg-white hover:text-black transition-colors"
-      >
-        Начать
-      </Link>
+      <GlitchButtonWrapper>
+        <Link
+          href="/auth/sign-in"
+          className="border border-white px-4 py-1.5 text-sm font-mono hover:bg-white hover:text-black transition-colors"
+        >
+          Начать
+        </Link>
+      </GlitchButtonWrapper>
     </motion.header>
   )
 }

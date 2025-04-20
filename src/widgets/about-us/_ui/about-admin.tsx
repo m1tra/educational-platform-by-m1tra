@@ -6,26 +6,33 @@ import { GlitchSection } from "@/src/shared/components/ui/glitch-section";
 import { useRef } from "react";
 import { GlitchButtonWrapper } from "@/src/shared/components/ui/glitch-button";
 
-export function AboutUsAdmin(){
-  const adminRef = useRef<HTMLDivElement>(null)
-  const adminInView = useInView(adminRef, { once: true, amount: 0.3 })
-  return(
-    <GlitchSection ref={adminRef} id="admin" className="container mx-auto px-4 py-24 border-t border-white/10">
-      <div className="grid grid-cols-12 gap-8">
+export function AboutUsAdmin() {
+  const adminRef = useRef<HTMLDivElement>(null);
+  const adminInView = useInView(adminRef, { once: true, amount: 0.3 });
+
+  return (
+    <GlitchSection
+      ref={adminRef}
+      id="admin"
+      className="container mx-auto px-4 py-16 sm:py-20 border-t border-white/10"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        {/* Левая колонка */}
         <motion.div
-          className="col-span-12 md:col-span-4 mb-8 md:mb-0"
+          className="md:col-span-4"
           initial={{ opacity: 0, x: -30 }}
           animate={adminInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7 }}
         >
-          <GlitchText className="text-3xl font-bold font-mono mb-4">ПАНЕЛЬ УПРАВЛЕНИЯ</GlitchText>
-          <p className="text-white/70 mb-8">
-            Мощный инструмент для преподавателей и администраторов с интуитивным интерфейсом и расширенной
-            аналитикой
+          <GlitchText className="text-2xl sm:text-3xl font-bold font-mono mb-4">
+            ПАНЕЛЬ УПРАВЛЕНИЯ
+          </GlitchText>
+          <p className="text-white/70 text-sm sm:text-base mb-8">
+            Мощный инструмент для преподавателей и администраторов с интуитивным интерфейсом и расширенной аналитикой
           </p>
 
           <motion.div
-            className="mt-8"
+            className="mt-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -39,26 +46,32 @@ export function AboutUsAdmin(){
                 ДЕМО ПАНЕЛИ
                 <ArrowUpRight className="h-4 w-4 ml-2" />
               </Link>
-              </GlitchButtonWrapper>
+            </GlitchButtonWrapper>
           </motion.div>
         </motion.div>
 
+        {/* Правая колонка */}
         <motion.div
-          className="col-span-12 md:col-span-8"
+          className="md:col-span-8"
           initial={{ opacity: 0, x: 30 }}
           animate={adminInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
           <div className="border border-white/20 overflow-hidden">
-            <div className="border-b border-white/20 p-3 flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full border border-white/40"></div>
-              <div className="w-3 h-3 rounded-full border border-white/40"></div>
-              <div className="w-3 h-3 rounded-full border border-white/40"></div>
-              <div className="ml-4 text-xs font-mono text-white/50">АДМИН-ПАНЕЛЬ / ТЕСТЫ / АНАЛИТИКА</div>
+            {/* Верхняя панель */}
+            <div className="border-b border-white/20 py-3 px-3 flex items-center gap-3 overflow-x-auto text-nowrap">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="w-3 h-3 rounded-full border border-white/40"></div>
+              ))}
+              <div className=" text-xs font-mono text-white/50">
+                АДМИН-ПАНЕЛЬ / ТЕСТЫ / АНАЛИТИКА
+              </div>
             </div>
 
-            <div className="grid grid-cols-12 h-[400px]">
-              <div className="col-span-3 border-r border-white/20 p-4">
+            {/* Основной контент */}
+            <div className="grid grid-cols-1 sm:grid-cols-12 h-auto sm:h-[400px]">
+              {/* Боковое меню */}
+              <div className="sm:col-span-3 border-b sm:border-b-0 sm:border-r border-white/20 p-4">
                 <div className="space-y-4">
                   <div className="h-6 border-b border-white/10 pb-4 flex items-center">
                     <div className="w-3 h-3 bg-white/20 mr-2"></div>
@@ -67,7 +80,9 @@ export function AboutUsAdmin(){
                   {[1, 2, 3, 4, 5, 6].map((i) => (
                     <motion.div
                       key={i}
-                      className={`h-8 flex items-center px-2 ${i === 2 ? "bg-white/5 border-l-2 border-white" : ""}`}
+                      className={`h-8 flex items-center px-2 ${
+                        i === 2 ? "bg-white/5 border-l-2 border-white" : ""
+                      }`}
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
@@ -84,19 +99,20 @@ export function AboutUsAdmin(){
                 </div>
               </div>
 
-              <div className="col-span-9 p-4">
+              {/* Контент и графики */}
+              <div className="sm:col-span-9 p-4">
                 <motion.div
-                  className="flex justify-between mb-6"
+                  className="flex flex-col sm:flex-row justify-between mb-6 gap-2"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
                   <div className="text-sm font-mono">АНАЛИТИКА ТЕСТИРОВАНИЯ</div>
-                  <div className="text-xs font-mono border border-white/30 px-2 py-1">ЭКСПОРТ</div>
+                  <div className="text-xs font-mono border border-white/30 px-2 py-1 w-max">ЭКСПОРТ</div>
                 </motion.div>
 
-                <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                   {[
                     { label: "ТЕСТЫ", value: "124" },
                     { label: "СТУДЕНТЫ", value: "1,842" },
@@ -142,16 +158,13 @@ export function AboutUsAdmin(){
                       >
                         <motion.div
                           className="bg-white/20 hover:bg-white/40 transition-colors"
-                          style={{ height: `${height * 2}px` }} 
-
+                          style={{ height: `${height * 2}px` }}
                           whileHover={{
                             scaleY: 1.1,
                             backgroundColor: "rgba(255, 255, 255, 0.5)",
                             transition: { duration: 0.2 },
                           }}
-                        >
-                            
-                        </motion.div>
+                        />
                       </motion.div>
                     ))}
                   </div>
@@ -162,5 +175,5 @@ export function AboutUsAdmin(){
         </motion.div>
       </div>
     </GlitchSection>
-  )
+  );
 }
