@@ -1,7 +1,6 @@
-import AppLayout from "@/src/shared/components/app-layout";
 
-export function Dashboard(){
+export function Home(){
     return(
-        <AppLayout variant="private">dashboard</AppLayout>
+        <div>home</div>
     )
 }

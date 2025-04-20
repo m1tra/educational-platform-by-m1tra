@@ -28,14 +28,15 @@ export function Profile() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="p-px rounded-full self-center h-8 w-8">
-          <Avatar>
+        <Button variant="ghost" className="w-full justify-start gap-2">
+          <Avatar className="h-6 w-6">
             <AvatarImage src={session.data?.user?.image || ""} alt="ИП" />
             <AvatarFallback>ИП</AvatarFallback>
           </Avatar>
+          <span>{session.data?.user?.name || ""}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40 mr-2">
+      <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
           <p>Мой аккаунт</p>
           <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">{session.data?.user?.name}</p>

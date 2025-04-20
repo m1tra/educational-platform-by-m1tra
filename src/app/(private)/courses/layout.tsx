@@ -8,6 +8,6 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <CourseSidebarInterface variant={"teaching"}>{children}</CourseSidebarInterface>
+    <CourseSidebarInterface variant={"courses"}>{children}</CourseSidebarInterface>
   );
 }

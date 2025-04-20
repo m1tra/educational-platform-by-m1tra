@@ -29,7 +29,6 @@ task в json
 допилить бэкэнд для работы с курсами
 фетчить курсы
 moder page
-сделать about-us
 profile
 БЕЗОПАСНОСТЬ
 auth middleware

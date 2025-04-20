@@ -90,7 +90,7 @@ export function MainPreloader() {
               }}
             >
               <div className="relative border-2 border-white/80 p-4">
-                <div className="text-3xl font-mono text-white">T/S</div>
+                <div className="text-3xl font-mono text-white">T/E</div>
                 <motion.div
                   className="absolute inset-0 bg-white/5 mix-blend-overlay"
                   animate={{ opacity: [0.1, 0.3, 0.1] }}
