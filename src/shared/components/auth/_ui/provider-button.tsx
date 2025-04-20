@@ -4,10 +4,12 @@ import { Github } from "lucide-react"
 import { type ClientSafeProvider, signIn } from "next-auth/react"
 import { useState } from "react"
 import { useAppSession } from "@/src/entities/session/use-app-session"
+import { motion } from "framer-motion"
 
 export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   const { status } = useAppSession()
   const [isLoading, setIsLoading] = useState(false)
+  const [isGlitching, setIsGlitching] = useState(false)
 
   const getIcon = (provider: ClientSafeProvider) => {
     switch (provider.id) {
@@ -19,7 +21,13 @@ export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   }
 
   const handleSignIn = async () => {
-    setIsLoading(true)
+    setIsGlitching(true)
+
+    setTimeout(() => {
+      setIsGlitching(false)
+      setIsLoading(true)
+    }, 800)
+
     await signIn(provider.id, {
       callbackUrl: "/",
       redirect: true,
@@ -27,14 +35,64 @@ export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   }
 
   return (
-    <button
+    <motion.button
       type="button"
       onClick={handleSignIn}
-      className="w-full border border-white px-4 py-2 font-mono text-sm hover:bg-white hover:text-black transition-colors flex items-center justify-center disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-white"
+      className="w-full border border-white px-4 py-2 font-mono text-sm text-white disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-white relative overflow-hidden"
       disabled={isLoading || status === "loading"}
+      whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+      whileTap={{ scale: 0.98 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+        opacity: { duration: 0.3 },
+        delay: 0.2,
+      }}
     >
-      {getIcon(provider)}
-      {isLoading ? "ВХОД..." : `ВОЙТИ ЧЕРЕЗ ${provider.name.toUpperCase()}`}
-    </button>
+      {isGlitching && (
+        <motion.div
+          className="absolute inset-0 bg-white/10"
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: [0, 0.5, 0, 0.8, 0],
+            x: [-5, 5, -3, 3, 0],
+          }}
+          transition={{ duration: 0.8 }}
+        />
+      )}
+
+      <motion.span
+        className="relative z-10 flex items-center justify-center"
+        animate={
+          isGlitching
+            ? {
+                x: [-2, 2, -1, 1, 0],
+                filter: ["blur(0px)", "blur(2px)", "blur(0px)"],
+              }
+            : {}
+        }
+        transition={{ duration: 0.8 }}
+      >
+        {getIcon(provider)}
+        {isLoading ? (
+          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+            ВХОД...
+          </motion.span>
+        ) : (
+          `ВОЙТИ ЧЕРЕЗ ${provider.name.toUpperCase()}`
+        )}
+      </motion.span>
+
+      <motion.div
+        className="absolute bottom-0 left-0 h-[1px] bg-white"
+        initial={{ scaleX: 0 }}
+        whileHover={{ scaleX: 1 }}
+        transition={{ duration: 0.3 }}
+        style={{ originX: 0 }}
+      />
+    </motion.button>
   )
 }

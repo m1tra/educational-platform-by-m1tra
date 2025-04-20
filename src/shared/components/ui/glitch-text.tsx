@@ -14,7 +14,7 @@ export function GlitchText({ children, className = "" }: GlitchTextProps) {
 
   useEffect(() => {
     const triggerRandomGlitch = () => {
-      const randomDelay = Math.random() * 8000 + 2000
+      const randomDelay = Math.random() * 4000 + 1000
 
       timeoutRef.current = setTimeout(() => {
         setIsGlitching(true)

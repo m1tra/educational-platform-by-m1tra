@@ -5,9 +5,9 @@ export function AboutUsHeader(){
       <header className="container mx-auto px-4 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="border border-white/30 p-1.5 rounded-sm">
-            <span className="font-mono text-sm">T/S</span>
+            <span className="font-mono text-sm">T/E</span>
           </div>
-          <span className="font-mono tracking-tight">ThinkSera</span>
+          <span className="font-mono tracking-tight">ThinksEra</span>
         </div>  
         <nav className="hidden md:flex items-center gap-8">
           <Link

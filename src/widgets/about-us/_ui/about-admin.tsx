@@ -139,13 +139,16 @@ export function AboutUsAdmin(){
                       >
                         <motion.div
                           className="bg-white/20 hover:bg-white/40 transition-colors"
-                          style={{ height: `${height}%` }}
+                          style={{ height: `${height * 2}px` }} 
+
                           whileHover={{
                             scaleY: 1.1,
                             backgroundColor: "rgba(255, 255, 255, 0.5)",
                             transition: { duration: 0.2 },
                           }}
-                        ></motion.div>
+                        >
+                            
+                        </motion.div>
                       </motion.div>
                     ))}
                   </div>
