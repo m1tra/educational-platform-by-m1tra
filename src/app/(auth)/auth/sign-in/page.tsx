@@ -23,7 +23,6 @@ export default function AuthenticationPage() {
           transition={{ duration: 0.5 }}
         >
 
-
           <motion.div
             className="max-w-[380px] mx-auto border border-white/30 p-6 relative bg-black"
             initial={{ y: 20, opacity: 0 }}

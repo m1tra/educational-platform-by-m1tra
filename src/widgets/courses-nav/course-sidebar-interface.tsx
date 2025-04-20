@@ -194,7 +194,7 @@ export function CourseSidebarInterface({
         </Sidebar>
 
         <div className="flex-1">
-          <div className="flex items-center h-16 px-4  gap-10">
+          <div className="flex items-center h-16 px-4 justify-between md:justify-start  md:gap-10">
             <SidebarTrigger />
             <div className="flex items-center gap-2">
               <div className="border border-white/30 p-1.5 rounded-sm">
@@ -203,7 +203,7 @@ export function CourseSidebarInterface({
               <span className="font-mono tracking-tight">ThinksEra</span>
             </div>  
           </div>
-          <div className="">{children}</div>
+          <div className="md:p-6">{children}</div>
         </div>
       </div>
     </SidebarProvider>
