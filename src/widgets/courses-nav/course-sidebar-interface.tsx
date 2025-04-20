@@ -14,6 +14,12 @@ import {
   GraduationCap,
   FileText,
   BookOpen,
+  Star,
+  Clock,
+  Sparkles,
+  Tags,
+  Filter,
+  LayoutGrid,
 } from "lucide-react"
 
 import {
@@ -32,7 +38,6 @@ import {
 } from "@/src/shared/components/ui/sidebar"
 
 import { Button } from "@/src/shared/components/ui/button"
-
 import { Profile } from "@/src/shared/components/header/_ui/profile"
 
 type SidebarVariant = "teaching" | "home" | "courses" | "tests"
@@ -59,6 +64,40 @@ const teachingItems = [
       { title: "Студенты", url: "/teach/students", icon: Users },
       { title: "Аналитика", url: "/teach/analytics", icon: ChartBar },
       { title: "Настройки", url: "/teach/settings", icon: Settings },
+    ],
+  },
+]
+
+const coursesItems = [
+  {
+    section: "Фильтрация",
+    items: [
+      { title: "Все курсы", url: "/courses", icon: LayoutGrid },
+      { title: "По тэгам", url: "/courses/tags", icon: Tags },
+      { title: "Фильтры", url: "/courses/filters", icon: Filter },
+    ],
+  },
+]
+
+const testsItems = [
+  {
+    section: "Фильтрация",
+    items: [
+      { title: "Все тесты", url: "/tests", icon: LayoutGrid },
+      { title: "По тэгам", url: "/tests/tags", icon: Tags },
+      { title: "Фильтры", url: "/tests/filters", icon: Filter },
+    ],
+  },
+]
+
+const homeItems = [
+  {
+    section: "Личное",
+    items: [
+      { title: "Моя панель", url: "/home", icon: Home },
+      { title: "Избранное", url: "/home/favorites", icon: Star },
+      { title: "Недавние", url: "/home/recent", icon: Clock },
+      { title: "Рекомендации", url: "/home/recommendations", icon: Sparkles },
     ],
   },
 ]
@@ -104,6 +143,23 @@ export function CourseSidebarInterface({
 }) {
   const pathname = usePathname()
 
+  const getVariantItems = () => {
+    switch (variant) {
+      case "teaching":
+        return teachingItems
+      case "courses":
+        return coursesItems
+      case "tests":
+        return testsItems
+      case "home":
+        return homeItems
+      default:
+        return []
+    }
+  }
+
+  const variantItems = getVariantItems()
+
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full">
@@ -111,38 +167,43 @@ export function CourseSidebarInterface({
           <SidebarHeader className="border-b">
             <div className="flex items-center gap-2 px-2">
               <GraduationCap className="h-6 w-6" />
-              <span className="font-semibold">Преподавание</span>
+              <span className="font-semibold">Навигация</span>
             </div>
           </SidebarHeader>
 
           <SidebarContent>
             <SidebarGroupRenderer label="Навигация" items={globalNav} pathname={pathname} />
-
-            {variant === "teaching" &&
-              teachingItems.map(({ section, items }) => (
-                <SidebarGroupRenderer key={section} label={section} items={items} pathname={pathname} />
-              ))}
+            {variantItems.map(({ section, items }) => (
+              <SidebarGroupRenderer key={section} label={section} items={items} pathname={pathname} />
+            ))}
           </SidebarContent>
 
           <SidebarFooter className="border-t">
+            {variant === "teaching" && (
+              <div className="p-2">
+                <Button className="w-full justify-start gap-2" variant="outline">
+                  <PlusCircle className="h-4 w-4" />
+                  <span>Создать курс</span>
+                </Button>
+              </div>
+            )}
             <div className="p-2">
-              <Button className="w-full justify-start gap-2" variant="outline">
-                <PlusCircle className="h-4 w-4" />
-                <span>Создать курс</span>
-              </Button>
-            </div>
-
-            <div className="p-2">
-              <Profile/>
+              <Profile />
             </div>
           </SidebarFooter>
         </Sidebar>
 
         <div className="flex-1">
-          <div className="flex items-center h-16 px-4 border-b">
+          <div className="flex items-center h-16 px-4  gap-10">
             <SidebarTrigger />
+            <div className="flex items-center gap-2">
+              <div className="border border-white/30 p-1.5 rounded-sm">
+                <span className="font-mono text-sm">T/E</span>
+              </div>
+              <span className="font-mono tracking-tight">ThinksEra</span>
+            </div>  
           </div>
-          <div className="p-6">{children}</div>
+          <div className="">{children}</div>
         </div>
       </div>
     </SidebarProvider>

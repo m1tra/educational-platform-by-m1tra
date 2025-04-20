@@ -11,6 +11,7 @@ import { SignInButton } from "../../auth/sign-in-button";
 import { Skeleton } from "../../ui/skeleton";
 import { useSignOut } from "@/src/shared/hooks/use-sign-out";
 import { useUserRole } from "@/src/entities/session/use-user-role";
+import { ThemeSwitch } from "../../theme-toggle";
 
 
 
@@ -36,12 +37,23 @@ export function Profile() {
           <span>{session.data?.user?.name || ""}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-68">
         <DropdownMenuLabel>
           <p>Мой аккаунт</p>
           <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">{session.data?.user?.name}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+              onSelect={(e) => e.preventDefault()}
+              className="flex justify-between items-center cursor-default 
+                bg-transparent hover:bg-transparent hover:text-inherit 
+                focus:bg-transparent focus:text-inherit"
+            >
+              <span>Тема</span>
+              <ThemeSwitch />
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         <DropdownMenuGroup>
           {isAdmin && (
             <DropdownMenuItem asChild>

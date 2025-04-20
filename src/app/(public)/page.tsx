@@ -1,14 +1,19 @@
-"use client";
-
+'use client'
 import { About } from "@/src/widgets/about-us/about-interface";
 import { useAppSession } from "@/src/entities/session/use-app-session";
 import { BarLoader } from "@/src/shared/components/ui/loader";
 import { useRouter } from "next/navigation";
-
+import { useEffect } from "react";
 
 export default function Home() {
   const session = useAppSession();
-  const router = useRouter()
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/home");
+    }
+  }, [session.status, router]);
 
   if (session.status === "loading") {
     return (
@@ -18,11 +23,5 @@ export default function Home() {
     );
   }
 
-  if (session.status === "authenticated") {
-    router.push('/home')
-  }
-
   return <About />;
 }
-
-

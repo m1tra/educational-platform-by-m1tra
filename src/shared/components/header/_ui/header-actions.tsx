@@ -1,5 +1,5 @@
 import { Profile } from "./profile";
-import { ThemeToggle } from "../../theme-toggle";
+import { ThemeSwitch } from "../../theme-toggle";
 
 type HeaderVariant = 'auth' | 'private' | 'public';
 
@@ -16,7 +16,7 @@ export function HeaderActions({ variant = 'public' }: HeaderActionsProps) {
       {(variant === 'private' || variant === 'auth') && (
         <Profile/>
       )}
-      <ThemeToggle />
+      <ThemeSwitch />
       
     </div>
   )
