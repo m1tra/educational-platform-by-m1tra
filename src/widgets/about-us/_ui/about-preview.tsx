@@ -8,10 +8,9 @@ import { GlitchText } from "@/src/shared/components/ui/glitch-text";
 export function AboutUsPreview(){
 
   const { scrollY } = useScroll()
-  // Refs for scroll animations
+  
   const heroRef = useRef<HTMLDivElement>(null)
 
-  // InView states for sections
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 })
 
 
