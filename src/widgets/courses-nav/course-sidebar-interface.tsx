@@ -117,6 +117,7 @@ function SidebarGroupRenderer({
     <SidebarGroup>
       <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <SidebarGroupContent>
+        
         <SidebarMenu>
           {items.map(({ title, url, icon: Icon }) => (
             <SidebarMenuItem key={url}>

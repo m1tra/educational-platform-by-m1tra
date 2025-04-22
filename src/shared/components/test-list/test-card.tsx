@@ -36,7 +36,7 @@ export function TestCard({ test, handleDelete }: TestProps) {
 
   useEffect(() => {
     if (edit) {
-      router.push(`/custom-test?id=${edit}`);
+      router.push(`/teach/test-dashboard/?id=${edit}`);
     }
   }, [edit]);
   return (
