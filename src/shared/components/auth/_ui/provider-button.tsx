@@ -1,17 +1,21 @@
 "use client"
 
-
 import { type ClientSafeProvider, signIn } from "next-auth/react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAppSession } from "@/src/entities/session/use-app-session"
 import { motion } from "framer-motion"
 import { GitHubIcon, GoogleIcon, YandexIcon } from "../../custom-icons"
-
 
 export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   const { status } = useAppSession()
   const [isLoading, setIsLoading] = useState(false)
   const [isGlitching, setIsGlitching] = useState(false)
+
+  useEffect(() => {
+    if (status === "authenticated" || status === "loading") {
+      setIsLoading(false) 
+    }
+  }, [status])
 
   const getIcon = (provider: ClientSafeProvider) => {
     switch (provider.id) {
