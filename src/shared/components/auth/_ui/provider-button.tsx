@@ -1,10 +1,12 @@
 "use client"
 
-import { Github } from "lucide-react"
+
 import { type ClientSafeProvider, signIn } from "next-auth/react"
 import { useState } from "react"
 import { useAppSession } from "@/src/entities/session/use-app-session"
 import { motion } from "framer-motion"
+import { GitHubIcon, GoogleIcon, YandexIcon } from "../../custom-icons"
+
 
 export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   const { status } = useAppSession()
@@ -14,7 +16,11 @@ export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   const getIcon = (provider: ClientSafeProvider) => {
     switch (provider.id) {
       case "github":
-        return <Github className="mr-2 h-4 w-4" />
+        return <GitHubIcon className="mr-2 h-4 w-4" />
+      case "yandex":
+        return <YandexIcon className="mr-2 h-4 w-4" />
+      case "google":
+        return <GoogleIcon className="mr-2 h-4 w-4" />
       default:
         return null
     }

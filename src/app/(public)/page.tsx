@@ -14,7 +14,7 @@ export default function Home() {
       router.push("/home");
     }
   }, [session.status, router]);
-
+  console.log(session)
   if (session.status === "loading") {
     return (
       <div className="flex justify-center items-center h-screen">
